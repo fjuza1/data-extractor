@@ -16,7 +16,17 @@ let response = {
         friendName: "Bob",
         age: 32
       }
-    ]
+    ],
+    meHow: [
+        {
+          fds: "Alice",
+          as: 28
+        },
+        {
+          dfgfdg: "Bob",
+          dfg: 32
+        }
+      ]
   };
 const AutomatizaciaResReq = {
     __ziskajObjektoveHodnoty(objekt){
