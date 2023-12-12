@@ -30,30 +30,26 @@ const AutomatizaciaResReq = {
 	__ziskajObjektoveHodnoty(objekt) {
 		return Object.values(objekt)
 	},
-	__zaplnPole(){}
 	__ziskajDatovePolia(pole) {
 		return this.__ziskajObjektoveHodnoty(pole)
 			.filter(datovyTyp => Array.isArray(datovyTyp))
 			.reduce((arr, acc) => arr.concat(acc), [])
 	},
-	__spracovanieVstupnychDat(element){
-		return 	Object.entries(element).forEach(([key, val]) => {
-			if (Array.isArray(key) && Array.isArray(val)) return
-			console.log(key, val);
-		});
-	},
 	__ziskajKlucHodnotuZArr(datovePolia) {
 		this.__ziskajDatovePolia(datovePolia)
 			.forEach(element => {
 				if (Array.isArray(element)) return;
-				this.__spracovanieVstupnychDat(element)
+				Object.entries(element).forEach(([key, val]) => {
+					if (Array.isArray(key) && Array.isArray(val)) return
+					console.log(key, val);
+				});
 			})
 	},
   ziskajNedatovePolia (){
 
   }
 };
-AutomatizaciaResReq.__ziskajKlucHodnotuZArr(response)
+// AutomatizaciaResReq.__ziskajKlucHodnotuZArr(response)
 // let skuska = {
 //   __ziskajKlucHodnotuZArr:AutomatizaciaResReq.__ziskajObjektoveHodnoty
 // }
