@@ -9,11 +9,11 @@ let response = {
     },
     friends: [
       {
-        friendName: "Alice",
+        friendNames: "Alice",
         age: 28
       },
       {
-        friendName: "Bob",
+        friendNamez: "Bob",
         age: 32
       }
     ],
@@ -39,5 +39,11 @@ const AutomatizaciaResReq = {
    }
 };
 const extraktovanePolia = AutomatizaciaResReq.__ziskajDatovePolia(response)
-console.log("🚀 ~ file: skuska_postman.js:41 ~ extraktovanePolia:", extraktovanePolia)
+// console.log("🚀 ~ file: skuska_postman.js:41 ~ extraktovanePolia:", extraktovanePolia)
+extraktovanePolia.forEach(element => {
+  Object.entries(element).forEach(([arr,val])=>{
+    console.log(arr,val);
+    return (arr,val)
+});
+})
 
