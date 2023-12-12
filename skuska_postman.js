@@ -49,7 +49,11 @@ const AutomatizaciaResReq = {
 
   }
 };
-// AutomatizaciaResReq.__ziskajKlucHodnotuZArr(response)
+// const skuska2 = [Object.entries(response)].forEach(([key, value]) => {
+// 	const c = key.filter(item => !Array.isArray(item))
+// 	return c
+// })
+// console.log("🚀 ~ file: skuska_postman.js:49 ~ skuska2 ~ skuska2:", skuska2)
 // let skuska = {
 //   __ziskajKlucHodnotuZArr:AutomatizaciaResReq.__ziskajObjektoveHodnoty
 // }
