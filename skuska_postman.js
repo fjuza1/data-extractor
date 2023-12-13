@@ -11,7 +11,13 @@ let response = {
 		firstName: "John",
 		lastName: "Doe",
 		age: 50,
-		eyeColor: "blue"
+		eyeColor: "blue",
+		x:{type:"Fiat", model:"500", color:"white"},
+		address: {
+			street: "123 Main St",
+			city: "Anytown",
+			country: "USA",
+		},
 	},
 	friends: [{
 			friendNames: "Alice",
@@ -63,4 +69,13 @@ const AutomatizaciaResReq = {
 		return arr
 	}
 };
-console.log(AutomatizaciaResReq.__ziskajNedatovePolia(response))
+
+function x(){
+	for (const key in response.person) {
+		if (Object.hasOwnProperty.call(response.person, key)) {
+			const element = response.person[key];
+			return element
+		}
+	}
+}
+console.log(x());
