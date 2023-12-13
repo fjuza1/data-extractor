@@ -52,7 +52,7 @@ const AutomatizaciaResReq = {
 	}
 };
 const vsetkyObjekty = AutomatizaciaResReq.__ziskajVsetkyObjekty(response)
-console.log("🚀 ~ file: skuska_postman.js:54 ~ vsetkyObjekty:", vsetkyObjekty)
+// console.log("🚀 ~ file: skuska_postman.js:54 ~ vsetkyObjekty:", vsetkyObjekty)
 /*
 console.log(Object.keys(response));
 for (const key in response) {
@@ -62,3 +62,4 @@ for (const key in response) {
 		console.log("🚀 ~ file: skuska_postman.js:59 ~ element:", element)
 	}
 }*/
+console.log(Object.values(response).map(v => !(v instanceof Object)));
