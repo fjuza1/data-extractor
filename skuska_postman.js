@@ -30,6 +30,9 @@ const AutomatizaciaResReq = {
 	__ziskajObjektoveHodnoty(objekt) {
 		return Object.values(objekt)
 	},
+	__ziskajObjektoveKluce(objekt) {
+		return Object.keys(objekt)
+	},
 	__ziskajDatovePolia(pole) {
 		return this.__ziskajObjektoveHodnoty(pole)
 			.filter(datovyTyp => Array.isArray(datovyTyp))
@@ -45,17 +48,13 @@ const AutomatizaciaResReq = {
 				});
 			})
 	},
-  ziskajNedatovePolia (){
-
-  }
+	__ziskajNedatovePolia(res) {
+		const arr = new Array();
+		this.__ziskajObjektoveKluce(res).forEach(item => {
+			const hodnoty = res[item]
+			typeof hodnoty === 'object' && !Array.isArray(hodnoty) ? arr[arr.length] = hodnoty : false;
+		})
+		return arr
+	}
 };
-// const skuska2 = [Object.entries(response)].forEach(([key, value]) => {
-// 	const c = key.filter(item => !Array.isArray(item))
-// 	return c
-// })
-// console.log("🚀 ~ file: skuska_postman.js:49 ~ skuska2 ~ skuska2:", skuska2)
-// let skuska = {
-//   __ziskajKlucHodnotuZArr:AutomatizaciaResReq.__ziskajObjektoveHodnoty
-// }
-// console.dir(skuska.__ziskajKlucHodnotuZArr(response)
-//   )
+AutomatizaciaResReq.__ziskajNedatovePolia(response)
