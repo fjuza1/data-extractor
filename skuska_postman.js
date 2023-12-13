@@ -50,4 +50,5 @@ const AutomatizaciaResReq = {
 			.reduce((acc, next) => acc.concat(...next), []).filter(obj=>typeof obj === 'object')
 	}
 };
-console.log(AutomatizaciaResReq.__ziskajVsetkyObjekty(response));
+const vsetkyObjekty = AutomatizaciaResReq.__ziskajVsetkyObjekty(response)
+console.log(vsetkyObjekty);
