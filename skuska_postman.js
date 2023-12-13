@@ -7,6 +7,9 @@ let response = {
 		city: "Anytown",
 		country: "USA"
 	},
+	person:{
+		firstName:"John", lastName:"Doe", age:50, eyeColor:"blue"
+	},
 	friends: [{
 			friendNames: "Alice",
 			age: 28
@@ -57,4 +60,4 @@ const AutomatizaciaResReq = {
 		return arr
 	}
 };
-AutomatizaciaResReq.__ziskajNedatovePolia(response)
+console.log(AutomatizaciaResReq.__ziskajNedatovePolia(response))
