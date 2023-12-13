@@ -45,37 +45,9 @@ const AutomatizaciaResReq = {
 	__ziskajObjektoveKluce(objekt) {
 		return Object.keys(objekt)
 	},
-	__ziskajDatovePolia(pole) {
-		return this.__ziskajObjektoveHodnoty(pole)
-			.filter(datovyTyp => Array.isArray(datovyTyp))
-			.reduce((arr, acc) => arr.concat(acc), [])
-	},
-	__ziskajKlucHodnotuZArr(datovePolia) {
-		this.__ziskajDatovePolia(datovePolia)
-			.forEach(element => {
-				if (Array.isArray(element)) return;
-				Object.entries(element).forEach(([key, val]) => {
-					if (Array.isArray(key) && Array.isArray(val)) return
-					console.log(key, val);
-				});
-			})
-	},
-	__ziskajNedatovePolia(res) {
-		const arr = new Array();
-		this.__ziskajObjektoveKluce(res).forEach(item => {
-			const hodnoty = res[item]
-			typeof hodnoty === 'object' && !Array.isArray(hodnoty) ? arr[arr.length] = hodnoty : false;
-		})
-		return arr
+	__ziskajVsetkyObjekty(res){
+			return this.__ziskajObjektoveHodnoty(res).map(v => v instanceof Object ? Object.values(v) : [v])
+			.reduce((acc, next) => acc.concat(...next), []).filter(obj=>typeof obj === 'object')
 	}
 };
-
-function x(){
-	for (const key in response.person) {
-		if (Object.hasOwnProperty.call(response.person, key)) {
-			const element = response.person[key];
-			return element
-		}
-	}
-}
-console.log(x());
+console.log(AutomatizaciaResReq.__ziskajVsetkyObjekty(response));
