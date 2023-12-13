@@ -7,8 +7,11 @@ let response = {
 		city: "Anytown",
 		country: "USA"
 	},
-	person:{
-		firstName:"John", lastName:"Doe", age:50, eyeColor:"blue"
+	person: {
+		firstName: "John",
+		lastName: "Doe",
+		age: 50,
+		eyeColor: "blue"
 	},
 	friends: [{
 			friendNames: "Alice",
