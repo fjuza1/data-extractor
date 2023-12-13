@@ -47,8 +47,18 @@ const AutomatizaciaResReq = {
 	},
 	__ziskajVsetkyObjekty(res){
 			return this.__ziskajObjektoveHodnoty(res).map(v => v instanceof Object ? Object.values(v) : [v])
-			.reduce((acc, next) => acc.concat(...next), []).filter(obj=>typeof obj === 'object')
+			.reduce((acc, next) => acc.concat(...next), [])
+			.filter(obj=>typeof obj === 'object')
 	}
 };
 const vsetkyObjekty = AutomatizaciaResReq.__ziskajVsetkyObjekty(response)
-console.log(vsetkyObjekty);
+console.log("🚀 ~ file: skuska_postman.js:54 ~ vsetkyObjekty:", vsetkyObjekty)
+/*
+console.log(Object.keys(response));
+for (const key in response) {
+	if (Object.hasOwnProperty.call(response, key)) {
+		const element = Object.values(response[key]).filter(item=>typeof item !== 'object' && !Array.isArray(item))
+		if(!element.length === []) return
+		console.log("🚀 ~ file: skuska_postman.js:59 ~ element:", element)
+	}
+}*/
