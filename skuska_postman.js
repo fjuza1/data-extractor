@@ -62,4 +62,9 @@ for (const key in response) {
 		console.log("🚀 ~ file: skuska_postman.js:59 ~ element:", element)
 	}
 }*/
-console.log(Object.values(response).map(v => !(v instanceof Object)));
+// console.log(Object.values(response).map(v => !(v instanceof Object)));
+
+const hasNonObjectValues = Object.values(response).map(v => !(v instanceof Object));
+console.log("🚀 ~ file: skuska_postman.js:68 ~ hasNonObjectValues:", hasNonObjectValues)
+
+  
