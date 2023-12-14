@@ -1,4 +1,9 @@
 'use strict'
+/*
+Object.entries(element).forEach(([key, value]) => {
+    console.log(key, value)
+})
+*/
 let response = {
     "reaction": {
         "sts": "<integer>",
@@ -66,8 +71,22 @@ const AutomatizaciaResReq = {
 };
 const vsetkyNestedObjekty = AutomatizaciaResReq.__ziskajNestedObjekty(response)
 const result = AutomatizaciaResReq.__ziskajPrimitivne(response);
-// console.log("🚀 ~ file: skuska_postman.js:64 ~ result:", result)
-const power = Object.values(response)
-  .filter(element => typeof element === 'object' && !Array.isArray(element))
-  .map(element => element);
-  console.log("🚀 ~ file: skuska_postman.js:72 ~ power:", power)
+
+/*
+priklad
+const ziskajJednoducheObjekty = (response) => {
+    const array = []
+  Object.values(response)
+    .filter((element) => typeof element === 'object' && !Array.isArray(element))
+    .forEach((obj) => {
+      Object.entries(obj).forEach(([key, value]) => {
+        typeof value === 'string'? array[array.length] = { [key]: value }:[]
+      });
+    });
+    return array
+};
+
+const results = ziskajJednoducheObjekty(response);
+console.log(results);
+//console.log([...results]);
+*/
