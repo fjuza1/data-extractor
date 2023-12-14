@@ -4,20 +4,6 @@ let response = {
         "sts": "<integer>",
         "msg": "<string>"
     },
-    "gfd": {
-        "stsf": "<integer>",
-        "msgf": "<string>"
-    },
-    "gfddfg": {
-        "stss": "<integer>",
-        "msgs": "<string>",
-        "ipload":{
-            "dfs":"dfui"
-        },
-        "dsadspload":{
-            "ddsaasdfs":"dfdsaasddasui"
-        }
-    },
     "User": [
         {
             "Email": "<string>",
@@ -30,6 +16,24 @@ let response = {
             "Gender_id": "<integer>"
         }
     ],
+    "service":[
+        {
+            "name":"restservice",
+            "device":"xr-1",
+            "interface-port":"0/0/2/3",
+            "interface-description":"uBot testing for NSO REST",
+            "addr":"10.10.1.3/24",
+            "mtu":1024
+        }
+    ],
+    "person": {
+    "male": {
+      "name": "infinitbility"
+    },
+    "female": {
+      "name": "aguidehub"
+    }
+  },
     "reactionID":"5484484898448948"
 }
 const AutomatizaciaResReq = {
@@ -51,21 +55,21 @@ const AutomatizaciaResReq = {
             })
         return objekt
     },
-    __ziskajVsetkyObjekty(res) {
+    __ziskajNestedObjekty(res) {
         return this.__ziskajObjektoveHodnoty(res).map(v => v instanceof Object ? this.__ziskajObjektoveHodnoty(v) : [v])
             .reduce((acc, next) => acc.concat(...next), [])
             .filter(obj => typeof obj === 'object')
     },
     __ziskajPrimitivne(){
         const primitivne= [this.__primitivne(response)];
-        const vsetkyObjekty = this.__ziskajVsetkyObjekty(response)
+        const vsetkyObjekty = this.__ziskajNestedObjekty(response)
         let arr
         primitivne.length > 0 ? arr = [...primitivne,...vsetkyObjekty]:arr = vsetkyObjekty
         if(this.__ziskajObjektoveKluce(arr[0]).length === 0) return arr.slice(1)
         return arr
     }
 };
-const vsetkyObjekty = AutomatizaciaResReq.__ziskajVsetkyObjekty(response)
+const vsetkyObjekty = AutomatizaciaResReq.__ziskajNestedObjekty(response)
 const result = AutomatizaciaResReq.__ziskajPrimitivne(response);
 console.log("🚀 ~ file: skuska_postman.js:64 ~ result:", result)
 /*
