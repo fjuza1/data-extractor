@@ -1,46 +1,31 @@
 'use strict'
 let response = {
-    // name:'me',
-    address: {
-        street: "123 Main St",
-        city: "Anytown",
-        country: "USA"
+    "reaction": {
+        "sts": "<integer>",
+        "msg": "<string>"
     },
-    person: {
-        firstName: "John",
-        lastName: "Doe",
-        age: 50,
-        eyeColor: "blue",
-        x: {
-            type: "Fiat",
-            model: "500",
-            color: "white"
-        },
-        address: {
-            street: "123 Main St",
-            city: "Anytown",
-            country: "USA",
-        },
+    "gfd": {
+        "stsf": "<integer>",
+        "msgf": "<string>"
     },
-    friends: [{
-            friendNames: "Alice",
-            age: 28
+    "gfddfg": {
+        "stss": "<integer>",
+        "msgs": "<string>"
+    },
+    "User": [
+        {
+            "Email": "<string>",
+            "Username": "<string>",
+            "Gender_id": "<integer>"
         },
         {
-            friendNamez: "Bob",
-            age: 32
+            "Email": "<string>",
+            "Username": "<string>",
+            "Gender_id": "<integer>"
         }
     ],
-    meHow: [{
-            fds: "Alice",
-            as: 28
-        },
-        {
-            dfgfdg: "Bob",
-            dfg: 32
-        }
-    ]
-};
+    "reactionID":"5484484898448948"
+}
 const AutomatizaciaResReq = {
     __ziskajObjektoveHodnoty(objekt) {
         return Object.values(objekt)
@@ -76,4 +61,10 @@ const AutomatizaciaResReq = {
 };
 const vsetkyObjekty = AutomatizaciaResReq.__ziskajVsetkyObjekty(response)
 const result = AutomatizaciaResReq.__ziskajPrimitivne(response);
-console.log("🚀 ~ file: skuska_postman.js:81 ~ result:", result)
+/*
+const power = Object.values(response)
+  .filter(element => typeof element === 'object' && !Array.isArray(element))
+  .map(element => element);
+
+console.log("🚀 ~ file: skuska_postman.js:24 ~ nenestObjekty:", power);
+*/
