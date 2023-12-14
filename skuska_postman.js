@@ -1,5 +1,6 @@
 'use strict'
 let response = {
+    // name:'me',
     address: {
         street: "123 Main St",
         city: "Anytown",
@@ -70,9 +71,9 @@ const AutomatizaciaResReq = {
         let arr
         if(primitivne.length > 0) arr = [...primitivne,...vsetkyObjekty]
         if(primitivne.length < 0) {
-            arr.slice(1)
             arr = vsetkyObjekty
         }
+        if(Object.keys(arr[0]).length === 0) return arr.slice(1)
         return arr
     }
 };
