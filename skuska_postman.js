@@ -70,7 +70,7 @@ const AutomatizaciaResReq = {
         const vsetkyObjekty = this.__ziskajVsetkyObjekty(response)
         let arr
         primitivne.length > 0 ? arr = [...primitivne,...vsetkyObjekty]:arr = vsetkyObjekty
-        if(Object.keys(arr[0]).length === 0) return arr.slice(1)
+        if(this.__ziskajObjektoveKluce(arr[0]).length === 0) return arr.slice(1)
         return arr
     }
 };
