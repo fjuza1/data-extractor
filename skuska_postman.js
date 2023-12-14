@@ -10,7 +10,13 @@ let response = {
     },
     "gfddfg": {
         "stss": "<integer>",
-        "msgs": "<string>"
+        "msgs": "<string>",
+        "ipload":{
+            "dfs":"dfui"
+        },
+        "dsadspload":{
+            "ddsaasdfs":"dfdsaasddasui"
+        }
     },
     "User": [
         {
@@ -61,6 +67,7 @@ const AutomatizaciaResReq = {
 };
 const vsetkyObjekty = AutomatizaciaResReq.__ziskajVsetkyObjekty(response)
 const result = AutomatizaciaResReq.__ziskajPrimitivne(response);
+console.log("🚀 ~ file: skuska_postman.js:64 ~ result:", result)
 /*
 const power = Object.values(response)
   .filter(element => typeof element === 'object' && !Array.isArray(element))
