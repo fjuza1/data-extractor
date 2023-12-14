@@ -69,10 +69,7 @@ const AutomatizaciaResReq = {
         const primitivne= [this.__primitivne(response)];
         const vsetkyObjekty = this.__ziskajVsetkyObjekty(response)
         let arr
-        if(primitivne.length > 0) arr = [...primitivne,...vsetkyObjekty]
-        if(primitivne.length < 0) {
-            arr = vsetkyObjekty
-        }
+        primitivne.length > 0 ? arr = [...primitivne,...vsetkyObjekty]:arr = vsetkyObjekty
         if(Object.keys(arr[0]).length === 0) return arr.slice(1)
         return arr
     }
