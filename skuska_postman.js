@@ -4,37 +4,28 @@ let response = {
         "sts": "<integer>",
         "msg": "<string>"
     },
-    "User": [
-        {
-            "Email": "<string>",
-            "Username": "<string>",
-            "Gender_id": "<integer>"
-        },
-        {
-            "Email": "<string>",
-            "Username": "<string>",
-            "Gender_id": "<integer>"
-        }
-    ],
-    "service":[
-        {
-            "name":"restservice",
-            "device":"xr-1",
-            "interface-port":"0/0/2/3",
-            "interface-description":"uBot testing for NSO REST",
-            "addr":"10.10.1.3/24",
-            "mtu":1024
-        }
-    ],
+    "User": [{
+        "Email": "<string>",
+        "Username": "<string>",
+        "Gender_id": "<integer>"
+    }, ],
+    "service": [{
+        "name": "restservice",
+        "device": "xr-1",
+        "interface-port": "0/0/2/3",
+        "interface-description": "uBot testing for NSO REST",
+        "addr": "10.10.1.3/24",
+        "mtu": 1024
+    }],
     "person": {
-    "male": {
-      "name": "infinitbility"
+        "male": {
+            "name": "infinitbility"
+        },
+        "female": {
+            "name": "aguidehub"
+        }
     },
-    "female": {
-      "name": "aguidehub"
-    }
-  },
-    "reactionID":"5484484898448948"
+    "reactionID": "5484484898448948"
 }
 const AutomatizaciaResReq = {
     __ziskajObjektoveHodnoty(objekt) {
@@ -60,12 +51,12 @@ const AutomatizaciaResReq = {
             .reduce((acc, next) => acc.concat(...next), [])
             .filter(obj => typeof obj === 'object')
     },
-    __ziskajPrimitivne(){
-        const primitivne= [this.__primitivne(response)];
+    __ziskajPrimitivne() {
+        const primitivne = [this.__primitivne(response)];
         const vsetkyObjekty = this.__ziskajNestedObjekty(response)
         let arr
-        primitivne.length > 0 ? arr = [...primitivne,...vsetkyObjekty]:arr = vsetkyObjekty
-        if(this.__ziskajObjektoveKluce(arr[0]).length === 0) return arr.slice(1)
+        primitivne.length > 0 ? arr = [...primitivne, ...vsetkyObjekty] : arr = vsetkyObjekty
+        if (this.__ziskajObjektoveKluce(arr[0]).length === 0) return arr.slice(1)
         return arr
     }
 };
