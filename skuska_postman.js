@@ -51,6 +51,10 @@ const AutomatizaciaResReq = {
             .reduce((acc, next) => acc.concat(...next), [])
             .filter(obj => typeof obj === 'object')
     },
+    __ziskajVonkajsieObjekty (response){
+        return this.__ziskajObjektoveHodnoty(response).filter(element => typeof element === 'object' || !Array.isArray(element))
+        .map(filtrovane=>this.contains(!Array.isArray(filtrovane)))
+    },
     __ziskajPrimitivne(response) {
         const primitivne = [this.__primitivne(response)];
         const vsetkyObjekty = this.__ziskajNestedObjekty(response)
@@ -61,13 +65,9 @@ const AutomatizaciaResReq = {
     }
 };
 const vsetkyNestedObjekty = AutomatizaciaResReq.__ziskajNestedObjekty(response)
-console.log("🚀 ~ file: skuska_postman.js:64 ~ vsetkyNestedObjekty:", vsetkyNestedObjekty)
 const result = AutomatizaciaResReq.__ziskajPrimitivne(response);
 // console.log("🚀 ~ file: skuska_postman.js:64 ~ result:", result)
-/*
 const power = Object.values(response)
   .filter(element => typeof element === 'object' && !Array.isArray(element))
   .map(element => element);
-
-console.log("🚀 ~ file: skuska_postman.js:24 ~ nenestObjekty:", power);
-*/
+  console.log("🚀 ~ file: skuska_postman.js:72 ~ power:", power)
