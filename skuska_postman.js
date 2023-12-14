@@ -41,7 +41,7 @@ let response = {
         }
     ]
 };
-const AutomatizaciaResReq = {
+const ZiskavanieDat = {
     __ziskajObjektoveHodnoty(objekt) {
         return Object.values(objekt)
     },
@@ -65,7 +65,7 @@ const AutomatizaciaResReq = {
             .reduce((acc, next) => acc.concat(...next), [])
             .filter(obj => typeof obj === 'object')
     },
-    __ziskajPrimitivne(){
+    __zaplnDatovePoleObjektami(){
         const primitivne= [this.__primitivne(response)];
         const vsetkyObjekty = this.__ziskajVsetkyObjekty(response)
         let arr
@@ -74,6 +74,10 @@ const AutomatizaciaResReq = {
         return arr
     }
 };
-const vsetkyObjekty = AutomatizaciaResReq.__ziskajVsetkyObjekty(response)
-const result = AutomatizaciaResReq.__ziskajPrimitivne(response);
+const spracovanieDat = Object.create(ZiskavanieDat)
+/*
+const vsetkyObjekty = ZiskavanieDat.__ziskajVsetkyObjekty(response)
+console.log("🚀 ~ file: skuska_postman.js:80 ~ vsetkyObjekty:", vsetkyObjekty)
+const result = ZiskavanieDat.__zaplnDatovePoleObjektami(response);
 console.log("🚀 ~ file: skuska_postman.js:81 ~ result:", result)
+*/
