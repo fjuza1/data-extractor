@@ -1,8 +1,5 @@
 'use strict'
 let response = {
-    name: "John Doe",
-    age: 30,
-    size: 'dss',
     address: {
         street: "123 Main St",
         city: "Anytown",
@@ -63,11 +60,22 @@ const AutomatizaciaResReq = {
         return objekt
     },
     __ziskajVsetkyObjekty(res) {
-        return this.__ziskajObjektoveHodnoty(res).map(v => v instanceof Object ? Object.values(v) : [v])
+        return this.__ziskajObjektoveHodnoty(res).map(v => v instanceof Object ? this.__ziskajObjektoveHodnoty(v) : [v])
             .reduce((acc, next) => acc.concat(...next), [])
             .filter(obj => typeof obj === 'object')
+    },
+    __ziskajPrimitivne(){
+        const primitivne= [this.__primitivne(response)];
+        const vsetkyObjekty = this.__ziskajVsetkyObjekty(response)
+        let arr
+        if(primitivne.length > 0) arr = [...primitivne,...vsetkyObjekty]
+        if(primitivne.length < 0) {
+            arr.slice(1)
+            arr = vsetkyObjekty
+        }
+        return arr
     }
 };
 const vsetkyObjekty = AutomatizaciaResReq.__ziskajVsetkyObjekty(response)
-const result = AutomatizaciaResReq.__primitivne(response);
-console.log(result);
+const result = AutomatizaciaResReq.__ziskajPrimitivne(response);
+console.log("🚀 ~ file: skuska_postman.js:81 ~ result:", result)
