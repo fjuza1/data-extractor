@@ -4,7 +4,7 @@ Object.entries(polozka).forEach(([key, value]) => {
     console.log(key, value)
 })
 */
-let response = {
+let odpoved = {
     "reaction": {
         "sts": "<integer>",
         "msg": "<string>"
@@ -56,27 +56,27 @@ const AutomatizaciaResReq = {
             .reduce((acc, next) => acc.concat(...next), [])
             .filter(obj => typeof obj === 'object')
     },
-    __ziskajVonkajsieObjekty (response){
-        return this.__ziskajObjektoveHodnoty(response).filter(polozka => typeof polozka === 'object' || !Array.isArray(polozka))
+    __ziskajVonkajsieObjekty (odpoved){
+        return this.__ziskajObjektoveHodnoty(odpoved).filter(polozka => typeof polozka === 'object' || !Array.isArray(polozka))
         .map(filtrovane=>this.contains(!Array.isArray(filtrovane)))
     },
-    __ziskajPrimitivne(response) {
-        const primitivne = [this.__primitivne(response)];
-        const vsetkyObjekty = this.__ziskajNestedObjekty(response)
+    __ziskajPrimitivne(odpoved) {
+        const primitivne = [this.__primitivne(odpoved)];
+        const vsetkyObjekty = this.__ziskajNestedObjekty(odpoved)
         let arr
         primitivne.length > 0 ? arr = [...primitivne, ...vsetkyObjekty] : arr = vsetkyObjekty
         if (this.__ziskajObjektoveKluce(arr[0]).length === 0) return arr.slice(1)
         return arr
     }
 };
-const vsetkyNestedObjekty = AutomatizaciaResReq.__ziskajNestedObjekty(response)
-const result = AutomatizaciaResReq.__ziskajPrimitivne(response);
+const vsetkyNestedObjekty = AutomatizaciaResReq.__ziskajNestedObjekty(odpoved)
+const result = AutomatizaciaResReq.__ziskajPrimitivne(odpoved);
 
 /*
 priklad
-const ziskajJednoducheObjekty = (response) => {
+const ziskajJednoducheObjekty = (odpoved) => {
     const array = []
-  Object.values(response)
+  Object.values(odpoved)
     .filter((polozka) => typeof polozka === 'object' && !Array.isArray(polozka))
     .forEach((obj) => {
       Object.entries(obj).forEach(([key, value]) => {
@@ -86,7 +86,7 @@ const ziskajJednoducheObjekty = (response) => {
     return array
 };
 
-const results = ziskajJednoducheObjekty(response);
+const results = ziskajJednoducheObjekty(odpoved);
 console.log(results);
 //console.log([...results]);
 */
