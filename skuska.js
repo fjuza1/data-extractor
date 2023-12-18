@@ -1,3 +1,4 @@
+/*
 const allButtons = document.querySelectorAll('.d-flex.justify-content-center');
 // dms
 
@@ -14,6 +15,7 @@ async function cancelDeletion() {
         console.error(error);
     }
 }
+*/
 // cms 
 /*
 async function cancelDeletion() {
@@ -28,3 +30,19 @@ async function cancelDeletion() {
         console.error(error);
     }
 }*/
+const arr = ['svatych', 'svatych67', 'svatych69', 'svatych66', 'advensty nedela'];
+
+const zoradenieFiltrovania = function (a, b) {
+    return a.localeCompare(b);
+};
+
+const bios = arr.sort(zoradenieFiltrovania).at(-1)
+console.log(+bios.split(/[a-zA-Z]+/g)[1]+1);
+
+// console.log("🚀 ~ file: skuska_postman.js:99 ~ bios:", bios);
+const string = 'svatych';
+// posledne je cislo
+const poslednyDatovyTyp = [...string].findLast(element => isNaN(+element));
+// console.log("🚀 ~ file: skuska_postman.js:97 ~ poslednyDatovyTyp:", poslednyDatovyTyp)
+// je cilso posledne alebo nie je
+// console.log(!isNaN(poslednyDatovyTyp));
