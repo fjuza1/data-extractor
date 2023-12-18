@@ -32,7 +32,7 @@ let odpoved = {
     },
     "reactionID": "5484484898448948"
 }
-const AutomatizaciaResReq = {
+const ZiskavanieDat = {
     __ziskajObjektoveHodnoty(objekt) {
         return Object.values(objekt)
     },
@@ -69,8 +69,8 @@ const AutomatizaciaResReq = {
         return arr
     }
 };
-const vsetkyNestedObjekty = AutomatizaciaResReq.__ziskajNestedObjekty(odpoved)
-const result = AutomatizaciaResReq.__ziskajPrimitivne(odpoved);
+const vsetkyNestedObjekty = ZiskavanieDat.__ziskajNestedObjekty(odpoved)
+const result = ZiskavanieDat.__ziskajPrimitivne(odpoved);
 
 /*
 priklad
