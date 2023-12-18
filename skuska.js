@@ -30,14 +30,17 @@ async function cancelDeletion() {
         console.error(error);
     }
 }*/
+/*
 const arr = ['svatych', 'svatych67', 'svatych69', 'svatych66', 'advensty nedela'];
 
 const zoradenieFiltrovania = function (a, b) {
     return a.localeCompare(b);
 };
 
-const bios = arr.sort(zoradenieFiltrovania).at(-1)
-console.log(+bios.split(/[a-zA-Z]+/g)[1]+1);
+const bios = arr.sort(zoradenieFiltrovania).at(-1) //svatych69
+const cislo = +bios.split(/(\d+)/)[1]+1 // 70
+const oddelCislo = bios.slice(-cislo.toString().length) //69
+const cisloOddelene = bios.replace(oddelCislo,'')//svatych
 
 // console.log("🚀 ~ file: skuska_postman.js:99 ~ bios:", bios);
 const string = 'svatych';
@@ -46,3 +49,4 @@ const poslednyDatovyTyp = [...string].findLast(element => isNaN(+element));
 // console.log("🚀 ~ file: skuska_postman.js:97 ~ poslednyDatovyTyp:", poslednyDatovyTyp)
 // je cilso posledne alebo nie je
 // console.log(!isNaN(poslednyDatovyTyp));
+*/
