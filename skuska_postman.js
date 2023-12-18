@@ -90,3 +90,9 @@ const results = ziskajJednoducheObjekty(response);
 console.log(results);
 //console.log([...results]);
 */
+
+const string = 'svatych';
+// posledne je cislo
+const poslednyDatovyTyp = [...string].findLast(element => !isNaN(+element));
+// je cilso posledne alebo nie je
+console.log(!isNaN(poslednyDatovyTyp));
