@@ -1,6 +1,6 @@
 'use strict'
 /*
-Object.entries(element).forEach(([key, value]) => {
+Object.entries(polozka).forEach(([key, value]) => {
     console.log(key, value)
 })
 */
@@ -45,9 +45,9 @@ const AutomatizaciaResReq = {
     __primitivne(obj) {
         let objekt = {};
         this.__ziskajObjektoveKluce(obj)
-            .forEach(element => {
-                const key = obj[element];
-                this.__jePrimitivna(key) ? objekt[element] = key : false
+            .forEach(polozka => {
+                const key = obj[polozka];
+                this.__jePrimitivna(key) ? objekt[polozka] = key : false
             })
         return objekt
     },
@@ -57,7 +57,7 @@ const AutomatizaciaResReq = {
             .filter(obj => typeof obj === 'object')
     },
     __ziskajVonkajsieObjekty (response){
-        return this.__ziskajObjektoveHodnoty(response).filter(element => typeof element === 'object' || !Array.isArray(element))
+        return this.__ziskajObjektoveHodnoty(response).filter(polozka => typeof polozka === 'object' || !Array.isArray(polozka))
         .map(filtrovane=>this.contains(!Array.isArray(filtrovane)))
     },
     __ziskajPrimitivne(response) {
@@ -77,7 +77,7 @@ priklad
 const ziskajJednoducheObjekty = (response) => {
     const array = []
   Object.values(response)
-    .filter((element) => typeof element === 'object' && !Array.isArray(element))
+    .filter((polozka) => typeof polozka === 'object' && !Array.isArray(polozka))
     .forEach((obj) => {
       Object.entries(obj).forEach(([key, value]) => {
         typeof value === 'string'? array[array.length] = { [key]: value }:[]
