@@ -32,7 +32,7 @@ let odpoved = {
     },
     "reactionID": "5484484898448948"
 }
-const ZiskavanieDat = {
+const ZiskavanieDatZoSluzieb = {
     __ziskajObjektoveHodnoty(objekt) {
         return Object.values(objekt)
     },
@@ -60,7 +60,7 @@ const ZiskavanieDat = {
         return this.__ziskajObjektoveHodnoty(odpoved).filter(polozka => typeof polozka === 'object' || !Array.isArray(polozka))
         .map(filtrovane=>this.contains(!Array.isArray(filtrovane)))
     },
-    __ziskajPrimitivne(odpoved) {
+    __ziskajObjekty(odpoved) {
         const primitivne = [this.__primitivne(odpoved)];
         const vsetkyObjekty = this.__ziskajNestedObjekty(odpoved)
         let arr
@@ -69,8 +69,8 @@ const ZiskavanieDat = {
         return arr
     }
 };
-const vsetkyNestedObjekty = ZiskavanieDat.__ziskajNestedObjekty(odpoved)
-const result = ZiskavanieDat.__ziskajPrimitivne(odpoved);
+const vsetkyNestedObjekty = ZiskavanieDatZoSluzieb.__ziskajNestedObjekty(odpoved)
+const result = ZiskavanieDatZoSluzieb.__ziskajObjekty(odpoved);
 
 /*
 priklad
