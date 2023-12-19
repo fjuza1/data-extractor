@@ -52,3 +52,6 @@ const poslednyDatovyTyp = [...string].findLast(element => isNaN(+element));
 // je cilso posledne alebo nie je
 // console.log(!isNaN(poslednyDatovyTyp));
 */
+/*
+const duplikatyPrec = result.reduce((acc,cur) =>acc.includes(cur)?[...acc,cur]:acc,[]) 
+*/
