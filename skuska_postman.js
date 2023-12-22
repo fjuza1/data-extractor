@@ -32,7 +32,7 @@ let odpoved = {
     },
     "reactionID": "5484484898448948"
 }
-const ZiskavanieDatZoSluzieb = {
+const ZískavanieDátZoSlužieb = {
     __ziskajObjektoveHodnoty(objekt) {
         return Object.values(objekt)
     },
@@ -47,7 +47,7 @@ const ZiskavanieDatZoSluzieb = {
         this.__ziskajObjektoveKluce(obj)
             .forEach(polozka => {
                 const key = obj[polozka];
-                this.__jePrimitivna(key) ? objekt[polozka] = key : false
+                this.__jePrimitivna(key) ? objekt[polozka] = key : []
             })
         return objekt
     },
@@ -57,8 +57,7 @@ const ZiskavanieDatZoSluzieb = {
             .filter(obj => typeof obj === 'object')
     },
     __ziskajVonkajsieObjekty (odpoved){
-        return this.__ziskajObjektoveHodnoty(odpoved).filter(polozka => typeof polozka === 'object' || !Array.isArray(polozka))
-        .map(filtrovane=>this.contains(!Array.isArray(filtrovane)))
+        console.log(Object.getOwnPropertyNames(this));
     },
     __ziskajObjekty(odpoved) {
         const primitivne = [this.__primitivne(odpoved)];
@@ -69,24 +68,6 @@ const ZiskavanieDatZoSluzieb = {
         return arr
     }
 };
-const vsetkyNestedObjekty = ZiskavanieDatZoSluzieb.__ziskajNestedObjekty(odpoved)
-const result = ZiskavanieDatZoSluzieb.__ziskajObjekty(odpoved);
-
-/*
-priklad
-const ziskajJednoducheObjekty = (odpoved) => {
-    const array = []
-  Object.values(odpoved)
-    .filter((polozka) => typeof polozka === 'object' && !Array.isArray(polozka))
-    .forEach((obj) => {
-      Object.entries(obj).forEach(([key, value]) => {
-        typeof value === 'string'? array[array.length] = { [key]: value }:[]
-      });
-    });
-    return array
-};
-
-const results = ziskajJednoducheObjekty(odpoved);
-console.log(results);
-//console.log([...results]);
-*/
+const SpracovanieDát = Object.create(ZískavanieDátZoSlužieb)
+const vsetkyNestedObjekty = ZískavanieDátZoSlužieb.__ziskajNestedObjekty(odpoved)
+const result = ZískavanieDátZoSlužieb.__ziskajObjekty(odpoved);
