@@ -65,7 +65,7 @@ const ZískavanieDátZoSlužieb = {
         .filter((polozka) => typeof polozka === 'object' && !Array.isArray(polozka))
         .forEach((obj) => {
           Object.entries(obj).forEach(([key, value]) => {
-            typeof value === 'string'? array[array.length] = { [key]: value }:[]
+            value? array[array.length] = { [key]: value }:[]
           });
         });
         return array
@@ -82,5 +82,9 @@ const ZískavanieDátZoSlužieb = {
 const SpracovanieDát = Object.create(ZískavanieDátZoSlužieb)
 const vsetkyNestedObjekty = ZískavanieDátZoSlužieb.__ziskajNestedObjekty(odpoved)
 const result = ZískavanieDátZoSlužieb.__ziskajUdaje(odpoved);
+console.log("🚀 ~ file: skuska_postman.js:85 ~ result:", result)
 // const resultss = ZískavanieDátZoSlužieb.__ziskajJednoducheObjekty(odpoved);
 // console.log([...resultss]);
+
+const resultss = ZískavanieDátZoSlužieb.__ziskajJednoducheObjekty(odpoved);
+console.log("🚀 ~ file: skuska_postman.js:90 ~ resultss:", resultss)
