@@ -59,15 +59,28 @@ const ZískavanieDátZoSlužieb = {
     __ziskajVonkajsieObjekty (odpoved){
         console.log(Object.getOwnPropertyNames(this));
     },
-    __ziskajObjekty(odpoved) {
+    __ziskajJednoducheObjekty(odpoved) {
+        const array = []
+      Object.values(odpoved)
+        .filter((polozka) => typeof polozka === 'object' && !Array.isArray(polozka))
+        .forEach((obj) => {
+          Object.entries(obj).forEach(([key, value]) => {
+            typeof value === 'string'? array[array.length] = { [key]: value }:[]
+          });
+        });
+        return array
+    },
+    __ziskajUdaje(odpoved) {
         const primitivne = [this.__primitivne(odpoved)];
         const vsetkyObjekty = this.__ziskajNestedObjekty(odpoved)
         let arr
         primitivne.length > 0 ? arr = [...primitivne, ...vsetkyObjekty] : arr = vsetkyObjekty
         if (this.__ziskajObjektoveKluce(arr[0]).length === 0) return arr.slice(1)
         return arr
-    }
+    },
 };
 const SpracovanieDát = Object.create(ZískavanieDátZoSlužieb)
 const vsetkyNestedObjekty = ZískavanieDátZoSlužieb.__ziskajNestedObjekty(odpoved)
-const result = ZískavanieDátZoSlužieb.__ziskajObjekty(odpoved);
+const result = ZískavanieDátZoSlužieb.__ziskajUdaje(odpoved);
+// const resultss = ZískavanieDátZoSlužieb.__ziskajJednoducheObjekty(odpoved);
+// console.log([...resultss]);

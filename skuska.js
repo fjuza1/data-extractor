@@ -55,21 +55,3 @@ const poslednyDatovyTyp = [...string].findLast(element => isNaN(+element));
 /*
 const duplikatyPrec = result.reduce((acc,cur) =>acc.includes(cur)?[...acc,cur]:acc,[]) 
 */
-/*
-priklad
-const ziskajJednoducheObjekty = (odpoved) => {
-    const array = []
-  Object.values(odpoved)
-    .filter((polozka) => typeof polozka === 'object' && !Array.isArray(polozka))
-    .forEach((obj) => {
-      Object.entries(obj).forEach(([key, value]) => {
-        typeof value === 'string'? array[array.length] = { [key]: value }:[]
-      });
-    });
-    return array
-};
-
-const results = ziskajJednoducheObjekty(odpoved);
-console.log(results);
-//console.log([...results]);
-*/
