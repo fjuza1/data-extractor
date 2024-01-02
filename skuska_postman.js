@@ -82,9 +82,11 @@ const ZískavanieDátZoSlužieb = {
     },
 };
 const SpracovanieDát = Object.create(ZískavanieDátZoSlužieb)
-const vsetkyNestedObjekty = ZískavanieDátZoSlužieb.__ziskajNestedObjekty(odpoved)
+SpracovanieDát.__najdiDuplikat = function (){
+    return odpoved
+}
 const result = ZískavanieDátZoSlužieb.__ziskajUdaje(odpoved);
-console.log("🚀 ~ file: skuska_postman.js:85 ~ result:", result)
+//console.log("🚀 ~ file: skuska_postman.js:85 ~ result:", result)
 // const resultss = ZískavanieDátZoSlužieb.__ziskajJednoducheObjekty(odpoved);
 // console.log([...resultss]);
 /*
