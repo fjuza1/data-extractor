@@ -30,17 +30,17 @@ async function cancelDeletion() {
         console.error(error);
     }
 }*/
-const arr = ['svatych', 'svatych67', 'svatych68', 'svatych66', 'advensty nedela'];
+const arr = ['svatych', 'svatych67', 'svatych69', 'svatych66', 'advensty nedela'];
 const moznostiZoradenia = {
     usage:"sort"
 }
 const zoradenieZostupne = function (a, b) {
     return a.localeCompare(b, moznostiZoradenia);
 };
-// console.log("🚀 ~ file: skuska.js:42 ~ arr.sort(zoradenieZostupne):", arr.sort(zoradenieZostupne))
+//console.log("🚀 ~ file: skuska.js:42 ~ arr.sort(zoradenieZostupne):", arr.sort(zoradenieZostupne))
 /*
 const bios = arr.sort(zoradenieZostupne).at(-1) //svatych69
-const cislo = +bios.split(/(\d+)/)[1]+1 // 70
+const cislo = +bios.split(/(\d+)/)[1]+1 // 70 could be NaN
 const oddelCislo = bios.slice(-cislo.toString().length) //69
 let cisloOddelene = bios.replace(oddelCislo,'')//svatych
 const vsetko  = cisloOddelene+=cislo
