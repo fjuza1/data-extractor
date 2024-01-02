@@ -9,11 +9,28 @@ let odpoved = {
         "sts": "<integer>",
         "msg": "<string>"
     },
-    "User": {
+    "User": [{
         "Email": "<string>",
         "Username": "<string>",
-        "Gender_id": "<string>"
-    }
+        "Gender_id": "<integer>"
+    }, ],
+    "service": [{
+        "name": "restservice",
+        "device": "xr-1",
+        "interface-port": "0/0/2/3",
+        "interface-description": "uBot testing for NSO REST",
+        "addr": "10.10.1.3/24",
+        "mtu": 1024
+    }],
+    "person": {
+        "male": {
+            "name": "infinitbility"
+        },
+        "female": {
+            "name": "aguidehub"
+        }
+    },
+    "reactionID": "5484484898448948"
 }
 const ZískavanieDátZoSlužieb = {
     __ziskajObjektoveHodnoty(objekt) {
