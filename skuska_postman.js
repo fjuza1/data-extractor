@@ -91,3 +91,5 @@ console.log("🚀 ~ file: skuska_postman.js:85 ~ result:", result)
 const resultss = ZískavanieDátZoSlužieb.__ziskajJednoducheObjekty(odpoved);
 console.log("🚀 ~ file: skuska_postman.js:90 ~ resultss:", resultss)
 */
+// PRiklad
+// console.log("🚀 ~ file: skuska_postman.js:85 ~ result:", Object.getOwnPropertyNames(result[8]))
