@@ -42,7 +42,7 @@ const ZískavanieDátZoSlužieb = {
     __jePrimitivna(obj) {
         return typeof obj !== 'object'
     },
-    __primitivne(obj) {
+    __ziskajPrimitivneDoObjektu(obj) {
         let objekt = {};
         this.__ziskajObjektoveKluce(obj)
             .forEach(polozka => {
@@ -71,7 +71,7 @@ const ZískavanieDátZoSlužieb = {
         return array
     },
     __ziskajUdaje(odpoved) {
-        const primitivne = [this.__primitivne(odpoved)];
+        const primitivne = [this.__ziskajPrimitivneDoObjektu(odpoved)];
         const vsetkyObjekty = this.__ziskajNestedObjekty(odpoved)
         const jednoducheObjekty = this.__ziskajJednoducheObjekty(odpoved)
         let arr
