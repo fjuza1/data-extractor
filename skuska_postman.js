@@ -9,28 +9,11 @@ let odpoved = {
         "sts": "<integer>",
         "msg": "<string>"
     },
-    "User": [{
+    "User": {
         "Email": "<string>",
         "Username": "<string>",
-        "Gender_id": "<integer>"
-    }, ],
-    "service": [{
-        "name": "restservice",
-        "device": "xr-1",
-        "interface-port": "0/0/2/3",
-        "interface-description": "uBot testing for NSO REST",
-        "addr": "10.10.1.3/24",
-        "mtu": 1024
-    }],
-    "person": {
-        "male": {
-            "name": "infinitbility"
-        },
-        "female": {
-            "name": "aguidehub"
-        }
-    },
-    "reactionID": "5484484898448948"
+        "Gender_id": "<string>"
+    }
 }
 const ZískavanieDátZoSlužieb = {
     __ziskajObjektoveHodnoty(objekt) {
@@ -57,7 +40,7 @@ const ZískavanieDátZoSlužieb = {
             .filter(obj => typeof obj === 'object')
     },
     __ziskajVonkajsieObjekty (odpoved){
-        console.log(Object.getOwnPropertyNames(this));
+        //console.log(Object.getOwnPropertyNames(this));
     },
     __ziskajJednoducheObjekty(odpoved) {
         const array = []
@@ -73,8 +56,10 @@ const ZískavanieDátZoSlužieb = {
     __ziskajUdaje(odpoved) {
         const primitivne = [this.__primitivne(odpoved)];
         const vsetkyObjekty = this.__ziskajNestedObjekty(odpoved)
+        const jednoducheObjekty = this.__ziskajJednoducheObjekty(odpoved)
         let arr
-        primitivne.length > 0 ? arr = [...primitivne, ...vsetkyObjekty] : arr = vsetkyObjekty
+        (primitivne.length > 0 || vsetkyObjekty.length > 0 || jednoducheObjekty.length > 0) ? 
+        arr = [...primitivne, ...vsetkyObjekty, ...jednoducheObjekty ] : arr = vsetkyObjekty
         if (this.__ziskajObjektoveKluce(arr[0]).length === 0) return arr.slice(1)
         return arr
     },
@@ -85,6 +70,7 @@ const result = ZískavanieDátZoSlužieb.__ziskajUdaje(odpoved);
 console.log("🚀 ~ file: skuska_postman.js:85 ~ result:", result)
 // const resultss = ZískavanieDátZoSlužieb.__ziskajJednoducheObjekty(odpoved);
 // console.log([...resultss]);
-
+/*
 const resultss = ZískavanieDátZoSlužieb.__ziskajJednoducheObjekty(odpoved);
 console.log("🚀 ~ file: skuska_postman.js:90 ~ resultss:", resultss)
+*/
