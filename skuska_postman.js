@@ -105,4 +105,3 @@ spracovanieDát.__najdiDuplikat = function (){
 // const duplikatyPrec = [...best.reduce((acc,cur) =>acc.includes(cur)?acc: [...acc,cur],[]) ]
 // console.log("🚀 ~ file: skuska_postman.js:283 ~ duplikatyPrec:", duplikatyPrec)
 //spracovanieDát.__hodnotaJeObjekt
-// spracovanieDát.spracovanieVariablesDatovychPoliVPostmane
