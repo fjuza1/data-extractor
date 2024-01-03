@@ -33,6 +33,7 @@ let odpoved = {
     "reactionID": "5484484898448948"
 }
 const ZískavanieDátZoSlužieb = {
+    'začiatok':'Dec 13, 2023 ',
     __ziskajObjektoveHodnoty(objekt) {
         return Object.values(objekt)
     },
@@ -86,7 +87,6 @@ const ZískavanieDátZoSlužieb = {
     },
 };
 const result = ZískavanieDátZoSlužieb.__ziskajUdaje(odpoved);
-console.log("🚀 ~ file: skuska_postman.js:89 ~ result:", result)
 const spracovanieDát = Object.create(ZískavanieDátZoSlužieb)
 /*
 Priklad
