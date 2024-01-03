@@ -77,25 +77,22 @@ const ZískavanieDátZoSlužieb = {
         primitivne.length > 0 || vsetkyObjekty.length > 0 || jednoducheObjekty.length > 0 ?
             arr = [...primitivne, ...vsetkyObjekty, ...jednoducheObjekty] :
             arr = vsetkyObjekty
-        return arr
+            const elementArr = []
+            arr.forEach(element => {
+                const oibjekty = this.__ziskajObjektoveHodnoty(element).length === 0
+                elementArr[elementArr.length] = oibjekty
+            })
+            return arr.slice(elementArr.indexOf(true) + 1)
     },
 };
 const result = ZískavanieDátZoSlužieb.__ziskajUdaje(odpoved);
+console.log("🚀 ~ file: skuska_postman.js:89 ~ result:", result)
 const spracovanieDát = Object.create(ZískavanieDátZoSlužieb)
 /*
 Priklad
 */
-spracovanieDát.__zbavPrazdnychObjektov = function(arr) {
-    const elementArr = []
-    const ziskavanieArray = ZískavanieDátZoSlužieb.__ziskajUdaje(arr)
-    ziskavanieArray.forEach(element => {
-        const oibjekty = this.__ziskajObjektoveHodnoty(element).length === 0
-        elementArr[elementArr.length] = oibjekty
-    })
-    return ziskavanieArray.slice(elementArr.indexOf(true) + 1)
-}
+
 spracovanieDát.__ulozKlucHodnotuDoPostmana = function () {}
-const best = spracovanieDát.__zbavPrazdnychObjektov(result)
 // PRiklad
 // console.log("🚀 ~ file: skuska_postman.js:85 ~ result:", Object.getOwnPropertyNames(result[8]))
 /*
