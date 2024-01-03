@@ -77,8 +77,6 @@ const ZískavanieDátZoSlužieb = {
         let arr
         (primitivne.length > 0 || vsetkyObjekty.length > 0 || jednoducheObjekty.length > 0) ? 
         arr = [...primitivne, ...vsetkyObjekty, ...jednoducheObjekty ] : arr = vsetkyObjekty
-        // TODO zmen vymazavanie prazdnych objektov v novej fcie __zbavPrazdnychObjektov v novom objekte
-        if (this.__ziskajObjektoveKluce(arr[0]).length === 0) return arr.slice(1)
         return arr
     },
 };
@@ -89,6 +87,8 @@ SpracovanieDát.__najdiDuplikat = function (){
 /*
 Priklad
 SpracovanieDát.__zbavPrazdnychObjektov = function(){
+            // TODO zmen vymazavanie prazdnych objektov v novej fcie __zbavPrazdnychObjektov v novom objekte
+        //if (this.__ziskajObjektoveKluce(arr[0]).length === 0) return arr.slice(1)
     const elementArr = []
     arr.forEach(element => {
         const oibjekty = this.__ziskajObjektoveHodnoty(element).length === 0
