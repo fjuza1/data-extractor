@@ -72,12 +72,12 @@ const ZískavanieDátZoSlužieb = {
     },
     __ziskajUdaje(odpoved) {
         const primitivne = [this.__ziskajPrimitivneDoObjektu(odpoved)];
-        const vsetkyObjekty = this.__ziskajNestedObjekty(odpoved)
+        const vnoreneObjekty = this.__ziskajNestedObjekty(odpoved)
         const jednoducheObjekty = this.__ziskajJednoducheObjekty(odpoved)
         let arr;
-        primitivne.length > 0 || vsetkyObjekty.length > 0 || jednoducheObjekty.length > 0 ?
-            arr = [...primitivne, ...vsetkyObjekty, ...jednoducheObjekty] :
-            arr = vsetkyObjekty
+        primitivne.length > 0 || vnoreneObjekty.length > 0 || jednoducheObjekty.length > 0 ?
+            arr = [...primitivne, ...vnoreneObjekty, ...jednoducheObjekty] :
+            arr = vnoreneObjekty
             const elementArr = []
             arr.forEach(element => {
                 const oibjekty = this.__ziskajObjektoveHodnoty(element).length === 0
@@ -87,6 +87,7 @@ const ZískavanieDátZoSlužieb = {
     },
 };
 const result = ZískavanieDátZoSlužieb.__ziskajUdaje(odpoved);
+console.log("🚀 ~ file: skuska_postman.js:90 ~ result:", result)
 const spracovanieDát = Object.create(ZískavanieDátZoSlužieb)
 /*
 Priklad
