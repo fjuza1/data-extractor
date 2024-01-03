@@ -81,11 +81,11 @@ const ZískavanieDátZoSlužieb = {
     },
 };
 const result = ZískavanieDátZoSlužieb.__ziskajUdaje(odpoved);
-const SpracovanieDát = Object.create(ZískavanieDátZoSlužieb)
+const spracovanieDát = Object.create(ZískavanieDátZoSlužieb)
 /*
 Priklad
 */
-SpracovanieDát.__zbavPrazdnychObjektov = function(arr) {
+spracovanieDát.__zbavPrazdnychObjektov = function(arr) {
     const elementArr = []
     const ziskavanieArray = ZískavanieDátZoSlužieb.__ziskajUdaje(arr)
     ziskavanieArray.forEach(element => {
@@ -94,7 +94,10 @@ SpracovanieDát.__zbavPrazdnychObjektov = function(arr) {
     })
     return ziskavanieArray.slice(elementArr.indexOf(true) + 1)
 }
-const best = SpracovanieDát.__zbavPrazdnychObjektov(result)
+spracovanieDát.__ulozKlucHodnotuDoPostmana = function () {
+
+}
+const best = spracovanieDát.__zbavPrazdnychObjektov(result)
 //console.log("🚀 ~ file: skuska_postman.js:85 ~ result:", result)
 // const resultss = ZískavanieDátZoSlužieb.__ziskajJednoducheObjekty(odpoved);
 // console.log([...resultss]);
@@ -105,6 +108,6 @@ console.log("🚀 ~ file: skuska_postman.js:90 ~ resultss:", resultss)
 // PRiklad
 // console.log("🚀 ~ file: skuska_postman.js:85 ~ result:", Object.getOwnPropertyNames(result[8]))
 /*
-SpracovanieDát.__najdiDuplikat = function (){
+spracovanieDát.__najdiDuplikat = function (){
     return odpoved
 } */
