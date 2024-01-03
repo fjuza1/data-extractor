@@ -94,9 +94,7 @@ spracovanieDát.__zbavPrazdnychObjektov = function(arr) {
     })
     return ziskavanieArray.slice(elementArr.indexOf(true) + 1)
 }
-spracovanieDát.__ulozKlucHodnotuDoPostmana = function () {
-
-}
+spracovanieDát.__ulozKlucHodnotuDoPostmana = function () {}
 const best = spracovanieDát.__zbavPrazdnychObjektov(result)
 //console.log("🚀 ~ file: skuska_postman.js:85 ~ result:", result)
 // const resultss = ZískavanieDátZoSlužieb.__ziskajJednoducheObjekty(odpoved);
