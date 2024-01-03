@@ -10,9 +10,9 @@ let odpoved = {
         "msg": "<string>"
     },
     "User": [{
-        "Email": "<string>",
-        "Username": "<string>",
-        "Gender_id": "<integer>"
+        // "Email": "<string>",
+        // "Username": "<string>",
+        // "Gender_id": "<integer>"
     }, ],
     "service": [{
         "name": "restservice",
@@ -77,6 +77,7 @@ const ZískavanieDátZoSlužieb = {
         let arr
         (primitivne.length > 0 || vsetkyObjekty.length > 0 || jednoducheObjekty.length > 0) ? 
         arr = [...primitivne, ...vsetkyObjekty, ...jednoducheObjekty ] : arr = vsetkyObjekty
+        // TODO zmen vymazavanie prazdnych objektov v novej fcie __zbavPrazdnychObjektov v novom objekte
         if (this.__ziskajObjektoveKluce(arr[0]).length === 0) return arr.slice(1)
         return arr
     },
@@ -85,6 +86,17 @@ const SpracovanieDát = Object.create(ZískavanieDátZoSlužieb)
 SpracovanieDát.__najdiDuplikat = function (){
     return odpoved
 }
+/*
+Priklad
+SpracovanieDát.__zbavPrazdnychObjektov = function(){
+    const elementArr = []
+    arr.forEach(element => {
+        const oibjekty = this.__ziskajObjektoveHodnoty(element).length === 0
+        elementArr[elementArr.length] =  oibjekty
+    })
+    return elementArr
+}
+*/
 const result = ZískavanieDátZoSlužieb.__ziskajUdaje(odpoved);
 //console.log("🚀 ~ file: skuska_postman.js:85 ~ result:", result)
 // const resultss = ZískavanieDátZoSlužieb.__ziskajJednoducheObjekty(odpoved);
