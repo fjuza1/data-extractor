@@ -2,7 +2,7 @@
 let odpoved = {
 	"reaction": {
 		"sts": "<integer>",
-		"msg": "<string>"
+		"msg": null
 	},
 	"User": [{
 		"Email": "<string>",
@@ -30,6 +30,7 @@ let odpoved = {
 const ZískavanieDátZoSlužieb = {
 	'začiatok': 'Dec 13, 2023 ',
 	__ziskajObjektoveHodnoty(objekt) {
+		if(objekt === null) return
 		return Object.values(objekt)
 	},
 	__ziskajObjektoveKluce(objekt) {
@@ -76,6 +77,7 @@ const ZískavanieDátZoSlužieb = {
 			arr = vnoreneObjekty
 		const elementArr = []
 		arr.forEach(element => {
+			if(element === null) return
 			const oibjekty = this.__ziskajObjektoveHodnoty(element).length === 0
 			elementArr[elementArr.length] = oibjekty
 		})
@@ -92,6 +94,7 @@ spracovanieDát.__zjednotitData = function(result) {
 	const arrKluc = [];
 	const arrHodnota = []
 	arrZozbierane.forEach(obj => {
+		if(obj === null) return
 		Object.entries(obj).forEach(([key, val]) => {
 				while (typeof val === 'object') {
 					for (const key in val) {
