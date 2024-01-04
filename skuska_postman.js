@@ -7,7 +7,7 @@ Object.entries(polozka).forEach(([key, value]) => {
 let odpoved = {
     "reaction": {
         "sts": "<integer>",
-        "msg": 0
+        "msg": '0'
     },
     "User": [{
         "Email": "<string>",
@@ -38,7 +38,7 @@ let odpoved = {
 const ZískavanieDátZoSlužieb = {
     'začiatok': 'Dec 13, 2023 ',
     __ziskajObjektoveHodnoty(objekt) {
-        if (objekt === null || (objekt !== 0 && objekt >= 0)) return
+        if (objekt === null) return
         return Object.values(objekt)
     },
     __ziskajObjektoveKluce(objekt) {
@@ -84,7 +84,7 @@ const ZískavanieDátZoSlužieb = {
             arr = vnoreneObjekty
         const elementArr = []
         arr.forEach(element => {
-            if (element === null || (element !== 0 && element >= 0)) return
+			if(element === null) return
             const oibjekty = this.__ziskajObjektoveHodnoty(element).length === 0
             elementArr[elementArr.length] = oibjekty
         })
@@ -102,8 +102,9 @@ spracovanieDát.__zjednotitData = function(result) {
     const arrHodnota = []
     // if (!foo1 && (foo1 !== 0 || foo1))
     arrZozbierane.forEach(obj => {
-        if (obj === null || (obj !== 0 && obj >= 0)) return
+    //console.log("🚀 ~ file: skuska_postman.js:104 ~ obj:", obj)
         Object.entries(obj).forEach(([key, val]) => {
+            // TODO guard clause for  0 or newgative value logic change
             while (typeof val === 'object') {
                 for (const key in val) {
                     if (Object.hasOwnProperty.call(val, key)) {
