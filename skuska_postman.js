@@ -101,12 +101,13 @@ spracovanieDát.__ulozKlucHodnotu = function(result) {
 	});
 	return arr;
 }
+const data = spracovanieDát.__ulozKlucHodnotu(result)
+console.log("🚀 ~ file: skuska_postman.js:105 ~ data:", data)
 /*
 spracovanieDát.__filtrujHodnotyObj = function(result){
     const objektoveHodnoty = spracovanieDát.__ulozKlucHodnotu(result)
     .filter(item=>typeof item === 'object' && !Array.isArray(item))
 }
-const data = spracovanieDát.__ulozKlucHodnotu(result)
 */
 // PRiklad
 // console.log("🚀 ~ file: skuska_postman.js:85 ~ result:", Object.getOwnPropertyNames(result[8]))
