@@ -28,7 +28,7 @@ let odpoved = {
             "name": "aguidehub"
         },
     },
-    "reactionID": "5484484898448948"
+    "reactionID": 0
 }
 const ZískavanieDátZoSlužieb = {
     'začiatok': 'Dec 13, 2023 ',
@@ -61,11 +61,13 @@ const ZískavanieDátZoSlužieb = {
         Object.values(odpoved)
             .filter((polozka) => typeof polozka === 'object' && !Array.isArray(polozka))
             .forEach((obj) => {
+                if (obj !== undefined && obj !== null) {
                 Object.entries(obj).forEach(([key, value]) => {
                     if (value !== undefined && value !== null) {
                         array.push({ [key]: value });
                     }
                 });
+            }
             });
         return array;
     },
