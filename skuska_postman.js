@@ -95,29 +95,36 @@ const spracovanieDát = Object.create(ZískavanieDátZoSlužieb)
 Priklad
 */
 
-spracovanieDát.__ulozKlucHodnotu = function(result) {
+spracovanieDát.zjednotitData = function(result) {
 	const arrZozbierane = ZískavanieDátZoSlužieb.__ziskajUdaje(result)
+	const arrKluc = [];
+	const arrHodnota = []
 	arrZozbierane.forEach(obj => {
 		Object.entries(obj).forEach(([key, val]) => {
 				while (typeof val === 'object') {
 					for (const key in val) {
 						if (Object.hasOwnProperty.call(val, key)) {
-							console.log("🚀 ~ file: skuska_postman.js:101 ~ Object.entries ~ val:", key)
+							arrKluc.push(key)
 							const element = val[key];
-							console.log("🚀 ~ file: skuska_postman.js:102 ~ Object.entries ~ element:", element)
+							arrHodnota.push(element)
+							// console.log("🚀 ~ file: skuska_postman.js:102 ~ Object.entries ~ element:", element)
 							if (typeof element !== 'object') return;
 						}
 					}
 				}
 				if(typeof val !== 'object'){
-					console.log("🚀 ~ file: skuska_postman.js:110 ~ Object.entries ~ val:", [key, val])
+					arrKluc.push(key)
+					arrHodnota.push(val)
+					// console.log("🚀 ~ file: skuska_postman.js:110 ~ Object.entries ~ val:", [key, val])
 					}
 		});
 	});
+	return [arrKluc,arrHodnota]
 }
-const data = spracovanieDát.__ulozKlucHodnotu(odpoved.person.male)
+const data = spracovanieDát.zjednotitData(odpoved)
+console.log("🚀 ~ file: skuska_postman.js:125 ~ data:", data)
 // spracovanieDát.__filtrujHodnotyObj = function(result){
-//     const objektoveHodnoty = spracovanieDát.__ulozKlucHodnotu(result)
+//     const objektoveHodnoty = spracovanieDát.zjednotitData(result)
 // 	objektoveHodnoty.forEach(element => {
 // 		const kluc = element[0]
 // 		const hodnota = element[1]
