@@ -1,9 +1,4 @@
 'use strict'
-/*
-Object.entries(polozka).forEach(([key, value]) => {
-    console.log(key, value)
-})
-*/
 let odpoved = {
 	"reaction": {
 		"sts": "<integer>",
@@ -24,10 +19,7 @@ let odpoved = {
 	}],
 	"person": {
 		"male": {
-			"name": "infinitbility",
-					"male": {
-			"names": "infinitbilities"
-		}
+			"name": "infinitbility"
 		},
 		"female": {
 			"name": "aguidehub"
@@ -51,6 +43,7 @@ const ZískavanieDátZoSlužieb = {
 		this.__ziskajObjektoveKluce(obj)
 			.forEach(polozka => {
 				const key = obj[polozka];
+				if(!key) return 
 				this.__jePrimitivna(key) ? objekt[polozka] = key : []
 			})
 		return objekt
@@ -106,7 +99,6 @@ spracovanieDát.__zjednotitData = function(result) {
 							arrKluc.push(key)
 							const element = val[key];
 							arrHodnota.push(element)
-							// console.log("🚀 ~ file: skuska_postman.js:102 ~ Object.entries ~ element:", element)
 							if (typeof element !== 'object') return;
 						}
 					}
@@ -114,7 +106,6 @@ spracovanieDát.__zjednotitData = function(result) {
 				if(typeof val !== 'object'){
 					arrKluc.push(key)
 					arrHodnota.push(val)
-					// console.log("🚀 ~ file: skuska_postman.js:110 ~ Object.entries ~ val:", [key, val])
 					}
 		});
 	});
