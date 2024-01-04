@@ -87,7 +87,6 @@ const ZískavanieDátZoSlužieb = {
         return arr.slice(elementArr.indexOf(true) + 1)
     },
 };
-//console.log(ZískavanieDátZoSlužieb. __ziskajUdaje(odpoved));
 const spracovanieDát = Object.create(ZískavanieDátZoSlužieb)
 spracovanieDát.__ocisliDuplikaty = function(arrParam) {
     let cislo = 1;
@@ -97,9 +96,7 @@ spracovanieDát.__zjednotitData = function(result) {
     const arrZozbierane = ZískavanieDátZoSlužieb.__ziskajUdaje(result)
     const arrKluc = [];
     const arrHodnota = []
-    // if (!foo1 && (foo1 !== 0 || foo1))
     arrZozbierane.forEach(obj => {
-        // BUG guard clause for  0 or newgative value logic change
         if (obj === undefined || obj === null) return
         Object.entries(obj).forEach(([key, val]) => {
             while (typeof val === 'object') {
