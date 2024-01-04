@@ -1,9 +1,4 @@
 'use strict'
-/*
-Object.entries(polozka).forEach(([key, value]) => {
-    console.log(key, value)
-})
-*/
 let odpoved = {
     "reaction": {
         "sts": "<integer>",
@@ -125,4 +120,3 @@ spracovanieDát.__zjednotitData = function(result) {
     return [klucOcisteneDupl, arrHodnota]
 }
 const data = spracovanieDát.__zjednotitData(odpoved)
-console.log("🚀 ~ file: skuska_postman.js:128 ~ data:", data)
