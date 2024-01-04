@@ -96,7 +96,8 @@ Priklad
 */
 
 spracovanieDát.__ulozKlucHodnotu = function(result) {
-	result.forEach(obj => {
+	const arrZozbierane = ZískavanieDátZoSlužieb.__ziskajUdaje(result)
+	arrZozbierane.forEach(obj => {
 		Object.entries(obj).forEach(([key, val]) => {
 				while (typeof val === 'object') {
 					for (const key in val) {
@@ -114,7 +115,7 @@ spracovanieDát.__ulozKlucHodnotu = function(result) {
 		});
 	});
 }
-const data = spracovanieDát.__ulozKlucHodnotu(result)
+const data = spracovanieDát.__ulozKlucHodnotu(odpoved.person.male)
 // spracovanieDát.__filtrujHodnotyObj = function(result){
 //     const objektoveHodnoty = spracovanieDát.__ulozKlucHodnotu(result)
 // 	objektoveHodnoty.forEach(element => {
