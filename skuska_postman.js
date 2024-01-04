@@ -89,13 +89,12 @@ const ZískavanieDátZoSlužieb = {
 		return arr.slice(elementArr.indexOf(true) + 1)
 	},
 };
-const result = ZískavanieDátZoSlužieb.__ziskajUdaje(odpoved);
 const spracovanieDát = Object.create(ZískavanieDátZoSlužieb)
-/*
-Priklad
-*/
-
-spracovanieDát.zjednotitData = function(result) {
+spracovanieDát.__ocisliDuplikaty = function (arrParam){
+	let cislo = 1;
+	return arrParam.reduce((acc,arr)=>acc.includes(arr)?acc.concat(arr + cislo++):acc.concat(arr),[])
+}
+spracovanieDát.__zjednotitData = function(result) {
 	const arrZozbierane = ZískavanieDátZoSlužieb.__ziskajUdaje(result)
 	const arrKluc = [];
 	const arrHodnota = []
@@ -119,29 +118,8 @@ spracovanieDát.zjednotitData = function(result) {
 					}
 		});
 	});
-	return [arrKluc,arrHodnota]
+	const klucOcisteneDupl = this.__ocisliDuplikaty(arrKluc)
+	return [klucOcisteneDupl, arrHodnota]
 }
-const data = spracovanieDát.zjednotitData(odpoved)
-console.log("🚀 ~ file: skuska_postman.js:125 ~ data:", data)
-// spracovanieDát.__filtrujHodnotyObj = function(result){
-//     const objektoveHodnoty = spracovanieDát.zjednotitData(result)
-// 	objektoveHodnoty.forEach(element => {
-// 		const kluc = element[0]
-// 		const hodnota = element[1]
-// 		if(typeof hodnota === 'object'){
-
-// 		}
-// 	});
-// }
-// spracovanieDát.__filtrujHodnotyObj(result)
-/*
-*/
-// PRiklad
-// console.log("🚀 ~ file: skuska_postman.js:85 ~ result:", Object.getOwnPropertyNames(result[8]))
-/*
-spracovanieDát.__najdiDuplikat = function (){
-    return odpoved
-} */
-// const duplikatyPrec = [...best.reduce((acc,cur) =>acc.includes(cur)?acc: [...acc,cur],[]) ]
-// console.log("🚀 ~ file: skuska_postman.js:283 ~ duplikatyPrec:", duplikatyPrec)
-//spracovanieDát.__hodnotaJeObjekt
+const data = spracovanieDát.__zjednotitData(odpoved)
+console.log("🚀 ~ file: skuska_postman.js:128 ~ data:", data)
