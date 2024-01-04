@@ -24,7 +24,10 @@ let odpoved = {
 	}],
 	"person": {
 		"male": {
-			"name": "infinitbility"
+			"name": "infinitbility",
+					"male": {
+			"names": "infinitbilities"
+		}
 		},
 		"female": {
 			"name": "aguidehub"
@@ -93,21 +96,37 @@ Priklad
 */
 
 spracovanieDát.__ulozKlucHodnotu = function(result) {
-	const arr = []
 	result.forEach(obj => {
 		Object.entries(obj).forEach(([key, val]) => {
-			arr[arr.length] = [key, val]
+				while (typeof val === 'object') {
+					for (const key in val) {
+						if (Object.hasOwnProperty.call(val, key)) {
+							console.log("🚀 ~ file: skuska_postman.js:101 ~ Object.entries ~ val:", key)
+							const element = val[key];
+							console.log("🚀 ~ file: skuska_postman.js:102 ~ Object.entries ~ element:", element)
+							if (typeof element !== 'object') return;
+						}
+					}
+				}
+				if(typeof val !== 'object'){
+					console.log("🚀 ~ file: skuska_postman.js:110 ~ Object.entries ~ val:", [key, val])
+					}
 		});
 	});
-	return arr;
 }
 const data = spracovanieDát.__ulozKlucHodnotu(result)
-console.log("🚀 ~ file: skuska_postman.js:105 ~ data:", data)
+// spracovanieDát.__filtrujHodnotyObj = function(result){
+//     const objektoveHodnoty = spracovanieDát.__ulozKlucHodnotu(result)
+// 	objektoveHodnoty.forEach(element => {
+// 		const kluc = element[0]
+// 		const hodnota = element[1]
+// 		if(typeof hodnota === 'object'){
+
+// 		}
+// 	});
+// }
+// spracovanieDát.__filtrujHodnotyObj(result)
 /*
-spracovanieDát.__filtrujHodnotyObj = function(result){
-    const objektoveHodnoty = spracovanieDát.__ulozKlucHodnotu(result)
-    .filter(item=>typeof item === 'object' && !Array.isArray(item))
-}
 */
 // PRiklad
 // console.log("🚀 ~ file: skuska_postman.js:85 ~ result:", Object.getOwnPropertyNames(result[8]))
