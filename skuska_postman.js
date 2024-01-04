@@ -2,7 +2,7 @@
 let odpoved = {
     "reaction": {
         "sts": "<integer>",
-        "msg": '0'
+        "msg": 0
     },
     "User": [{
         "Email": "<string>",
@@ -26,14 +26,14 @@ let odpoved = {
         },
         "female": {
             "name": "aguidehub"
-        }
+        },
     },
     "reactionID": "5484484898448948"
 }
 const ZískavanieDátZoSlužieb = {
     'začiatok': 'Dec 13, 2023 ',
     __ziskajObjektoveHodnoty(objekt) {
-        if (objekt === null) return
+        if (objekt === undefined || objekt === null) return
         return Object.values(objekt)
     },
     __ziskajObjektoveKluce(objekt) {
@@ -47,7 +47,7 @@ const ZískavanieDátZoSlužieb = {
         this.__ziskajObjektoveKluce(obj)
             .forEach(polozka => {
                 const key = obj[polozka];
-                this.__jePrimitivna(key) ? objekt[polozka] = key : []
+                this.__jePrimitivna(key) ? objekt[polozka] = key : null
             })
         return objekt
     },
@@ -57,18 +57,19 @@ const ZískavanieDátZoSlužieb = {
             .filter(obj => typeof obj === 'object')
     },
     __ziskajJednoducheObjekty(odpoved) {
-        const array = []
+        const array = [];
         Object.values(odpoved)
             .filter((polozka) => typeof polozka === 'object' && !Array.isArray(polozka))
             .forEach((obj) => {
                 Object.entries(obj).forEach(([key, value]) => {
-                    value ? array[array.length] = {
-                        [key]: value
-                    } : []
+                    if (value !== undefined && value !== null) {
+                        array.push({ [key]: value });
+                    }
                 });
             });
-        return array
+        return array;
     },
+      
     __ziskajUdaje(odpoved) {
         const primitivne = [this.__ziskajPrimitivneDoObjektu(odpoved)];
         const vnoreneObjekty = this.__ziskajNestedObj(odpoved)
@@ -79,13 +80,14 @@ const ZískavanieDátZoSlužieb = {
             arr = vnoreneObjekty
         const elementArr = []
         arr.forEach(element => {
-			if(element === null) return
+            if (element === undefined || element === null) return
             const oibjekty = this.__ziskajObjektoveHodnoty(element).length === 0
             elementArr[elementArr.length] = oibjekty
         })
         return arr.slice(elementArr.indexOf(true) + 1)
     },
 };
+//console.log(ZískavanieDátZoSlužieb. __ziskajUdaje(odpoved));
 const spracovanieDát = Object.create(ZískavanieDátZoSlužieb)
 spracovanieDát.__ocisliDuplikaty = function(arrParam) {
     let cislo = 1;
@@ -97,14 +99,15 @@ spracovanieDát.__zjednotitData = function(result) {
     const arrHodnota = []
     // if (!foo1 && (foo1 !== 0 || foo1))
     arrZozbierane.forEach(obj => {
-    //console.log("🚀 ~ file: skuska_postman.js:104 ~ obj:", obj)
+        // BUG guard clause for  0 or newgative value logic change
+        if (obj === undefined || obj === null) return
         Object.entries(obj).forEach(([key, val]) => {
-            // TODO guard clause for  0 or newgative value logic change
             while (typeof val === 'object') {
                 for (const key in val) {
                     if (Object.hasOwnProperty.call(val, key)) {
                         arrKluc.push(key)
                         const element = val[key];
+                        if(element === 0)
                         arrHodnota.push(element)
                         if (typeof element !== 'object') return;
                     }
@@ -120,3 +123,4 @@ spracovanieDát.__zjednotitData = function(result) {
     return [klucOcisteneDupl, arrHodnota]
 }
 const data = spracovanieDát.__zjednotitData(odpoved)
+console.log("🚀 ~ file: skuska_postman.js:126 ~ data:", data)
