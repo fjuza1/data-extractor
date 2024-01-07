@@ -1,34 +1,28 @@
 'use strict'
 let odpoved = {
-    "reaction": {
-        "sts": "<integer>",
-        "msg": 0
-    },
-    "User": [{
-        "Email": "<string>",
-        "Username": "<string>",
-        "Gender_id": "<integer>"
-    }, ],
-    "service": [{
-        "name": "restservice",
-        "device": "xr-1",
-        "interface-port": "0/0/2/3",
-        "interface-description": "uBot testing for NSO REST",
-        "addr": "10.10.1.3/24",
-        "mtu": 1024
-    }],
-    "person": {
-        "male": {
-            "name": "infinitbility",
-            "male": {
-                "names": "infinitbilities"
-            }
+        user: {
+          name: {
+            first: "Bob",
+            last: "Johnson"
+          },
+          age: 35,
+          address: {
+            street: "789 Pine St",
+            city: "Complex City",
+            zip: "98765"
+          }
         },
-        "female": {
-            "name": "aguidehub"
+        preferences: {
+          colors: ["blue", "green", "red"],
+          language: "JavaScript",
+          theme: "dark"
         },
-    },
-    "reactionID": 0
+        isDeveloper: true,
+        projects: [
+          { name: "Project A", status: "completed" },
+          { name: "Project B", status: "in progress" },
+          { name: "Project C", status: "planning" }
+        ],
 }
 const ZískavanieDátZoSlužieb = {
     'začiatok': 'Dec 13, 2023 ',
@@ -106,20 +100,18 @@ spracovanieDát.__zjednotitData = function(result) {
                     if (Object.hasOwnProperty.call(val, key)) {
                         arrKluc.push(key)
                         const element = val[key];
-                        if(element === 0)
                         arrHodnota.push(element)
                         if (typeof element !== 'object') return;
                     }
                 }
             }
-            if (typeof val !== 'object') {
+            if (typeof val !== 'object'){
                 arrKluc.push(key)
                 arrHodnota.push(val)
             }
         });
     });
-    const klucOcisteneDupl = this.__ocisliDuplikaty(arrKluc)
-    return [klucOcisteneDupl, arrHodnota]
+    return [arrKluc, arrHodnota]
 }
 const data = spracovanieDát.__zjednotitData(odpoved)
 console.log("🚀 ~ file: skuska_postman.js:126 ~ data:", data)
