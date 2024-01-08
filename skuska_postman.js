@@ -101,7 +101,7 @@ const ZískDátZoServisov = {
             } if (typeof value === 'object' && value !== null) {
                 const vnoreneRes = this.__ziskajObjektPodlaHodnoty(value, hladanaHodnota);
                 if (vnoreneRes) {
-                    return { [key]: vnoreneRes };
+                    const c = { [key]: vnoreneRes }
                 }
             }
 
