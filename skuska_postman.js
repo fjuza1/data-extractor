@@ -37,7 +37,7 @@ const ZískavanieDátZoSlužieb = {
         return typeof obj !== 'object'
     },
     __nieJePoleObjektov(array){
-        return array.every(element => typeof element !=='object')
+        return array.every(element => typeof element !=='object' || !Array.isArray(element))
     },
     __ziskajPrimitivneDoObjektu(obj) {
         let objekt = {};
