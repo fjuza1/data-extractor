@@ -55,8 +55,9 @@ const poslednyDatovyTyp = [...string].findLast(element => isNaN(+element));
 /*
 const duplikatyPrec = result.reduce((acc,cur) =>acc.includes(cur)?[...acc,cur]:acc,[]) 
 */
-  
+  /*
   let obj = { user: { address: '98765' } }
   const [objekt] = Object.getOwnPropertyNames(obj)
   console.log("🚀 ~ file: skuska.js:61 ~ objekt:", objekt)
-  
+  */
+ const nieJePoleObjektov = (array=>array.every(element => typeof element !=='object'))
