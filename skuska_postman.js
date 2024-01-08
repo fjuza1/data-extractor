@@ -68,7 +68,9 @@ const ZískavanieDátZoSlužieb = {
             });
         return array;
     },
-      
+     __ziskajJednDatPolia(array){
+        if(this.__nieJePoleObjektov(array)) array.filter(item=>this.__nieJePoleObjektov(item))
+     },
     __ziskajUdaje(odpoved) {
         const primitivne = [this.__ziskajPrimitivneDoObjektu(odpoved)];
         const vnoreneObjekty = this.__ziskajNestedObj(odpoved)
@@ -102,18 +104,16 @@ const ZískavanieDátZoSlužieb = {
         return null;
     },
 };
-const fds = ZískavanieDátZoSlužieb.__nieJePoleObjektov(['dssadsa'])
-console.log("🚀 ~ file: skuska_postman.js:106 ~ fds:", fds)
 const spracovanieDát = Object.create(ZískavanieDátZoSlužieb)
 spracovanieDát.__ocisliDuplikaty = function(arrParam) {
     let cislo = 1;
     return arrParam.reduce((acc, arr) => acc.includes(arr) ? acc.concat(arr + cislo++) : acc.concat(arr), [])
 }
 spracovanieDát.__zjednotitData = function(result) {
-    const arrZozbierane = ZískavanieDátZoSlužieb.__ziskajUdaje(result)
+    const zozbieraneData = ZískavanieDátZoSlužieb.__ziskajUdaje(result)
     const arrKluc = [];
     const arrHodnota = []
-    arrZozbierane.forEach(obj => {
+    zozbieraneData.forEach(obj => {
         if (obj === undefined || obj === null) return
         Object.entries(obj).forEach(([key, val]) => {
             while (typeof val === 'object') {
