@@ -14,6 +14,7 @@ let odpoved = {
         },
         preferences: {
           colors: ["blue", "green", "red"],
+          fruits:['banana', 'apple', 'peach'],
           language: "JavaScript",
           theme: "dark"
         },
@@ -24,7 +25,7 @@ let odpoved = {
           { name: "Project C", status: "planning" }
         ],
 }
-const ZískavanieDátZoSlužieb = {
+const ZískDátZoServisov = {
     'začiatok': 'Dec 13, 2023 ',
     __ziskajObjektoveHodnoty(objekt) {
         if (objekt === undefined || objekt === null) return
@@ -101,13 +102,13 @@ const ZískavanieDátZoSlužieb = {
         return null;
     },
 };
-const spracovanieDát = Object.create(ZískavanieDátZoSlužieb)
+const spracovanieDát = Object.create(ZískDátZoServisov)
 spracovanieDát.__ocisliDuplikaty = function(arrParam) {
     let cislo = 1;
     return arrParam.reduce((acc, arr) => acc.includes(arr) ? acc.concat(arr + cislo++) : acc.concat(arr), [])
 }
 spracovanieDát.__zjednotitData = function(result) {
-    const zozbieraneData = ZískavanieDátZoSlužieb.__ziskajUdaje(result)
+    const zozbieraneData = ZískDátZoServisov.__ziskajUdaje(result)
     const arrKluc = [];
     const arrHodnota = []
     zozbieraneData.forEach(obj => {
@@ -136,5 +137,5 @@ spracovanieDát.__zjednotitData = function(result) {
     return [arrKluc, arrHodnota]
 }
 const data = spracovanieDát.__zjednotitData(odpoved)
-const foundObject = ZískavanieDátZoSlužieb.__ziskajObjektPodlaHodnoty(odpoved, data[1][0]);
+const foundObject = ZískDátZoServisov.__ziskajObjektPodlaHodnoty(odpoved, data[1][0]);
 //console.log("🚀 ~ file: skuska_postman.js:134 ~ foundObject:", foundObject)
