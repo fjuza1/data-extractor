@@ -36,6 +36,9 @@ const ZískavanieDátZoSlužieb = {
     __jePrimitivna(obj) {
         return typeof obj !== 'object'
     },
+    __nieJePoleObjektov(array){
+        return array.every(element => typeof element !=='object')
+    },
     __ziskajPrimitivneDoObjektu(obj) {
         let objekt = {};
         this.__ziskajObjektoveKluce(obj)
@@ -99,6 +102,8 @@ const ZískavanieDátZoSlužieb = {
         return null;
     },
 };
+const fds = ZískavanieDátZoSlužieb.__nieJePoleObjektov(['dssadsa'])
+console.log("🚀 ~ file: skuska_postman.js:106 ~ fds:", fds)
 const spracovanieDát = Object.create(ZískavanieDátZoSlužieb)
 spracovanieDát.__ocisliDuplikaty = function(arrParam) {
     let cislo = 1;
