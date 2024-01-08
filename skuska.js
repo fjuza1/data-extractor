@@ -55,3 +55,43 @@ const poslednyDatovyTyp = [...string].findLast(element => isNaN(+element));
 /*
 const duplikatyPrec = result.reduce((acc,cur) =>acc.includes(cur)?[...acc,cur]:acc,[]) 
 */
+function getObjectKeys(obj, value) {
+    let keys = [];
+  
+    for (const key of Object.keys(obj)) {
+      if (obj[key] === value) {
+        keys.push(key);
+      }
+    }
+  
+    return keys;
+  }
+  
+  let obj = {
+    user: {
+      name: {
+        first: "Bob",
+        last: "Johnson"
+      },
+      age: 35,
+      address: {
+        street: "789 Pine St",
+        city: "Complex City",
+        zip: "98765"
+      }
+    },
+    preferences: {
+      colors: ["blue", "green", "red"],
+      language: "JavaScript",
+      theme: "dark"
+    },
+    isDeveloper: true,
+    projects: [
+      { name: "Project A", status: "completed" },
+      { name: "Project B", status: "in progress" },
+      { name: "Project C", status: "planning" }
+    ],
+}
+  
+  console.log(getObjectKeys(obj, 'Johnson')); // 👉️ employee1
+  

@@ -82,6 +82,22 @@ const ZískavanieDátZoSlužieb = {
         })
         return arr.slice(elementArr.indexOf(true) + 1)
     },
+    __ziskajObjektPodlaHodnoty(odpoved, hladanaHodnota) {
+        const keys = Object.keys(odpoved);
+        for (const key of keys) {
+            const value = odpoved[key];
+            if (value === hladanaHodnota) {
+                return { [key]: value };
+            } if (typeof value === 'object' && value !== null) {
+                const vnoreneRes = this.__ziskajObjektPodlaHodnoty(value, hladanaHodnota);
+                if (vnoreneRes) {
+                    return { [key]: vnoreneRes };
+                }
+            }
+
+        }
+        return null;
+    },
 };
 const spracovanieDát = Object.create(ZískavanieDátZoSlužieb)
 spracovanieDát.__ocisliDuplikaty = function(arrParam) {
@@ -114,4 +130,5 @@ spracovanieDát.__zjednotitData = function(result) {
     return [arrKluc, arrHodnota]
 }
 const data = spracovanieDát.__zjednotitData(odpoved)
-console.log("🚀 ~ file: skuska_postman.js:126 ~ data:", data)
+const foundObject = ZískavanieDátZoSlužieb.__ziskajObjektPodlaHodnoty(odpoved, data[1][0]);
+console.log("🚀 ~ file: skuska_postman.js:134 ~ foundObject:", foundObject)
