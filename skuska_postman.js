@@ -68,9 +68,6 @@ const ZískavanieDátZoSlužieb = {
             });
         return array;
     },
-     __ziskajJednDatPolia(array){
-        if(this.__nieJePoleObjektov(array)) array.filter(item=>this.__nieJePoleObjektov(item))
-     },
     __ziskajUdaje(odpoved) {
         const primitivne = [this.__ziskajPrimitivneDoObjektu(odpoved)];
         const vnoreneObjekty = this.__ziskajNestedObj(odpoved)
@@ -119,6 +116,10 @@ spracovanieDát.__zjednotitData = function(result) {
             while (typeof val === 'object') {
                 for (const key in val) {
                     if (Object.hasOwnProperty.call(val, key)) {
+                        if(Array.isArray(val)){
+                            this.__nieJePoleObjektov(val) ? console.log(val):[]
+                            
+                        }
                         arrKluc.push(key)
                         const element = val[key];
                         arrHodnota.push(element)
@@ -136,4 +137,4 @@ spracovanieDát.__zjednotitData = function(result) {
 }
 const data = spracovanieDát.__zjednotitData(odpoved)
 const foundObject = ZískavanieDátZoSlužieb.__ziskajObjektPodlaHodnoty(odpoved, data[1][0]);
-console.log("🚀 ~ file: skuska_postman.js:134 ~ foundObject:", foundObject)
+//console.log("🚀 ~ file: skuska_postman.js:134 ~ foundObject:", foundObject)
