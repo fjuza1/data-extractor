@@ -1,5 +1,7 @@
 'use strict'
 let odpoved = {
+    fruits:['bananas', 'apples', 'peaches'],
+    bitches:['bananassssssss', 'applessssssssss', 'peachessssssss'],
         user: {
           name: {
             first: "Bob",
@@ -38,7 +40,7 @@ const ZískDátZoServisov = {
         return typeof obj !== 'object'
     },
     __nieJePoleObjektov(array){
-        return array.every(element => typeof element !=='object' || !Array.isArray(element))
+        return array.every(element => typeof element !=='object')
     },
     __ziskajPrimitivneDoObjektu(obj) {
         let objekt = {};
@@ -56,7 +58,7 @@ const ZískDátZoServisov = {
     },
     __ziskajJednoducheObjekty(odpoved) {
         const array = [];
-        Object.values(odpoved)
+        this.__ziskajObjektoveHodnoty(odpoved)
             .filter((polozka) => typeof polozka === 'object' && !Array.isArray(polozka))
             .forEach((obj) => {
                 if (obj !== undefined && obj !== null) {
@@ -73,6 +75,11 @@ const ZískDátZoServisov = {
         const primitivne = [this.__ziskajPrimitivneDoObjektu(odpoved)];
         const vnoreneObjekty = this.__ziskajNestedObj(odpoved)
         const jednoducheObjekty = this.__ziskajJednoducheObjekty(odpoved)
+        const ghost = Object.values(odpoved).forEach(element => {
+            if(Array.isArray(element)) {
+                this.__nieJePoleObjektov(element) ? console.log(...element):[]
+            }
+        });
         let arr;
         primitivne.length > 0 || vnoreneObjekty.length > 0 || jednoducheObjekty.length > 0 ?
             arr = [...primitivne, ...vnoreneObjekty, ...jednoducheObjekty] :
@@ -118,7 +125,7 @@ spracovanieDát.__zjednotitData = function(result) {
                 for (const key in val) {
                     if (Object.hasOwnProperty.call(val, key)) {
                         if(Array.isArray(val)){
-                            this.__nieJePoleObjektov(val) ? console.log(val):[]
+                            this.__nieJePoleObjektov(val) ? val:[]
                             
                         }
                         arrKluc.push(key)
