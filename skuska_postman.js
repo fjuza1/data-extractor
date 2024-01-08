@@ -75,11 +75,11 @@ const ZískDátZoServisov = {
         const primitivne = [this.__ziskajPrimitivneDoObjektu(odpoved)];
         const vnoreneObjekty = this.__ziskajNestedObj(odpoved)
         const jednoducheObjekty = this.__ziskajJednoducheObjekty(odpoved)
-        const ghost = Object.values(odpoved).forEach(element => {
+        const ghost = [Object.values(odpoved).forEach(element => {
             if(Array.isArray(element)) {
                 this.__nieJePoleObjektov(element) ? console.log(...element):[]
             }
-        });
+        })]
         let arr;
         primitivne.length > 0 || vnoreneObjekty.length > 0 || jednoducheObjekty.length > 0 ?
             arr = [...primitivne, ...vnoreneObjekty, ...jednoducheObjekty] :
@@ -110,7 +110,7 @@ const ZískDátZoServisov = {
     },
 };
 const spracovanieDát = Object.create(ZískDátZoServisov)
-spracovanieDát.__ocisliDuplikaty = function(arrParam) {
+spracovanieDát.__ocislujDuplikaty = function(arrParam) {
     let cislo = 1;
     return arrParam.reduce((acc, arr) => acc.includes(arr) ? acc.concat(arr + cislo++) : acc.concat(arr), [])
 }
