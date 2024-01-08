@@ -1,29 +1,10 @@
 'use strict'
 let odpoved = {
-        user: {
-          name: {
-            first: "Bob",
-            last: "Johnson"
-          },
-          age: 35,
-          address: {
-            street: "789 Pine St",
-            city: "Complex City",
-            zip: "98765"
-          }
-        },
-        preferences: {
-          colors: ["blue", "green", "red"],
-          language: "JavaScript",
-          theme: "dark"
-        },
-        isDeveloper: true,
-        projects: [
-          { name: "Project A", status: "completed" },
-          { name: "Project B", status: "in progress" },
-          { name: "Project C", status: "planning" }
-        ],
-}
+    firstName: "John",
+    lastName: "Doe",
+    age: 50,
+    eyeColor: "blue"
+  };
 const ZískavanieDátZoSlužieb = {
     'začiatok': 'Dec 13, 2023 ',
     __ziskajObjektoveHodnoty(objekt) {
@@ -131,4 +112,4 @@ spracovanieDát.__zjednotitData = function(result) {
 }
 const data = spracovanieDát.__zjednotitData(odpoved)
 const foundObject = ZískavanieDátZoSlužieb.__ziskajObjektPodlaHodnoty(odpoved, data[1][0]);
-console.log("🚀 ~ file: skuska_postman.js:134 ~ foundObject:", foundObject)
+console.log("🚀 ~ file: skuska_postman.js:134 ~ foundObject:", spracovanieDát.__zjednotitData(foundObject))
