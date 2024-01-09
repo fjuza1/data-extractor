@@ -82,7 +82,7 @@ const ZískDátZoServisov = {
 			});
 		return array;
 	},
-	__ziskajUdaje(odpoved) {
+	__ziskjHodnKlucDoArr(odpoved) {
 		const primitivne = [this.__ziskajPrimitivneDoObjektu(odpoved)];
 		const vnoreneObjekty = this.__ziskajNestedObj(odpoved)
 		const jednoducheObjekty = this.__ziskajJednoducheObjekty(odpoved)
@@ -110,7 +110,7 @@ spracovanieDát.__ocislujDuplikaty = function(arrParam) {
 	return arrParam.reduce((acc, arr) => acc.includes(arr) ? acc.concat(arr + cislo++) : acc.concat(arr), [])
 }
 spracovanieDát.__zjednotitData = function(result) {
-	const zozbieraneData = ZískDátZoServisov.__ziskajUdaje(result)
+	const zozbieraneData = ZískDátZoServisov.__ziskjHodnKlucDoArr(result)
 	const arrKluc = [];
 	const arrHodnota = []
 	zozbieraneData.forEach(obj => {
