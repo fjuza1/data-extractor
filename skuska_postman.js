@@ -110,7 +110,7 @@ spracovanieDát.__ocislujDuplikaty = function(arrParam) {
     return arrParam.reduce((acc, arr) => acc.includes(arr) ? acc.concat(arr + cislo++) : acc.concat(arr), [])
 }
 spracovanieDát.__vymazDuplikatyString = function(){
-    
+
 }
 spracovanieDát.__zjednotitData = function(result) {
     const zozbieraneData = ZískDátZoServisov.__ziskjHodnKlucDoArr(result)
@@ -203,9 +203,10 @@ spracovanieDát.__ziskjHodnZArr = function() {
         const key1 = ky1.flat(element => element);
         const key2 = ky2.flat(element => element);
         const spojene = key1.map((item, i)=>`${item}_${key2[i]}`)
-        console.log("🚀 ~ ziskjHodn ~ spojene:", spojene)
+        return spojene
     }
-    ziskjHodn(ky1,ky2)
+    const zbavSa = ziskjHodn(ky1,ky2)
+    console.log("🚀 ~ zbavSa:", zbavSa)
     /*
     for (const a in arraySimple) {
         if (Object.hasOwnProperty.call(arraySimple, a)) {
