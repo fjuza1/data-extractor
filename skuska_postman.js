@@ -162,7 +162,7 @@ spracovanieDát.__ziskajObjektPodlaHodnoty = function(odpoved, hladanaHodnota) {
 spracovanieDát.__jeJednObj = function(obj) {
 	return Object.values(obj).map(element => (typeof element).match(/(number)|(boolean)|(string)/))
 }
-spracovanieDát.__poskladajNazKluc = function(res) {
+spracovanieDát.__menNazKlucZlozObj = function(res) {
 	let array = []
 	const naVyhladanie = this.__zjednotitData(res)[1]
 	const vyhladane = naVyhladanie.map(item => this.__ziskajObjektPodlaHodnoty(res, item))
@@ -189,5 +189,4 @@ spracovanieDát.__poskladajNazKluc = function(res) {
 	});
 	return array
 }
-spracovanieDát.__poskladajNazKluc(odpoved)
-//console.log(spracovanieDát.__poskladajNazKluc(odpoved));
+//spracovanieDát.__menNazKlucZlozObj(odpoved)
