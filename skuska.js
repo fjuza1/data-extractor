@@ -58,6 +58,12 @@ const duplikatyPrec = result.reduce((acc,cur) =>acc.includes(cur)?[...acc,cur]:a
   /*
   let obj = { user: { address: '98765' } }
   const [objekt] = Object.getOwnPropertyNames(obj)
-  console.log("🚀 ~ file: skuska.js:61 ~ objekt:", objekt)
   */
+ /*
  const nieJePoleObjektov = (array=>array.every(element => typeof element !=='object'))
+ */
+const obj = {isDeveloper: true}
+const jednObj = function(obj){
+    return Object.values(obj).map(element => (typeof element).match(/(number)|(boolean)|(string)/).input)
+}
+console.log(jednObj(obj));
