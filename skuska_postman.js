@@ -193,6 +193,19 @@ spracovanieDát.__menNazKlucZlozObj = function(res) {
     });
     return array
 }
+spracovanieDát.__ziskjHodnZArr = function(arraySimple){
+    for (const a in arraySimple) {
+        if (Object.hasOwnProperty.call(arraySimple, a)) {
+            const [element] = arraySimple[a];
+            console.log("🚀 ~ file: skuska_postman.js:200 ~ element:", element)
+        }
+    }
+}
+/*
+console.log(spracovanieDát.__menNazKlucZlozObj(odpoved));
+console.log(spracovanieDát.__zjednotitData(odpoved)[0])
+console.log(spracovanieDát.__zjednotitData(odpoved)[1])
+*/
 /*
 console.log(spracovanieDát.__zjednotitData(odpoved)[0].length)
 console.log(spracovanieDát.__zjednotitData(odpoved)[1].length)
