@@ -62,8 +62,6 @@ const duplikatyPrec = result.reduce((acc,cur) =>acc.includes(cur)?[...acc,cur]:a
  /*
  const nieJePoleObjektov = (array=>array.every(element => typeof element !=='object'))
  */
-const obj = {isDeveloper: true}
-const jednObj = function(obj){
-    return Object.values(obj).map(element => (typeof element).match(/(number)|(boolean)|(string)/).input)
-}
-console.log(jednObj(obj));
+let x = ' preferences_language_language'
+console.log(new Set(x.split('_')))
+ x = Array.from(new Set(x.split('_'))).toString().split(',').join('_')

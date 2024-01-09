@@ -200,9 +200,9 @@ spracovanieDát.__ziskjHodnZArr = function() {
     const jeto = [ky1,ky2]
     const val = this.__zjednotitData(odpoved)[1]
     const ziskjHodn = (ky1,ky2)=>{
-        const key1 = ky1.flat(element => element);
-        const key2 = ky2.flat(element => element);
-        const spojene = key1.map((item, i)=>`${item}_${key2[i]}`)
+        const key1 = ky1.flat();
+        const key2 = ky2.flat();
+        const [...spojene] = key1.map((item, i)=>`${item}_${key2[i]}`)
         return spojene
     }
     const zbavSa = ziskjHodn(ky1,ky2)
