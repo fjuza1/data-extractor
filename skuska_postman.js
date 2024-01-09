@@ -166,6 +166,7 @@ spracovanieDát.__jeJednObj = function(obj) {
 }
 spracovanieDát.__menNazKlucZlozObj = function(res) {
     let array = []
+    let objektove = []
     const naVyhladanie = this.__zjednotitData(res)[1]
     const vyhladane = naVyhladanie.map(item => this.__ziskajObjektPodlaHodnoty(res, item))
     Object.entries(vyhladane).forEach(([key, val]) => {
@@ -174,7 +175,7 @@ spracovanieDát.__menNazKlucZlozObj = function(res) {
                 const jeObjJedn = this.__jeJednObj(val)
                 const [propertyName] = jeObjJedn;
                 if (Array.isArray(propertyName)) {
-                    
+                    array[array.length] = val
                 }
                 const element = val[kys];
                 for (let ky in element) {
@@ -184,7 +185,7 @@ spracovanieDát.__menNazKlucZlozObj = function(res) {
                             +ky++
                         }
                     }
-                    array.push(`${kys}_${ky}`)
+                    array[array.length] = `${kys}_${ky}`
                 }
             }
         }
@@ -192,7 +193,8 @@ spracovanieDát.__menNazKlucZlozObj = function(res) {
     });
     return array
 }
-console.log(spracovanieDát.__menNazKlucZlozObj(odpoved).length);
+/*
 console.log(spracovanieDát.__zjednotitData(odpoved)[0].length)
 console.log(spracovanieDát.__zjednotitData(odpoved)[1].length)
-//spracovanieDát.__menNazKlucZlozObj(odpoved)
+console.log(spracovanieDát.__menNazKlucZlozObj(odpoved).length);
+*/
