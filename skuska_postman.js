@@ -18,8 +18,8 @@ let odpoved = {
         language: "JavaScript",
         theme: "dark"
     },
-    isDeveloper: true,
-    isNOTDeveloper: false,
+    // isDeveloper: true,
+    // isNOTDeveloper: false,
     projects: [{
             name: "Project A",
             status: "completed"
@@ -194,7 +194,15 @@ spracovanieDát.__menNazKlucZlozObj = function(res) {
 spracovanieDát.__ziskjHodnZArr = function() {
     const ky1 = this.__menNazKlucZlozObj(odpoved)
     const ky2 = this.__zjednotitData(odpoved)[0]
+    const jeto = [ky1,ky2]
     const val = this.__zjednotitData(odpoved)[1]
+    const ziskjHodn = (ky1,ky2)=>{
+        const key1 = ky1.flat(element => element);
+        const key2 = ky2.flat(element => element);
+        const spojene = key1.map((item, i)=>`${item}_${key2[i]}`)
+        console.log("🚀 ~ ziskjHodn ~ spojene:", spojene)
+    }
+    ziskjHodn(ky1,ky2)
     /*
     for (const a in arraySimple) {
         if (Object.hasOwnProperty.call(arraySimple, a)) {
@@ -205,4 +213,4 @@ spracovanieDát.__ziskjHodnZArr = function() {
     }
     */
 }
-console.log(spracovanieDát.__ziskjHodnZArr());
+spracovanieDát.__ziskjHodnZArr()
