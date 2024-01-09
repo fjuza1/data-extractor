@@ -209,16 +209,5 @@ spracovanieDát.__ziskjHodnZArr = function() {
                 let string = `${item}_${key2[i]}`
             string = new Set(string.split('_').toString().split(',').join('_'))*/
     const zbavSa = ziskjHodn(ky1,ky2)
-    const [...sdas] = zbavSa
-    console.log("🚀 ~ sdas:", sdas)
-    /*
-    for (const a in arraySimple) {
-        if (Object.hasOwnProperty.call(arraySimple, a)) {
-            const [element] = arraySimple[a];
-            const pouzivam = this.__ziskjHodnZArr(this.__menNazKlucZlozObj(odpoved))
-            console.log("🚀 ~ file: skuska_postman.js:201 ~ pouzivam:", pouzivam)
-        }
-    }
-    */
 }
 spracovanieDát.__ziskjHodnZArr()
