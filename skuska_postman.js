@@ -109,6 +109,9 @@ spracovanieDát.__ocislujDuplikaty = function(arrParam) {
     let cislo = 1;
     return arrParam.reduce((acc, arr) => acc.includes(arr) ? acc.concat(arr + cislo++) : acc.concat(arr), [])
 }
+spracovanieDát.__vymazDuplikatyString = function(){
+    
+}
 spracovanieDát.__zjednotitData = function(result) {
     const zozbieraneData = ZískDátZoServisov.__ziskjHodnKlucDoArr(result)
     const arrKluc = [];
