@@ -205,16 +205,12 @@ spracovanieDát.__ziskjHodnZArr = function() {
         const [...spojene] = key1.map((item, i)=>`${item}_${key2[i]}`)
         return spojene
     }
-    const zbavSa = ziskjHodn(ky1,ky2)
-    console.log("🚀 ~ zbavSa:", zbavSa)
     /*
-    for (const a in arraySimple) {
-        if (Object.hasOwnProperty.call(arraySimple, a)) {
-            const [element] = arraySimple[a];
-            const pouzivam = this.__ziskjHodnZArr(this.__menNazKlucZlozObj(odpoved))
-            console.log("🚀 ~ file: skuska_postman.js:201 ~ pouzivam:", pouzivam)
-        }
-    }
-    */
+                let string = `${item}_${key2[i]}`
+            string = new Set(string.split('_').toString().split(',').join('_'))*/
+
+    const zbavSa = ziskjHodn(ky1,ky2)
+    const [...sdas] = zbavSa
+    console.log("🚀 ~ sdas:", sdas)
 }
 spracovanieDát.__ziskjHodnZArr()
