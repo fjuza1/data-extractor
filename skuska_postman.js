@@ -1,5 +1,6 @@
 'use strict'
 let odpoved = {
+    uponUs: ["wintertime", "sunshine", "The time is now"],
     user: {
         name: {
             first: "Bob",
@@ -13,8 +14,8 @@ let odpoved = {
         }
     },
     preferences: {
-        colors: ["blue", "green", "red"],
-        fruits: ['banana', 'apple', 'peach'],
+        colors: ["modr", "zelk", "cer"],
+        fruits: ['neviem', 'co', 'tera'],
         language: "JavaScript",
         theme: "dark"
     },
@@ -119,6 +120,10 @@ spracovanieDát.__zjednotitData = function(result) {
     zozbieraneData.forEach(obj => {
         if (obj === undefined || obj === null) return
         Object.entries(obj).forEach(([key, val]) => {
+            if (Array.isArray(val)) {
+                this.__nieJePoleObjektov(val) ? val : []
+
+            }
             while (typeof val === 'object') {
                 for (const key in val) {
                     if (Object.hasOwnProperty.call(val, key)) {
@@ -165,6 +170,7 @@ spracovanieDát.__ziskajObjektPodlaHodnoty = function(odpoved, hladanaHodnota) {
 spracovanieDát.__jeJednObj = function(obj) {
     return Object.values(obj).map(element => (typeof element).match(/(number)|(boolean)|(string)/))
 }
+/*
 spracovanieDát.__menNazKlucZlozObj = function(res) {
     let array = []
     let objektove = []
@@ -205,9 +211,7 @@ spracovanieDát.__ziskjHodnZArr = function() {
         const [...spojene] = key1.map((item, i)=>`${item}_${key2[i]}`)
         return spojene
     }
-    /*
-                let string = `${item}_${key2[i]}`
-            string = new Set(string.split('_').toString().split(',').join('_'))*/
     const zbavSa = ziskjHodn(ky1,ky2)
 }
 spracovanieDát.__ziskjHodnZArr()
+*/
