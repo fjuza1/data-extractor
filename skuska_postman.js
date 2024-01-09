@@ -208,8 +208,11 @@ spracovanieDát.__ziskjHodnZArr = function() {
     const ziskjHodn = (ky1,ky2)=>{
         const key1 = ky1.flat();
         const key2 = ky2.flat();
-        const [...spojene] = key1.map((item, i)=>`${item}_${key2[i]}`)
-        return spojene
+        const spojene = key1.map((item, i)=>{
+            let string = `${item}_${key2[i]}`
+            string = Array.from(new Set(Object.values(string.split('_'))))
+            console.log("🚀 ~ file: skuska_postman.js:208 ~ spojene ~ string:", string)
+        })
     }
     const zbavSa = ziskjHodn(ky1,ky2)
 }
