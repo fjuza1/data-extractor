@@ -1,7 +1,5 @@
 'use strict'
 let odpoved = {
-    fruits: ['sdadsa', 'trtrtrt', 'pdpdppd'],
-    bitches: ['bananasssz', 'applesssssssz', 'peachessz'],
     user: {
         name: {
             first: "Bob",
@@ -193,21 +191,18 @@ spracovanieDát.__menNazKlucZlozObj = function(res) {
     });
     return array
 }
-spracovanieDát.__ziskjHodnZArr = function(arraySimple){
+spracovanieDát.__ziskjHodnZArr = function() {
+    const ky1 = this.__menNazKlucZlozObj(odpoved)
+    const ky2 = this.__zjednotitData(odpoved)[0]
+    const val = this.__zjednotitData(odpoved)[1]
+    /*
     for (const a in arraySimple) {
         if (Object.hasOwnProperty.call(arraySimple, a)) {
             const [element] = arraySimple[a];
-            console.log("🚀 ~ file: skuska_postman.js:200 ~ element:", element)
+            const pouzivam = this.__ziskjHodnZArr(this.__menNazKlucZlozObj(odpoved))
+            console.log("🚀 ~ file: skuska_postman.js:201 ~ pouzivam:", pouzivam)
         }
     }
+    */
 }
-/*
-console.log(spracovanieDát.__menNazKlucZlozObj(odpoved));
-console.log(spracovanieDát.__zjednotitData(odpoved)[0])
-console.log(spracovanieDát.__zjednotitData(odpoved)[1])
-*/
-/*
-console.log(spracovanieDát.__zjednotitData(odpoved)[0].length)
-console.log(spracovanieDát.__zjednotitData(odpoved)[1].length)
-console.log(spracovanieDát.__menNazKlucZlozObj(odpoved).length);
-*/
+console.log(spracovanieDát.__ziskjHodnZArr());
