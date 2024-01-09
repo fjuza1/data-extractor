@@ -92,22 +92,6 @@ const ZískDátZoServisov = {
         })
         return arr.slice(elementArr.indexOf(true) + 1)
     },
-    __ziskajObjektPodlaHodnoty(odpoved, hladanaHodnota) {
-        const keys = Object.keys(odpoved);
-        for (const key of keys) {
-            const value = odpoved[key];
-            if (value === hladanaHodnota) {
-                return { [key]: value };
-            } if (typeof value === 'object' && value !== null) {
-                const vnoreneRes = this.__ziskajObjektPodlaHodnoty(value, hladanaHodnota);
-                if (vnoreneRes) {
-                    const c = { [key]: vnoreneRes }
-                }
-            }
-
-        }
-        return null;
-    },
 };
 const spracovanieDát = Object.create(ZískDátZoServisov)
 spracovanieDát.__ocislujDuplikaty = function(arrParam) {
@@ -143,6 +127,41 @@ spracovanieDát.__zjednotitData = function(result) {
     });
     return [arrKluc, arrHodnota]
 }
-const data = spracovanieDát.__zjednotitData(odpoved)
-const foundObject = ZískDátZoServisov.__ziskajObjektPodlaHodnoty(odpoved, data[1][0]);
-//console.log("🚀 ~ file: skuska_postman.js:134 ~ foundObject:", foundObject)
+spracovanieDát.__ziskajObjektPodlaHodnoty = function (odpoved, hladanaHodnota) {
+    const keys = Object.keys(odpoved);
+    for (const key of keys) {
+        const value = odpoved[key];
+        if (value === hladanaHodnota) {
+            return { [key]: value };
+        } if (typeof value === 'object' && value !== null) {
+            const vnoreneRes = this.__ziskajObjektPodlaHodnoty(value, hladanaHodnota);
+            if (vnoreneRes) {
+                return{ [key]: vnoreneRes }
+            }
+        }
+
+    }
+    return null;
+}
+spracovanieDát.__poskladajNazKluc = function(res) {
+    let array = []
+    const naVyhladanie = this.__zjednotitData(res)[1]
+    const vyhladane = naVyhladanie.map(item => this.__ziskajObjektPodlaHodnoty(res, item))
+    Object.entries(vyhladane).forEach(([key, val]) => {
+        for (const kys in val) {
+            if (Object.hasOwnProperty.call(val, kys)) {
+                const element = val[kys];
+                for (const ky in element) {
+                    if (Object.hasOwnProperty.call(element, ky)) {
+
+                        if (!isNaN(+ky)) return
+                    }
+                    array.push(`${kys}_${ky}`)
+                }
+            }
+        }
+
+    });
+    return array
+}
+console.log(spracovanieDát.__poskladajNazKluc(odpoved));
