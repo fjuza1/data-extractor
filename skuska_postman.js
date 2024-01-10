@@ -1,8 +1,9 @@
 'use strict'
 let odpoved = {
     uponUs: ["wintertime", "sunshine", "The time is now"],
-    status:{
-        nameStatus:'sdad'
+    name: {
+        lust: "you",
+        bust: "Tedious"
     },
     user: {
         name: {
@@ -68,28 +69,14 @@ const ZískDátZoServisov = {
             .reduce((acc, cur) => typeof cur === 'object' ? [...acc, cur] : acc, []);
     },
     __ziskajJednoducheObjekty(odpoved) {
-        const array = [];
-        this.__ziskajObjektoveHodnoty(odpoved)
-        // BUG vracia sa aj nejednoduche obj, uprav cast kodu, ktoru zatial napisanu:&& typeof arr[i] !== 'object'
-            .reduce((acc, cur,i,arr) => typeof cur === 'object'&& !Array.isArray(cur)? [...acc, cur] : acc, [])
-            .forEach((obj) => {
-                if (obj !== undefined && obj !== null) {
-                    Object.entries(obj).forEach(([key, value]) => {
-                        if (value !== undefined && value !== null) {
-                            array.push({
-                                [key]: value
-                            });
-                        }
-                    });
-                }
-            });
-        return array;
+        return this.__ziskajObjektoveHodnoty(odpoved)
+            .reduce((acc, cur, i, arr) => typeof cur === 'object' && !Array.isArray(cur) && Object.values(cur).every(value => typeof value !== 'object') ? [...acc, cur] : acc, [])
     },
     __ziskjHodnKlucDoArr(odpoved) {
         const primitivne = [this.__ziskajPrimitivneDoObjektu(odpoved)];
         const vnoreneObjekty = this.__ziskajNestedObj(odpoved)
+        console.log("🚀 ~ __ziskjHodnKlucDoArr ~ vnoreneObjekty:", vnoreneObjekty)
         const jednoducheObjekty = this.__ziskajJednoducheObjekty(odpoved)
-        console.log("🚀 ~ __ziskjHodnKlucDoArr ~ jednoducheObjekty:", jednoducheObjekty)
         let jednoducheArr = Object.values(odpoved)
             .flatMap(element => {
                 if (!element) return
@@ -102,7 +89,6 @@ const ZískDátZoServisov = {
         return arr.reduce((acc, cur) => !Object.keys(cur).length < 1 ? [...acc, cur] : acc, []);
     },
 };
-ZískDátZoServisov.__ziskjHodnKlucDoArr(odpoved)
 const spracovanieDát = Object.create(ZískDátZoServisov)
 spracovanieDát.__ocislujDuplikaty = function(arrParam) {
     let cislo = 1;

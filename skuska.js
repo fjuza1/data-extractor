@@ -76,4 +76,28 @@ function myGeeks() {
 }
 myGeeks()
 */
-let array=[{nameStatus:"sdad"},{name:{first:"Bob",last:"Johnson"},age:35,address:{street:"789 Pine St",city:"Complex City",zip:"98765"}}];
+//item=>typeof item !== 'object'?item:''
+/*
+const data = [
+  { nameStatus: 'sdad' },
+  { name: { first: 'Bob', last: 'Johnson' } },
+  { age: 35 },
+  { address: { street: '789 Pine St', city: 'Complex City', zip: '98765' } },
+  { colors: ['modr', 'zelk', 'cer'] },
+  { fruits: ['neviem', 'co', 'tera'] },
+  { language: 'JavaScript' },
+  { theme: 'dark' }
+];
+
+const filteredData = data.reduce((accumulator, currentObject) => {
+  // Check if the object has a property with a string value
+  if (Object.values(currentObject).every(value => typeof value !== 'object')) {
+    accumulator.push(currentObject);
+  }
+  return accumulator;
+}, []);
+
+console.log(filteredData);
+const data = ZískDátZoServisov.__ziskajJednoducheObjekty(odpoved)
+console.log("🚀 ~ data:", data)
+*/
