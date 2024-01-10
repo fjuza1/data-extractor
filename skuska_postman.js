@@ -75,7 +75,6 @@ const ZískDátZoServisov = {
     __ziskjHodnKlucDoArr(odpoved) {
         const primitivne = [this.__ziskajPrimitivneDoObjektu(odpoved)];
         const vnoreneObjekty = this.__ziskajNestedObj(odpoved)
-        console.log("🚀 ~ __ziskjHodnKlucDoArr ~ vnoreneObjekty:", vnoreneObjekty)
         const jednoducheObjekty = this.__ziskajJednoducheObjekty(odpoved)
         let jednoducheArr = Object.values(odpoved)
             .flatMap(element => {
