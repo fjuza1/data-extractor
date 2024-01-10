@@ -83,6 +83,10 @@ const ZískDátZoServisov = {
         const primitivne = this.__ziskajPrimitivneDoObjektu(odpoved);
         const vnoreneObjekty = this.__ziskajNestedObj(odpoved)
         const jednoducheObjekty = this.__ziskajJednoducheObjekty(odpoved)
+        const lord= this.__ziskajObjektoveHodnoty(odpoved)
+        .reduce((acc,cur)=>!Array.isArray(cur) && this.__ziskajObjektoveHodnoty(cur).some(value => Array.isArray(value))?[...acc, cur] : acc, [])
+        //.filter(el=>this.__nieJePoleObjektov(el)?el:el)
+        console.log("🚀 ~ __ziskjHodnKlucDoArr ~ lord:", lord)
         let jednoducheArr = this.__ziskjJednTypyDatPoli(odpoved)
         let arr;
         primitivne.length > 0 || vnoreneObjekty.length > 0 || jednoducheObjekty.length > 0 ?
@@ -91,7 +95,7 @@ const ZískDátZoServisov = {
         return arr.reduce((acc, cur) => !Object.keys(cur).length < 1 ? [...acc, cur] : acc, []);
     },
 };
-console.log(ZískDátZoServisov.__ziskjHodnKlucDoArr(odpoved));
+ZískDátZoServisov.__ziskjHodnKlucDoArr(odpoved)
 const spracovanieDát = Object.create(ZískDátZoServisov)
 spracovanieDát.__zjednotitData = function(result) {
     const zozbieraneData = ZískDátZoServisov.__ziskjHodnKlucDoArr(result)
