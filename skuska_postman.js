@@ -1,6 +1,9 @@
 'use strict'
 let odpoved = {
     uponUs: ["wintertime", "sunshine", "The time is now"],
+    status:{
+        nameStatus:'sdad'
+    },
     user: {
         name: {
             first: "Bob",
@@ -48,7 +51,7 @@ const ZískDátZoServisov = {
         return typeof obj !== 'object'
     },
     __nieJePoleObjektov(array) {
-        if(Array.isArray(array)) return array.every(element => typeof element !== 'object')
+        if (Array.isArray(array)) return array.every(element => typeof element !== 'object')
     },
     __ziskajPrimitivneDoObjektu(obj) {
         let objekt = {};
@@ -62,12 +65,13 @@ const ZískDátZoServisov = {
     __ziskajNestedObj(res) {
         return this.__ziskajObjektoveHodnoty(res).map(v => v instanceof Object ? this.__ziskajObjektoveHodnoty(v) : [v])
             .reduce((acc, next) => acc.concat(...next), [])
-            .filter(obj => typeof obj === 'object')
+            .reduce((acc, cur) => typeof cur === 'object' ? [...acc, cur] : acc, []);
     },
     __ziskajJednoducheObjekty(odpoved) {
         const array = [];
         this.__ziskajObjektoveHodnoty(odpoved)
-            .filter((polozka) => typeof polozka === 'object' && !Array.isArray(polozka))
+        // BUG vracia sa aj nejednoduche obj, uprav cast kodu, ktoru zatial napisanu:&& typeof arr[i] !== 'object'
+            .reduce((acc, cur,i,arr) => typeof cur === 'object'&& !Array.isArray(cur)? [...acc, cur] : acc, [])
             .forEach((obj) => {
                 if (obj !== undefined && obj !== null) {
                     Object.entries(obj).forEach(([key, value]) => {
@@ -85,26 +89,26 @@ const ZískDátZoServisov = {
         const primitivne = [this.__ziskajPrimitivneDoObjektu(odpoved)];
         const vnoreneObjekty = this.__ziskajNestedObj(odpoved)
         const jednoducheObjekty = this.__ziskajJednoducheObjekty(odpoved)
+        console.log("🚀 ~ __ziskjHodnKlucDoArr ~ jednoducheObjekty:", jednoducheObjekty)
         let jednoducheArr = Object.values(odpoved)
             .flatMap(element => {
-                    if (!element) return
-                    return this.__nieJePoleObjektov(element) ? [...element] : []
-                }
-            )
+                if (!element) return
+                return this.__nieJePoleObjektov(element) ? [...element] : []
+            })
         let arr;
         primitivne.length > 0 || vnoreneObjekty.length > 0 || jednoducheObjekty.length > 0 ?
             arr = [...primitivne, ...vnoreneObjekty, ...jednoducheObjekty] : ''
         if (jednoducheArr.length > 0) arr = [...arr, jednoducheArr]
-        return arr.reduce((acc, cur) => !Object.keys(cur).length<1? [...acc, cur] : acc, []);
+        return arr.reduce((acc, cur) => !Object.keys(cur).length < 1 ? [...acc, cur] : acc, []);
     },
 };
-console.log(ZískDátZoServisov.__ziskjHodnKlucDoArr(odpoved));
+ZískDátZoServisov.__ziskjHodnKlucDoArr(odpoved)
 const spracovanieDát = Object.create(ZískDátZoServisov)
 spracovanieDát.__ocislujDuplikaty = function(arrParam) {
     let cislo = 1;
     return arrParam.reduce((acc, arr) => acc.includes(arr) ? acc.concat(arr + cislo++) : acc.concat(arr), [])
 }
-spracovanieDát.__vymazDuplikatyString = function(){
+spracovanieDát.__vymazDuplikatyString = function() {
 
 }
 spracovanieDát.__zjednotitData = function(result) {

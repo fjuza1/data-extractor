@@ -76,3 +76,4 @@ function myGeeks() {
 }
 myGeeks()
 */
+let array=[{nameStatus:"sdad"},{name:{first:"Bob",last:"Johnson"},age:35,address:{street:"789 Pine St",city:"Complex City",zip:"98765"}}];
