@@ -101,3 +101,47 @@ console.log(filteredData);
 const data = ZískDátZoServisov.__ziskajJednoducheObjekty(odpoved)
 console.log("🚀 ~ data:", data)
 */
+let odpoved = {
+    uponUs: ["wintertime", "sunshine", "The time is now"],
+    name: {
+        lust: "you",
+        bust: "Tedious"
+    },
+    user: {
+        name: {
+            first: "Bob",
+            last: "Johnson"
+        },
+        age: 35,
+        address: {
+            street: "789 Pine St",
+            city: "Complex City",
+            zip: "98765"
+        }
+    },
+    preferences: {
+        colors: ["modr", "zelk", "cer"],
+        fruits: ['neviem', 'co', 'tera'],
+        language: "JavaScript",
+        theme: "dark"
+    },
+    // isDeveloper: true,
+    // isNOTDeveloper: false,
+    projects: [{
+            name: "Project A",
+            status: "completed"
+        },
+        {
+            name: "Project B",
+            status: "in progress"
+        },
+        {
+            name: "Project C",
+            status: "planning"
+        }
+    ],
+}
+const costr = 
+Object.values(odpoved)
+.reduce((acc,cur)=>typeof cur === 'object'&& !Array.isArray(cur) && Object.values(cur).some(cur=>Array.isArray(cur) )?[...acc,cur]:acc ,[])
+console.log("🚀 ~ costr:", costr)
