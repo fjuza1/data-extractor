@@ -68,7 +68,7 @@ const ZískDátZoServisov = {
                 const key = obj[polozka];
                 this.__jePrimitivna(key) ? objekt[polozka] = key : null
             })
-        return objekt
+        return [objekt]
     },
     __ziskajNestedObj(res) {
         return this.__ziskajObjektoveHodnoty(res).map(v => v instanceof Object ? this.__ziskajObjektoveHodnoty(v) : [v])
@@ -80,7 +80,7 @@ const ZískDátZoServisov = {
             .reduce((acc, cur, i, arr) => typeof cur === 'object' && !Array.isArray(cur) && this.__ziskajObjektoveHodnoty(cur).every(value => typeof value !== 'object') ? [...acc, cur] : acc, [])
     },
     __ziskjHodnKlucDoArr(odpoved) {
-        const primitivne = [this.__ziskajPrimitivneDoObjektu(odpoved)];
+        const primitivne = this.__ziskajPrimitivneDoObjektu(odpoved);
         const vnoreneObjekty = this.__ziskajNestedObj(odpoved)
         const jednoducheObjekty = this.__ziskajJednoducheObjekty(odpoved)
         let jednoducheArr = this.__ziskjJednTypyDatPoli(odpoved)
@@ -91,15 +91,8 @@ const ZískDátZoServisov = {
         return arr.reduce((acc, cur) => !Object.keys(cur).length < 1 ? [...acc, cur] : acc, []);
     },
 };
-//console.log(ZískDátZoServisov.__ziskjHodnKlucDoArr(odpoved));
+console.log(ZískDátZoServisov.__ziskjHodnKlucDoArr(odpoved));
 const spracovanieDát = Object.create(ZískDátZoServisov)
-spracovanieDát.__ocislujDuplikaty = function(arrParam) {
-    let cislo = 1;
-    return arrParam.reduce((acc, arr) => acc.includes(arr) ? acc.concat(arr + cislo++) : acc.concat(arr), [])
-}
-spracovanieDát.__vymazDuplikatyString = function() {
-
-}
 spracovanieDát.__zjednotitData = function(result) {
     const zozbieraneData = ZískDátZoServisov.__ziskjHodnKlucDoArr(result)
     const arrKluc = [];
@@ -205,3 +198,10 @@ spracovanieDát.__ziskjHodnZArr = function() {
 }
 spracovanieDát.__ziskjHodnZArr()
 */
+spracovanieDát.__ocislujDuplikaty = function(arrParam) {
+    let cislo = 1;
+    return arrParam.reduce((acc, arr) => acc.includes(arr) ? acc.concat(arr + cislo++) : acc.concat(arr), [])
+}
+spracovanieDát.__vymazDuplikatyString = function() {
+
+}
