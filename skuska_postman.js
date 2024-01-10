@@ -91,7 +91,7 @@ const ZískDátZoServisov = {
         return arr.reduce((acc, cur) => !Object.keys(cur).length < 1 ? [...acc, cur] : acc, []);
     },
 };
-//console.log(ZískDátZoServisov.__ziskjJednTypyDatPoli(odpoved));
+//console.log(ZískDátZoServisov.__ziskjHodnKlucDoArr(odpoved));
 const spracovanieDát = Object.create(ZískDátZoServisov)
 spracovanieDát.__ocislujDuplikaty = function(arrParam) {
     let cislo = 1;
