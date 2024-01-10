@@ -48,7 +48,7 @@ const ZískDátZoServisov = {
         return typeof obj !== 'object'
     },
     __nieJePoleObjektov(array) {
-        return array.every(element => typeof element !== 'object')
+        if(Array.isArray(array)) return array.every(element => typeof element !== 'object')
     },
     __ziskajPrimitivneDoObjektu(obj) {
         let objekt = {};
@@ -85,13 +85,12 @@ const ZískDátZoServisov = {
         const primitivne = [this.__ziskajPrimitivneDoObjektu(odpoved)];
         const vnoreneObjekty = this.__ziskajNestedObj(odpoved)
         const jednoducheObjekty = this.__ziskajJednoducheObjekty(odpoved)
-        const jednoducheArr = Object.values(odpoved)
+        let jednoducheArr = Object.values(odpoved)
             .flatMap(element => {
-                if (Array.isArray(element)) {
                     if (!element) return
                     return this.__nieJePoleObjektov(element) ? [...element] : []
                 }
-            }).filter(item => typeof item !== 'undefined')
+            )
         let arr;
         primitivne.length > 0 || vnoreneObjekty.length > 0 || jednoducheObjekty.length > 0 ?
             arr = [...primitivne, ...vnoreneObjekty, ...jednoducheObjekty] : ''
