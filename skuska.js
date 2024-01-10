@@ -62,6 +62,17 @@ const duplikatyPrec = result.reduce((acc,cur) =>acc.includes(cur)?[...acc,cur]:a
  /*
  const nieJePoleObjektov = (array=>array.every(element => typeof element !=='object'))
  */
+/*
 let x = ' preferences_language_language'
 console.log(new Set(x.split('_')))
  x = Array.from(new Set(x.split('_'))).toString().split(',').join('_')
+ */
+
+/*
+ let array = [{a:'b'}, {}, {}, {}];
+function myGeeks() {
+ let filtered = array.reduce((acc, cur) => !Object.keys(cur).length<1? [...acc, cur] : acc, []);
+ console.log(filtered)
+}
+myGeeks()
+*/

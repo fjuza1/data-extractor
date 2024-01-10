@@ -95,15 +95,10 @@ const ZískDátZoServisov = {
         primitivne.length > 0 || vnoreneObjekty.length > 0 || jednoducheObjekty.length > 0 ?
             arr = [...primitivne, ...vnoreneObjekty, ...jednoducheObjekty] : ''
         if (jednoducheArr.length > 0) arr = [...arr, jednoducheArr]
-        const elementArr = []
-        arr.forEach(element => {
-            if (element === undefined || element === null) return
-            const oibjekty = this.__ziskajObjektoveHodnoty(element).length === 0
-            elementArr[elementArr.length] = oibjekty
-        })
-        return arr.slice(elementArr.indexOf(true) + 1)
+        return arr.reduce((acc, cur) => !Object.keys(cur).length<1? [...acc, cur] : acc, []);
     },
 };
+console.log(ZískDátZoServisov.__ziskjHodnKlucDoArr(odpoved));
 const spracovanieDát = Object.create(ZískDátZoServisov)
 spracovanieDát.__ocislujDuplikaty = function(arrParam) {
     let cislo = 1;
