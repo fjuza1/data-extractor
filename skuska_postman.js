@@ -55,7 +55,7 @@ const ZískDátZoServisov = {
         if (Array.isArray(array)) return array.every(element => typeof element !== 'object')
     },
     __ziskjJednTypyDatPoli(odpoved) {
-        return Object.values(odpoved)
+        return this.__ziskajObjektoveHodnoty(odpoved)
         .flatMap(element => {
             if (!element) return
             return this.__nieJePoleObjektov(element) ? [...element] : []
@@ -77,7 +77,7 @@ const ZískDátZoServisov = {
     },
     __ziskajJednoducheObjekty(odpoved) {
         return this.__ziskajObjektoveHodnoty(odpoved)
-            .reduce((acc, cur, i, arr) => typeof cur === 'object' && !Array.isArray(cur) && Object.values(cur).every(value => typeof value !== 'object') ? [...acc, cur] : acc, [])
+            .reduce((acc, cur, i, arr) => typeof cur === 'object' && !Array.isArray(cur) && this.__ziskajObjektoveHodnoty(cur).every(value => typeof value !== 'object') ? [...acc, cur] : acc, [])
     },
     __ziskjHodnKlucDoArr(odpoved) {
         const primitivne = [this.__ziskajPrimitivneDoObjektu(odpoved)];
@@ -91,6 +91,7 @@ const ZískDátZoServisov = {
         return arr.reduce((acc, cur) => !Object.keys(cur).length < 1 ? [...acc, cur] : acc, []);
     },
 };
+//console.log(ZískDátZoServisov.__ziskjJednTypyDatPoli(odpoved));
 const spracovanieDát = Object.create(ZískDátZoServisov)
 spracovanieDát.__ocislujDuplikaty = function(arrParam) {
     let cislo = 1;
@@ -154,7 +155,7 @@ spracovanieDát.__ziskajObjektPodlaHodnoty = function(odpoved, hladanaHodnota) {
     return null;
 }
 spracovanieDát.__jeJednObj = function(obj) {
-    return Object.values(obj).map(element => (typeof element).match(/(number)|(boolean)|(string)/))
+    return this.__ziskajObjektoveHodnoty(obj).map(element => (typeof element).match(/(number)|(boolean)|(string)/))
 }
 /*
 spracovanieDát.__menNazKlucZlozObj = function(res) {
