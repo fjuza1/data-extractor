@@ -85,8 +85,6 @@ const ZískDátZoServisov = {
         const jednoducheObjekty = this.__ziskajJednoducheObjekty(odpoved)
         const lord= this.__ziskajObjektoveHodnoty(odpoved)
         .reduce((acc,cur)=>!Array.isArray(cur) && this.__ziskajObjektoveHodnoty(cur).some(value => Array.isArray(value))?[...acc, cur] : acc, [])
-        //.filter(el=>this.__nieJePoleObjektov(el)?el:el)
-        console.log("🚀 ~ __ziskjHodnKlucDoArr ~ lord:", lord)
         let jednoducheArr = this.__ziskjJednTypyDatPoli(odpoved)
         let arr;
         primitivne.length > 0 || vnoreneObjekty.length > 0 || jednoducheObjekty.length > 0 ?
@@ -95,7 +93,6 @@ const ZískDátZoServisov = {
         return arr.reduce((acc, cur) => !Object.keys(cur).length < 1 ? [...acc, cur] : acc, []);
     },
 };
-ZískDátZoServisov.__ziskjHodnKlucDoArr(odpoved)
 const spracovanieDát = Object.create(ZískDátZoServisov)
 spracovanieDát.__zjednotitData = function(result) {
     const zozbieraneData = ZískDátZoServisov.__ziskjHodnKlucDoArr(result)
@@ -195,17 +192,16 @@ spracovanieDát.__ziskjHodnZArr = function() {
         const spojene = key1.map((item, i)=>{
             let string = `${item}_${key2[i]}`
             string = Array.from(new Set(Object.values(string.split('_'))))
-            console.log("🚀 ~ file: skuska_postman.js:208 ~ spojene ~ string:", string)
+            return string
         })
+        return spojene
     }
     const zbavSa = ziskjHodn(ky1,ky2)
+    console.log("🚀 ~ zbavSa:", zbavSa)
 }
-spracovanieDát.__ziskjHodnZArr()
+console.log(spracovanieDát.__ziskjHodnZArr());
 */
 spracovanieDát.__ocislujDuplikaty = function(arrParam) {
     let cislo = 1;
     return arrParam.reduce((acc, arr) => acc.includes(arr) ? acc.concat(arr + cislo++) : acc.concat(arr), [])
-}
-spracovanieDát.__vymazDuplikatyString = function() {
-
 }
