@@ -56,10 +56,10 @@ const ZískDátZoServisov = {
     },
     __ziskjJednTypyDatPoli(odpoved) {
         return this.__ziskajObjektoveHodnoty(odpoved)
-        .flatMap(element => {
-            if (!element) return
-            return this.__nieJePoleObjektov(element) ? [...element] : []
-        })
+            .flatMap(element => {
+                if (!element) return
+                return this.__nieJePoleObjektov(element) ? [...element] : []
+            })
     },
     __ziskajPrimitivneDoObjektu(obj) {
         let objekt = {};
@@ -83,8 +83,8 @@ const ZískDátZoServisov = {
         const primitivne = this.__ziskajPrimitivneDoObjektu(odpoved);
         const vnoreneObjekty = this.__ziskajNestedObj(odpoved)
         const jednoducheObjekty = this.__ziskajJednoducheObjekty(odpoved)
-        const lord= this.__ziskajObjektoveHodnoty(odpoved)
-        .reduce((acc,cur)=>!Array.isArray(cur) && this.__ziskajObjektoveHodnoty(cur).some(value => Array.isArray(value))?[...acc, cur] : acc, [])
+        const lord = this.__ziskajObjektoveHodnoty(odpoved)
+            .reduce((acc, cur) => !Array.isArray(cur) && this.__ziskajObjektoveHodnoty(cur).some(value => Array.isArray(value)) ? [...acc, cur] : acc, [])
         let jednoducheArr = this.__ziskjJednTypyDatPoli(odpoved)
         let arr;
         primitivne.length > 0 || vnoreneObjekty.length > 0 || jednoducheObjekty.length > 0 ?
