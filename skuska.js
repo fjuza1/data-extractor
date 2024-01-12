@@ -47,7 +47,7 @@ const vsetko  = cisloOddelene+=cislo
 console.log("🚀 ~ file: skuska.js:44 ~ vsetko:", vsetko)// console.log("🚀 ~ file: skuska_postman.js:99 ~ bios:", bios);
 const string = 'svatych';
 // posledne je cislo
-const poslednyDatovyTyp = [...string].findLast(element => isNaN(+element));
+const poslednyDatovyTyp = [...string].findLast(innerElement => isNaN(+innerElement));
 // console.log("🚀 ~ file: skuska_postman.js:97 ~ poslednyDatovyTyp:", poslednyDatovyTyp)
 // je cilso posledne alebo nie je
 // console.log(!isNaN(poslednyDatovyTyp));
@@ -60,7 +60,7 @@ const duplikatyPrec = result.reduce((acc,cur) =>acc.includes(cur)?[...acc,cur]:a
   const [objekt] = Object.getOwnPropertyNames(obj)
   */
  /*
- const nieJePoleObjektov = (array=>array.every(element => typeof element !=='object'))
+ const nieJePoleObjektov = (array=>array.every(innerElement => typeof innerElement !=='object'))
  */
 /*
 let x = ' preferences_language_language'
@@ -122,6 +122,19 @@ let odpoved = {
     preferences: {
         colors: ["modr", "zelk", "cer"],
         fruits: ['neviem', 'co', 'tera'],
+        projects: [{
+            name: "Project A",
+            status: "completed"
+        },
+        {
+            name: "Project B",
+            status: "in progress"
+        },
+        {
+            name: "Project C",
+            status: "planning"
+        }
+    ],
         language: "JavaScript",
         theme: "dark"
     },
@@ -141,7 +154,30 @@ let odpoved = {
         }
     ],
 }
-const costr = 
-Object.values(odpoved)
-.reduce((acc,cur)=>typeof cur === 'object'&& !Array.isArray(cur) && Object.values(cur).some(cur=>Array.isArray(cur) )?[...acc,cur]:acc ,[])
-console.log("🚀 ~ costr:", costr)
+const jednArr = []
+const zlozeneArr = []
+const costr = Object.values(odpoved)
+    .reduce((acc, cur) =>
+        typeof cur === 'object' && !Array.isArray(cur) &&
+        Object.values(cur).some(inner => Array.isArray(inner)) ? [...acc, cur] : acc, [])
+    .forEach(element => {
+        Object.values(element).forEach(innerElement => {
+            if (Array.isArray(innerElement) && Object.values(innerElement).every(value => typeof value !== 'object')) {
+                jednArr[jednArr.length] = innerElement
+            }
+        });
+    });
+    const zlozArr = Object.values(odpoved)
+    .reduce((acc, cur) =>
+        typeof cur === 'object' && !Array.isArray(cur) &&
+        Object.values(cur).some(inner => Array.isArray(inner)) ? [...acc, cur] : acc, [])
+    .forEach(element => {
+        Object.values(element).forEach(innerElement => {
+            if (Array.isArray(innerElement) && Object.values(innerElement).every(value => typeof value === 'object')) {
+                zlozeneArr[zlozeneArr.length] = innerElement
+            }
+        });
+    });
+    //zlozeneArr
+    console.log(jednArr.flat());
+console.log(zlozeneArr.flat());
