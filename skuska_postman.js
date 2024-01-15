@@ -98,7 +98,6 @@ const ZískDátZoServisov = {
         return arr.reduce((acc, cur) => cur && !Object.keys(cur).length < 1 ? [...acc, cur] : acc, []);
     },
 };
-console.log(ZískDátZoServisov.__ziskjHodnKlucDoArr(odpoved));
 const spracovanieDát = Object.create(ZískDátZoServisov)
 spracovanieDát.__zjednotitData = function(result) {
     const zozbieraneData = ZískDátZoServisov.__ziskjHodnKlucDoArr(result)
