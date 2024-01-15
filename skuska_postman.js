@@ -1,44 +1,247 @@
 'use strict'
-let odpoved = {
-    uponUs: ["wintertime", "sunshine", "The time is now"],
-    name: {
-        lust: "you",
-        bust: "Tedious"
+let odpoved = 
+[
+    {
+        "cisTypSviatkuId": 2,
+        "platnostOd": "0001-01-01T00:00:00",
+        "platnostDo": "0001-01-01T00:00:00",
+        "vytvoril": "0e984725-c51c-4bf4-9960-e1c80e27aba0",
+        "datumVytvorenia": "2023-12-15T00:00:00",
+        "zmenil": "00000000-0000-0000-0000-000000000000",
+        "datumZmeny": "0001-01-01T00:00:00",
+        "id": 1,
+        "nazov": "Deň vzniku Slovenskej republiky 1",
+        "poznamka": null
     },
-    user: {
-        name: {
-            first: "Bob",
-            last: "Johnson"
-        },
-        age: 35,
-        address: {
-            street: "789 Pine St",
-            city: "Complex City",
-            zip: "98765"
-        }
+    {
+        "cisTypSviatkuId": 1,
+        "platnostOd": "0001-01-01T00:00:00",
+        "platnostDo": "2024-01-03T00:00:00",
+        "vytvoril": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "datumVytvorenia": "2023-12-20T00:00:00",
+        "zmenil": "00000000-0000-0000-0000-000000000000",
+        "datumZmeny": "0001-01-01T00:00:00",
+        "id": 3,
+        "nazov": "Novy Rok",
+        "poznamka": 'null'
     },
-    preferences: {
-        colors: ["modr", "zelk", "cer"],
-        fruits: ['neviem', 'co', 'tera'],
-        language: "JavaScript",
-        theme: "dark"
+    {
+        "cisTypSviatkuId": 1,
+        "platnostOd": "0001-01-01T00:00:00",
+        "platnostDo": "2024-01-10T00:00:00",
+        "vytvoril": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "datumVytvorenia": "2023-12-20T00:00:00",
+        "zmenil": "0b733d55-9454-49d2-9411-3b87ba1b88c4",
+        "datumZmeny": "2024-01-10T11:48:34",
+        "id": 4,
+        "nazov": "Novy RokcXXXXX",
+        "poznamka": ""
     },
-    // isDeveloper: true,
-    // isNOTDeveloper: false,
-    projects: [{
-            name: "Project A",
-            status: "completed"
-        },
-        {
-            name: "Project B",
-            status: "in progress"
-        },
-        {
-            name: "Project C",
-            status: "planning"
-        }
-    ],
-}
+    {
+        "cisTypSviatkuId": 1,
+        "platnostOd": "0001-01-01T00:00:00",
+        "platnostDo": "2024-01-02T00:00:00",
+        "vytvoril": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "datumVytvorenia": "2023-12-20T15:01:16",
+        "zmenil": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "datumZmeny": "2023-12-20T15:01:16",
+        "id": 5,
+        "nazov": "Nový rok",
+        "poznamka": "Nový rok 2024"
+    },
+    {
+        "cisTypSviatkuId": 1,
+        "platnostOd": "0001-01-01T00:00:00",
+        "platnostDo": "2024-01-02T00:00:00",
+        "vytvoril": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "datumVytvorenia": "2023-12-20T15:01:16",
+        "zmenil": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "datumZmeny": "2023-12-20T15:01:16",
+        "id": 6,
+        "nazov": "Nový rok",
+        "poznamka": "Nový rok 2024"
+    },
+    {
+        "cisTypSviatkuId": 1,
+        "platnostOd": "0001-01-01T00:00:00",
+        "platnostDo": "2024-01-11T00:00:00",
+        "vytvoril": "2e3ec7d6-6498-4ca4-a633-fcbe855c5872",
+        "datumVytvorenia": "2023-12-21T11:59:19",
+        "zmenil": "f5acc546-673e-44d6-99f0-8f1ad4af4cd9",
+        "datumZmeny": "2024-01-11T08:05:17",
+        "id": 7,
+        "nazov": "Deň vzniku Slovenskej republiky 2",
+        "poznamka": ""
+    },
+    {
+        "cisTypSviatkuId": 1,
+        "platnostOd": "0001-01-01T00:00:00",
+        "platnostDo": "0001-01-01T00:00:00",
+        "vytvoril": "833c28b2-3894-4e39-a5b3-14f408340c30",
+        "datumVytvorenia": "2023-12-22T09:56:11",
+        "zmenil": "833c28b2-3894-4e39-a5b3-14f408340c30",
+        "datumZmeny": "2023-12-22T09:56:11",
+        "id": 41,
+        "nazov": "Výročie SNP",
+        "poznamka": "Výročie SNP - Test"
+    },
+    {
+        "cisTypSviatkuId": 1,
+        "platnostOd": "0001-01-01T00:00:00",
+        "platnostDo": "2024-01-11T00:00:00",
+        "vytvoril": "24c6d7ad-ed57-4da7-a39d-69c1edc59839",
+        "datumVytvorenia": "2024-01-03T07:49:24",
+        "zmenil": "d8035bcb-2095-486b-834c-a8fadcc1fc43",
+        "datumZmeny": "2024-01-11T08:05:15",
+        "id": 42,
+        "nazov": "Test update 2",
+        "poznamka": ""
+    },
+    {
+        "cisTypSviatkuId": 1,
+        "platnostOd": "0001-01-01T00:00:00",
+        "platnostDo": "0001-01-01T00:00:00",
+        "vytvoril": "ba946b9f-668e-497a-ac82-bca33683faef",
+        "datumVytvorenia": "2024-01-10T09:01:14",
+        "zmenil": "b760269c-476b-49b9-b9f5-16758c88f6eb",
+        "datumZmeny": "2024-01-13T08:56:04",
+        "id": 43,
+        "nazov": "Test 5",
+        "poznamka": ""
+    },
+    {
+        "cisTypSviatkuId": 2,
+        "platnostOd": "0001-01-01T00:00:00",
+        "platnostDo": "0001-01-01T00:00:00",
+        "vytvoril": "32ad32b5-2b20-401e-9213-555f0aa5f7b4",
+        "datumVytvorenia": "2024-01-10T10:40:13",
+        "zmenil": "3f768010-9385-496e-b128-f1068be1f39a",
+        "datumZmeny": "2024-01-10T12:25:28",
+        "id": 44,
+        "nazov": "Sviatok #1 update test",
+        "poznamka": ""
+    },
+    {
+        "cisTypSviatkuId": 2,
+        "platnostOd": "0001-01-01T00:00:00",
+        "platnostDo": "0001-01-01T00:00:00",
+        "vytvoril": "976cbf6a-748e-441d-ba51-d25de700807e",
+        "datumVytvorenia": "2024-01-10T10:45:52",
+        "zmenil": "49491472-1742-4492-b86f-44017c6a054d",
+        "datumZmeny": "2024-01-10T10:46:14",
+        "id": 45,
+        "nazov": "Sviatok #2 update test",
+        "poznamka": ""
+    },
+    {
+        "cisTypSviatkuId": 2,
+        "platnostOd": "0001-01-01T00:00:00",
+        "platnostDo": "2024-01-10T00:00:00",
+        "vytvoril": "054a2188-5bc7-4898-b7a8-57560905c58d",
+        "datumVytvorenia": "2024-01-10T11:48:49",
+        "zmenil": "5ba291ca-d653-444c-97c1-a96425311d97",
+        "datumZmeny": "2024-01-10T11:50:18",
+        "id": 46,
+        "nazov": "XXXXXRRR",
+        "poznamka": ""
+    },
+    {
+        "cisTypSviatkuId": 1,
+        "platnostOd": "0001-01-01T00:00:00",
+        "platnostDo": "0001-01-01T00:00:00",
+        "vytvoril": "8424b304-4a0f-4eac-bcea-7ff0cd1b9eae",
+        "datumVytvorenia": "2024-01-10T11:52:42",
+        "zmenil": "8424b304-4a0f-4eac-bcea-7ff0cd1b9eae",
+        "datumZmeny": "2024-01-10T11:52:42",
+        "id": 47,
+        "nazov": "test 3",
+        "poznamka": ""
+    },
+    {
+        "cisTypSviatkuId": 1,
+        "platnostOd": "0001-01-01T00:00:00",
+        "platnostDo": "2024-01-10T00:00:00",
+        "vytvoril": "704048a7-466d-43e7-ab73-1507811e4270",
+        "datumVytvorenia": "2024-01-10T12:11:01",
+        "zmenil": "4c25173c-2587-421f-8a69-d9ff47ea2e59",
+        "datumZmeny": "2024-01-10T12:11:09",
+        "id": 48,
+        "nazov": "Luos1",
+        "poznamka": ""
+    },
+    {
+        "cisTypSviatkuId": 2,
+        "platnostOd": "0001-01-01T00:00:00",
+        "platnostDo": "0001-01-01T00:00:00",
+        "vytvoril": "25af7ef1-d85b-4566-b5c7-7244825f5d15",
+        "datumVytvorenia": "2024-01-11T07:57:14",
+        "zmenil": "25af7ef1-d85b-4566-b5c7-7244825f5d15",
+        "datumZmeny": "2024-01-11T07:57:14",
+        "id": 49,
+        "nazov": "XXXXXX",
+        "poznamka": ""
+    },
+    {
+        "cisTypSviatkuId": 2,
+        "platnostOd": "0001-01-01T00:00:00",
+        "platnostDo": "0001-01-01T00:00:00",
+        "vytvoril": "d92070ce-8555-465b-82c4-b51cc7f5409c",
+        "datumVytvorenia": "2024-01-11T10:08:00",
+        "zmenil": "b3f7b5e4-2516-48ea-b9df-ee936e21d026",
+        "datumZmeny": "2024-01-11T10:08:14",
+        "id": 50,
+        "nazov": "Vianoce2",
+        "poznamka": ""
+    },
+    {
+        "cisTypSviatkuId": 1,
+        "platnostOd": "0001-01-01T00:00:00",
+        "platnostDo": "0001-01-01T00:00:00",
+        "vytvoril": "7565d2d1-343b-424a-82b7-01b5d5c1e428",
+        "datumVytvorenia": "2024-01-11T10:11:55",
+        "zmenil": "7565d2d1-343b-424a-82b7-01b5d5c1e428",
+        "datumZmeny": "2024-01-11T10:11:55",
+        "id": 51,
+        "nazov": "VianoceABC",
+        "poznamka": ""
+    },
+    {
+        "cisTypSviatkuId": 1,
+        "platnostOd": "0001-01-01T00:00:00",
+        "platnostDo": "0001-01-01T00:00:00",
+        "vytvoril": "b132b4b9-d34c-4ab8-9751-ab7fa305ec5e",
+        "datumVytvorenia": "2024-01-11T11:57:29",
+        "zmenil": "7d784f21-be63-4701-939a-3c5fd0d4309b",
+        "datumZmeny": "2024-01-11T12:46:21",
+        "id": 52,
+        "nazov": "Vianoce",
+        "poznamka": ""
+    },
+    {
+        "cisTypSviatkuId": 1,
+        "platnostOd": "0001-01-01T00:00:00",
+        "platnostDo": "0001-01-01T00:00:00",
+        "vytvoril": "0fb723ae-b6bc-4e1d-b0d9-87e83864eefe",
+        "datumVytvorenia": "2024-01-11T13:08:32",
+        "zmenil": "0fb723ae-b6bc-4e1d-b0d9-87e83864eefe",
+        "datumZmeny": "2024-01-11T13:08:32",
+        "id": 53,
+        "nazov": "Vianoce",
+        "poznamka": ""
+    },
+    {
+        "cisTypSviatkuId": 1,
+        "platnostOd": "0001-01-01T00:00:00",
+        "platnostDo": "2024-01-13T00:00:00",
+        "vytvoril": "81c588d0-d543-45e5-a498-e64a87732593",
+        "datumVytvorenia": "2024-01-13T08:56:22",
+        "zmenil": "76a4000f-176f-4193-8251-bab566ff1a0b",
+        "datumZmeny": "2024-01-13T08:56:28",
+        "id": 54,
+        "nazov": "test",
+        "poznamka": ""
+    }
+]
 const ZískDátZoServisov = {
     'začiatok': 'Dec 13, 2023 ',
     __ziskajObjektoveHodnoty(objekt) {
@@ -77,7 +280,7 @@ const ZískDátZoServisov = {
     },
     __ziskajJednoducheObjekty(odpoved) {
         return this.__ziskajObjektoveHodnoty(odpoved)
-            .reduce((acc, cur, i, arr) => typeof cur === 'object' && !Array.isArray(cur) && this.__ziskajObjektoveHodnoty(cur).every(value => typeof value !== 'object') ? [...acc, cur] : acc, [])
+            .reduce((acc, cur, i, arr) => typeof cur === 'object' || Array.isArray(arr) && !Array.isArray(cur) && this.__ziskajObjektoveHodnoty(cur).every(value => typeof value !== 'object') ? [...acc, cur] : acc, [])
     },
     __ziskjHodnKlucDoArr(odpoved) {
         const primitivne = this.__ziskajPrimitivneDoObjektu(odpoved);
@@ -90,9 +293,10 @@ const ZískDátZoServisov = {
         primitivne.length > 0 || vnoreneObjekty.length > 0 || jednoducheObjekty.length > 0 ?
             arr = [...primitivne, ...vnoreneObjekty, ...jednoducheObjekty] : ''
         if (jednoducheArr.length > 0) arr = [...arr, jednoducheArr]
-        return arr.reduce((acc, cur) => !Object.keys(cur).length < 1 ? [...acc, cur] : acc, []);
+        return arr.reduce((acc, cur) => cur && !Object.keys(cur).length < 1 ? [...acc, cur] : acc, []);
     },
 };
+ZískDátZoServisov.__ziskjHodnKlucDoArr(odpoved)
 const spracovanieDát = Object.create(ZískDátZoServisov)
 spracovanieDát.__zjednotitData = function(result) {
     const zozbieraneData = ZískDátZoServisov.__ziskjHodnKlucDoArr(result)
@@ -151,7 +355,7 @@ spracovanieDát.__ziskajObjektPodlaHodnoty = function(odpoved, hladanaHodnota) {
 spracovanieDát.__jeJednObj = function(obj) {
     return this.__ziskajObjektoveHodnoty(obj).map(element => (typeof element).match(/(number)|(boolean)|(string)/))
 }
-/*
+/*\
 spracovanieDát.__menNazKlucZlozObj = function(res) {
     let array = []
     let objektove = []
