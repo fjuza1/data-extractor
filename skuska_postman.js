@@ -78,10 +78,10 @@ const ZískDátZoServisov = {
     __ziskajJednoducheObjekty(odpoved) {
         if (!Array.isArray(odpoved)) {
             return this.__ziskajObjektoveHodnoty(odpoved)
-            .reduce((acc, cur, i, arr) => typeof cur === 'object' && !Array.isArray(cur) && this.__ziskajObjektoveHodnoty(cur).every(value => typeof value !== 'object') ? [...acc, cur] : acc, [])
+            .reduce((acc, cur, i, arr) => cur && typeof cur === 'object' && !Array.isArray(cur) && this.__ziskajObjektoveHodnoty(cur).every(value => typeof value !== 'object') ? [...acc, cur] : acc, [])
         } else{
             return this.__ziskajObjektoveHodnoty(odpoved)
-            .reduce((acc, cur, i, arr) => typeof cur === 'object' || Array.isArray(arr) && !Array.isArray(cur) && this.__ziskajObjektoveHodnoty(cur).every(value => typeof value !== 'object') ? [...acc, cur] : acc, [])
+            .reduce((acc, cur, i, arr) => cur && typeof cur === 'object' || Array.isArray(arr) && !Array.isArray(cur) && this.__ziskajObjektoveHodnoty(cur).every(value => typeof value !== 'object') ? [...acc, cur] : acc, [])
         }
     },
     __ziskjHodnKlucDoArr(odpoved) {
@@ -89,15 +89,16 @@ const ZískDátZoServisov = {
         const vnoreneObjekty = this.__ziskajNestedObj(odpoved)
         const jednoducheObjekty = this.__ziskajJednoducheObjekty(odpoved)
         const lord = this.__ziskajObjektoveHodnoty(odpoved)
-            .reduce((acc, cur) => !Array.isArray(cur) && this.__ziskajObjektoveHodnoty(cur).some(value => Array.isArray(value)) ? [...acc, cur] : acc, [])
+            .reduce((acc, cur) => cur && !Array.isArray(cur) && this.__ziskajObjektoveHodnoty(cur).some(value => Array.isArray(value)) ? [...acc, cur] : acc, [])
         let jednoducheArr = this.__ziskjJednTypyDatPoli(odpoved)
         let arr;
         primitivne.length > 0 || vnoreneObjekty.length > 0 || jednoducheObjekty.length > 0 ?
             arr = [...primitivne, ...vnoreneObjekty, ...jednoducheObjekty] : ''
         if (jednoducheArr.length > 0) arr = [...arr, jednoducheArr]
-        return arr.reduce((acc, cur) => !Object.keys(cur).length < 1 ? [...acc, cur] : acc, []);
+        return arr.reduce((acc, cur) => cur && !Object.keys(cur).length < 1 ? [...acc, cur] : acc, []);
     },
 };
+console.log(ZískDátZoServisov.__ziskjHodnKlucDoArr(odpoved));
 const spracovanieDát = Object.create(ZískDátZoServisov)
 spracovanieDát.__zjednotitData = function(result) {
     const zozbieraneData = ZískDátZoServisov.__ziskjHodnKlucDoArr(result)
