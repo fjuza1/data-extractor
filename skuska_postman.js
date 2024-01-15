@@ -23,7 +23,7 @@ let odpoved =
         "datumZmeny": "0001-01-01T00:00:00",
         "id": 3,
         "nazov": "Novy Rok",
-        "poznamka": 'null'
+        "poznamka": null
     },
     {
         "cisTypSviatkuId": 1,
@@ -223,8 +223,8 @@ let odpoved =
         "platnostDo": "0001-01-01T00:00:00",
         "vytvoril": "0fb723ae-b6bc-4e1d-b0d9-87e83864eefe",
         "datumVytvorenia": "2024-01-11T13:08:32",
-        "zmenil": "0fb723ae-b6bc-4e1d-b0d9-87e83864eefe",
-        "datumZmeny": "2024-01-11T13:08:32",
+        "zmenil": "c4b444f9-f93c-4035-8b81-b3aae6b02810",
+        "datumZmeny": "2024-01-15T08:59:02",
         "id": 53,
         "nazov": "Vianoce",
         "poznamka": ""
@@ -232,11 +232,11 @@ let odpoved =
     {
         "cisTypSviatkuId": 1,
         "platnostOd": "0001-01-01T00:00:00",
-        "platnostDo": "2024-01-13T00:00:00",
+        "platnostDo": "2024-01-15T00:00:00",
         "vytvoril": "81c588d0-d543-45e5-a498-e64a87732593",
         "datumVytvorenia": "2024-01-13T08:56:22",
-        "zmenil": "76a4000f-176f-4193-8251-bab566ff1a0b",
-        "datumZmeny": "2024-01-13T08:56:28",
+        "zmenil": "a0138096-ab88-4595-aedc-4559fc91df08",
+        "datumZmeny": "2024-01-15T08:29:49",
         "id": 54,
         "nazov": "test",
         "poznamka": ""
@@ -278,25 +278,29 @@ const ZískDátZoServisov = {
             .reduce((acc, next) => acc.concat(...next), [])
             .reduce((acc, cur) => typeof cur === 'object' ? [...acc, cur] : acc, []);
     },
-    __ziskajJednoducheObjekty(odpoved) {
+    __ziskajObjekty(odpoved) {
         return this.__ziskajObjektoveHodnoty(odpoved)
-            .reduce((acc, cur, i, arr) => typeof cur === 'object' || Array.isArray(arr) && !Array.isArray(cur) && this.__ziskajObjektoveHodnoty(cur).every(value => typeof value !== 'object') ? [...acc, cur] : acc, [])
+        .reduce((acc, cur, i, arr) => typeof cur === 'object' || Array.isArray(arr) && !Array.isArray(cur)? [...acc, cur] : acc, [])
+    },
+    __ziskajJednoducheObjekty(odpoved){
+        return this.__ziskajObjekty(odpoved)
+        .reduce((acc, cur, i, arr) => typeof cur === 'object' && !Array.isArray(cur) && this.__ziskajObjektoveHodnoty(cur).every(value => typeof value === 'string') ? [...acc, cur] : acc, [])
     },
     __ziskjHodnKlucDoArr(odpoved) {
         const primitivne = this.__ziskajPrimitivneDoObjektu(odpoved);
         const vnoreneObjekty = this.__ziskajNestedObj(odpoved)
-        const jednoducheObjekty = this.__ziskajJednoducheObjekty(odpoved)
+        let Objekty = this.__ziskajObjekty(odpoved)
+        const jednoducheObjekt = this.__ziskajJednoducheObjekty(odpoved)
         const lord = this.__ziskajObjektoveHodnoty(odpoved)
             .reduce((acc, cur) => !Array.isArray(cur) && this.__ziskajObjektoveHodnoty(cur).some(value => Array.isArray(value)) ? [...acc, cur] : acc, [])
         let jednoducheArr = this.__ziskjJednTypyDatPoli(odpoved)
         let arr;
-        primitivne.length > 0 || vnoreneObjekty.length > 0 || jednoducheObjekty.length > 0 ?
-            arr = [...primitivne, ...vnoreneObjekty, ...jednoducheObjekty] : ''
+        primitivne.length > 0 || vnoreneObjekty.length > 0 || Objekty.length > 0 ?
+            arr = [...primitivne, ...vnoreneObjekty, ...Objekty,...jednoducheObjekt] : ''
         if (jednoducheArr.length > 0) arr = [...arr, jednoducheArr]
         return arr.reduce((acc, cur) => cur && !Object.keys(cur).length < 1 ? [...acc, cur] : acc, []);
     },
 };
-ZískDátZoServisov.__ziskjHodnKlucDoArr(odpoved)
 const spracovanieDát = Object.create(ZískDátZoServisov)
 spracovanieDát.__zjednotitData = function(result) {
     const zozbieraneData = ZískDátZoServisov.__ziskjHodnKlucDoArr(result)
