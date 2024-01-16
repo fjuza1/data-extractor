@@ -141,7 +141,12 @@ let odpoved = {
         }
     ],
 }
-const costr = 
+const jednArr = []
 Object.values(odpoved)
 .reduce((acc,cur)=>typeof cur === 'object'&& !Array.isArray(cur) && Object.values(cur).some(cur=>Array.isArray(cur) )?[...acc,cur]:acc ,[])
-console.log("🚀 ~ costr:", costr)
+.forEach(element => {
+    Object.values(element).forEach(element => {
+        Array.isArray(element) ? jednArr[jednArr.length] = element:[]
+    });
+});
+console.log("🚀 ~ jednArr:", jednArr)
