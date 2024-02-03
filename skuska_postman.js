@@ -4,13 +4,11 @@ let odpoved = {
         "sts": 200,
         "msg": "Connected"
     },
-    "User": [
-        {
-          "Email": "dds@example.com",
-          "Username": "dds",
-          "Gender_id": 2
-        }
-    ]
+    "User": [{
+        "Email": "dds@example.com",
+        "Username": "dds",
+        "Gender_id": 2
+    }]
 }
 const ZískDátZoServisov = {
     'začiatok': 'Dec 13, 2023 ',
@@ -51,10 +49,10 @@ const ZískDátZoServisov = {
     __ziskajJednoducheObjekty(odpoved) {
         if (!Array.isArray(odpoved)) {
             return this.__ziskajObjektoveHodnoty(odpoved)
-            .reduce((acc, cur, i, arr) => cur && typeof cur === 'object' && !Array.isArray(cur) && this.__ziskajObjektoveHodnoty(cur).every(value => typeof value !== 'object') ? [...acc, cur] : acc, [])
-        } else{
+                .reduce((acc, cur, i, arr) => cur && typeof cur === 'object' && !Array.isArray(cur) && this.__ziskajObjektoveHodnoty(cur).every(value => typeof value !== 'object') ? [...acc, cur] : acc, [])
+        } else {
             return this.__ziskajObjektoveHodnoty(odpoved)
-            .reduce((acc, cur, i, arr) => cur && typeof cur === 'object' || Array.isArray(arr) && !Array.isArray(cur) && this.__ziskajObjektoveHodnoty(cur).every(value => typeof value !== 'object') ? [...acc, cur] : acc, [])
+                .reduce((acc, cur, i, arr) => cur && typeof cur === 'object' || Array.isArray(arr) && !Array.isArray(cur) && this.__ziskajObjektoveHodnoty(cur).every(value => typeof value !== 'object') ? [...acc, cur] : acc, [])
         }
     },
     __ziskjHodnKlucDoArr(odpoved) {
@@ -161,21 +159,21 @@ spracovanieDát.__menNazKlucZlozObj = function(res) {
 spracovanieDát.__ziskjHodnZArr = function() {
     const ky1 = this.__menNazKlucZlozObj(odpoved)
     const ky2 = this.__zjednotitData(odpoved)[0]
-    const jeto = [ky1,ky2]
+    const jeto = [ky1, ky2]
     const val = this.__zjednotitData(odpoved)[1]
-    const ziskjHodn = (ky1,ky2)=>{
+    const ziskjHodn = (ky1, ky2) => {
         const key1 = ky1.flat();
         const key2 = ky2.flat();
-        const spojene = key1.map((item, i)=>{
+        const spojene = key1.map((item, i) => {
             let string = `${item}_${key2[i]}`
             string = Array.from(new Set(Object.values(string.split('_'))))
-            return string
+            return string.join('_')
         })
         return spojene
     }
-    const zbavSa = ziskjHodn(ky1,ky2)
+    const zbavSa = ziskjHodn(ky1, ky2)
     return [zbavSa, val]
 }
 console.log(spracovanieDát.__ziskjHodnZArr());
 /*\
-*/
+ */
