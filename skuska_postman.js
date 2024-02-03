@@ -1,43 +1,16 @@
 'use strict'
 let odpoved = {
-    uponUs: ["wintertime", "sunshine", "The time is now"],
-    name: {
-        lust: "you",
-        bust: "Tedious"
+    "reaction": {
+        "sts": 200,
+        "msg": "Connected"
     },
-    user: {
-        name: {
-            first: "Bob",
-            last: "Johnson"
-        },
-        age: 35,
-        address: {
-            street: "789 Pine St",
-            city: "Complex City",
-            zip: "98765"
-        }
-    },
-    preferences: {
-        colors: ["modr", "zelk", "cer"],
-        fruits: ['neviem', 'co', 'tera'],
-        language: "JavaScript",
-        theme: "dark"
-    },
-    // isDeveloper: true,
-    // isNOTDeveloper: false,
-    projects: [{
-            name: "Project A",
-            status: "completed"
-        },
+    "User": [
         {
-            name: "Project B",
-            status: "in progress"
-        },
-        {
-            name: "Project C",
-            status: "planning"
+          "Email": "dds@example.com",
+          "Username": "dds",
+          "Gender_id": 2
         }
-    ],
+    ]
 }
 const ZískDátZoServisov = {
     'začiatok': 'Dec 13, 2023 ',
@@ -156,7 +129,6 @@ spracovanieDát.__ziskajObjektPodlaHodnoty = function(odpoved, hladanaHodnota) {
 spracovanieDát.__jeJednObj = function(obj) {
     return this.__ziskajObjektoveHodnoty(obj).map(element => (typeof element).match(/(number)|(boolean)|(string)/))
 }
-/*\
 spracovanieDát.__menNazKlucZlozObj = function(res) {
     let array = []
     let objektove = []
@@ -202,11 +174,8 @@ spracovanieDát.__ziskjHodnZArr = function() {
         return spojene
     }
     const zbavSa = ziskjHodn(ky1,ky2)
-    console.log("🚀 ~ zbavSa:", zbavSa)
+    return [zbavSa, val]
 }
 console.log(spracovanieDát.__ziskjHodnZArr());
+/*\
 */
-spracovanieDát.__ocislujDuplikaty = function(arrParam) {
-    let cislo = 1;
-    return arrParam.reduce((acc, arr) => acc.includes(arr) ? acc.concat(arr + cislo++) : acc.concat(arr), [])
-}
