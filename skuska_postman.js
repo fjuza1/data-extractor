@@ -174,6 +174,12 @@ spracovanieDát.__ziskjHodnZArr = function() {
     const zbavSa = ziskjHodn(ky1, ky2)
     return [zbavSa, val]
 }
-console.log(spracovanieDát.__ziskjHodnZArr());
+//console.log(spracovanieDát.__ziskjHodnZArr());
+spracovanieDát.__ulozKlHdnDoProstr = function (odpoved){
+    const datas = spracovanieDát.__ziskjHodnZArr(odpoved)
+    //pm.environment.set(...datas[0],...datas[1])
+    console.log(...datas[0],...datas[1]);
+}
 /*\
  */
+spracovanieDát.__ulozKlHdnDoProstr(odpoved)
