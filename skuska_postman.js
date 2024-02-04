@@ -185,12 +185,11 @@ spracovanieDát.__ziskjHodnZArr = function() {
 
 	return result;
 }
-spracovanieDát.__ulozKlHdnDoProstr = function (odpoved,saveTo){
-    const datas = spracovanieDát.__ziskjHodnZArr(odpoved)
-    Object.entries(datas).forEach(([key,value])=>{
-        pm.saveTo.set(key,value);
+spracovanieDát.__ulozKlHdnDoProstr = function (odpoved,pouzFct){
+    Object.entries(pouzFct).forEach(([key,value])=>{
+        pm.environment.set(key,value);
     })
 }
 // /*\
 //  */
- spracovanieDát.__ulozKlHdnDoProstr(odpoved)
+ spracovanieDát.__ulozKlHdnDoProstr(odpoved,spracovanieDát.__ziskjHodnZArr(odpoved))
