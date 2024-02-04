@@ -185,15 +185,12 @@ spracovanieDát.__ziskjHodnZArr = function() {
 
 	return result;
 }
-console.log(spracovanieDát.__ziskjHodnZArr(odpoved));
-//console.log(spracovanieDát.__ziskjHodnZArr());
-// spracovanieDát.__ulozKlHdnDoProstr = function (odpoved){
-//     const datas = spracovanieDát.__ziskjHodnZArr(odpoved)
-//     const obj = Object.create(...datas[0],...datas[1])
-//     console.log("🚀 ~ obj:", obj)
-//     //pm.environment.set(...datas[0],...datas[1])
-//     console.log(...datas[0],...datas[1]);
-// }
+spracovanieDát.__ulozKlHdnDoProstr = function (odpoved,saveTo){
+    const datas = spracovanieDát.__ziskjHodnZArr(odpoved)
+    Object.entries(datas).forEach(([key,value])=>{
+        pm.saveTo.set(key,value);
+    })
+}
 // /*\
 //  */
-// spracovanieDát.__ulozKlHdnDoProstr(odpoved)
+ spracovanieDát.__ulozKlHdnDoProstr(odpoved)
