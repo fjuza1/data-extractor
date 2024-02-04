@@ -173,22 +173,19 @@ spracovanieDát.__ziskjHodnZArr = function() {
 	}
 	const zbavSa = ziskjHodn(ky1, ky2)
 	const brasil = zbavSa.map(item => {
-        const c = item
-        .split('_')
-        .map((part, index) => (index > 0 && !isNaN(part) ? part : index === 0 ? part : `_${part}`))
-        .join('');
-
-    const result = {};
-
-    // Use .forEach to populate the 'result' object
-    c.split('').forEach((key, index) => {
-        result[key] = val[index];
-    });
-
-    return result;
+		return item
+			.split('_')
+			.map((part, index) => (index > 0 && !isNaN(part) ? part : index === 0 ? part : `_${part}`))
+			.join('');
 	});
-const naUloz = spracovanieDát.__ziskjHodnZArr(odpoved)
-console.log("🚀 ~ naUloz:", naUloz)
+	const result = {};
+	brasil.forEach((key, index) => {
+		result[key] = val[index];
+	});
+
+	return result;
+}
+console.log(spracovanieDát.__ziskjHodnZArr(odpoved));
 //console.log(spracovanieDát.__ziskjHodnZArr());
 // spracovanieDát.__ulozKlHdnDoProstr = function (odpoved){
 //     const datas = spracovanieDát.__ziskjHodnZArr(odpoved)
