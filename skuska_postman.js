@@ -20,7 +20,7 @@ const ZískDátZoServisov = {
 		return Object.keys(objekt)
 	},
 	__jePrimitivna(obj) {
-		return typeof obj !== 'object'
+		return typeof obj !== 'object' || obj === null
 	},
 	__nieJePoleObjektov(array) {
 		if (Array.isArray(array)) return array.every(element => typeof element !== 'object')
