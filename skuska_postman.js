@@ -5,21 +5,21 @@ let odpoved = {
         "msg": "description"
     },
     "User": [{
-        "Email": null,
-        "Username": null,
-        "Gender_id": 2
-    },
-	{
-        "Email": null,
-        "Username":null,
-        "Gender_id": null
-    },
-	{
-        "Email": null,
-        "Username":null,
-        "Gender_id": null
-    }
-],
+            "Email": null,
+            "Username": null,
+            "Gender_id": null
+        },
+        {
+            "Email": null,
+            "Username": null,
+            "Gender_id": null
+        },
+        {
+            "Email": null,
+            "Username": null,
+            "Gender_id": null
+        }
+    ],
     "dssad": 'dffsdfds',
 }
 const ZískDátZoServisov = {
@@ -85,15 +85,18 @@ spracovanieDát.__ocislujDuplikaty = function(obj) {
     let i = 1;
     if (Array.isArray(obj)) {
         const cislaNecisla = obj.reduce((acc, cur) => {
-            if (acc.includes(cur)) {
-                i++;
-                return [...acc, `${cur}${i}`];
-            }
+                const original = cur;
+                while (acc.includes(cur)) {
+                    i++;
+                    cur = `${original}${i}`;
+                }
+                i = 1;
                 return [...acc, cur];
-        }, [])
-        .map(cislaNecisla=>!(/\d/).test(cislaNecisla) ?`${cislaNecisla}1`:`${cislaNecisla}`);
-        return cislaNecisla
+            }, [])
+            .map(cislaNecisla => !(/\d/).test(cislaNecisla) ? `${cislaNecisla}1` : `${cislaNecisla}`);
+        return cislaNecisla;
     }
+    return obj;
     return cislaNecisla
 };
 
@@ -213,8 +216,8 @@ spracovanieDát.__ziskjHodnZArr = function() {
 spracovanieDát.__ulozKlHdnDoProstr = function(odpoved, pouzFct) {
     let nullove = this.__ziskjHodnKlucDoArr(odpoved)
         .flatMap((obj) => Object.keys(obj).reduce((acc, o) => obj[o] === null ? [...acc, o] : acc, []))
-		console.log(this.__ocislujDuplikaty(nullove));
-		nullove = this.__ocislujDuplikaty(nullove) // ide?
+    console.log(this.__ocislujDuplikaty(nullove));
+    nullove = this.__ocislujDuplikaty(nullove) // ide?
     //console.log(...nullove,null);
     if (nullove) {
         nullove.forEach(element => {
@@ -225,7 +228,7 @@ spracovanieDát.__ulozKlHdnDoProstr = function(odpoved, pouzFct) {
     //if(nullove) pm.environment.set(...nullove,null);
     Object.entries(pouzFct).forEach(([key, value]) => {
         //pm.environment.set(key,value);
-        console.log( key, value);
+        console.log(key, value);
     })
 }
 const boomboom = spracovanieDát.__ulozKlHdnDoProstr(odpoved, spracovanieDát.__ziskjHodnZArr(odpoved))
