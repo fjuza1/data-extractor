@@ -2,14 +2,14 @@
 let odpoved = {
     "reaction": {
         "sts": 200,
-        "msg": ""
+        "msg": "description"
     },
     "User": [{
         "Email": null,
-        "Username": "",
+        "Username": null,
         "Gender_id": 2
     }],
-    "dssad0": 'dffsdfds'
+    "dssad": 'dffsdfds',
 }
 const ZískDátZoServisov = {
     'začiatok': 'Dec 13, 2023 ',
@@ -185,11 +185,17 @@ spracovanieDát.__ziskjHodnZArr = function() {
 spracovanieDát.__ulozKlHdnDoProstr = function(odpoved, pouzFct) {
     const nullove = this.__ziskjHodnKlucDoArr(odpoved)
         .flatMap((obj) => Object.keys(obj).reduce((acc, o) => obj[o] === null ? [...acc, o] : acc, []))
-    console.log("🚀 ~ nullove:", nullove)
+		//console.log(...nullove,null);
+		if(nullove) {
+			nullove.forEach(element => {
+				console.log(element,null);
+				//pm.environment.set(element,null);
+			});
+		}
+		//if(nullove) pm.environment.set(...nullove,null);
     Object.entries(pouzFct).forEach(([key, value]) => {
-        console.log("🚀 ~ Object.entries ~ value:", value)
         //pm.environment.set(key,value);
-        //console.log('key',key,'value:',value);
+        console.log('key',key,'value:',value);
     })
 }
 // /*\
