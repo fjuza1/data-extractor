@@ -8,7 +8,8 @@ let odpoved = {
 		"Email": "dds@example.com",
 		"Username": "dds",
 		"Gender_id": 2
-	}]
+	}],
+	//"dssad0":'dffsdfds'
 }
 const ZískDátZoServisov = {
 	'začiatok': 'Dec 13, 2023 ',
@@ -63,8 +64,7 @@ const ZískDátZoServisov = {
 			.reduce((acc, cur) => cur && !Array.isArray(cur) && this.__ziskajObjektoveHodnoty(cur).some(value => Array.isArray(value)) ? [...acc, cur] : acc, [])
 		let jednoducheArr = this.__ziskjJednTypyDatPoli(odpoved)
 		let arr;
-		primitivne.length > 0 || vnoreneObjekty.length > 0 || jednoducheObjekty.length > 0 ?
-			arr = [...primitivne, ...vnoreneObjekty, ...jednoducheObjekty] : ''
+			arr = [...primitivne, ...vnoreneObjekty, ...jednoducheObjekty]
 		if (jednoducheArr.length > 0) arr = [...arr, jednoducheArr]
 		return arr.reduce((acc, cur) => cur && !Object.keys(cur).length < 1 ? [...acc, cur] : acc, []);
 	},
@@ -81,7 +81,7 @@ spracovanieDát.__zjednotitData = function(result) {
 				this.__nieJePoleObjektov(val) ? val : []
 
 			}
-			while (typeof val === 'object') {
+			if (typeof val === 'object') {
 				for (const key in val) {
 					if (Object.hasOwnProperty.call(val, key)) {
 						if (Array.isArray(val)) {
@@ -103,6 +103,7 @@ spracovanieDát.__zjednotitData = function(result) {
 	});
 	return [arrKluc, arrHodnota]
 }
+
 spracovanieDát.__ziskajObjektPodlaHodnoty = function(odpoved, hladanaHodnota) {
 	const keys = Object.keys(odpoved);
 	for (const key of keys) {
@@ -128,33 +129,29 @@ spracovanieDát.__jeJednObj = function(obj) {
 	return this.__ziskajObjektoveHodnoty(obj).map(element => (typeof element).match(/(number)|(boolean)|(string)/))
 }
 spracovanieDát.__menNazKlucZlozObj = function(res) {
-	let array = []
-	let objektove = []
-	const naVyhladanie = this.__zjednotitData(res)[1]
-	const vyhladane = naVyhladanie.map(item => this.__ziskajObjektPodlaHodnoty(res, item))
-	Object.entries(vyhladane).forEach(([key, val]) => {
-		for (const kys in val) {
-			if (Object.hasOwnProperty.call(val, kys)) {
-				const jeObjJedn = this.__jeJednObj(val)
-				const [propertyName] = jeObjJedn;
-				if (Array.isArray(propertyName)) {
-					array[array.length] = val
-				}
-				const element = val[kys];
-				for (let ky in element) {
-					if (Object.hasOwnProperty.call(element, ky)) {
-
-
-						if (!isNaN(+ky)) {
-							+ky++
-						}
-					}
-					array[array.length] = `${kys}_${ky}`
-				}
-			}
-		}
-	});
-	return array
+    let array = [];
+    let objektove = [];
+    const naVyhladanie = this.__zjednotitData(res)[1];
+    const vyhladane = naVyhladanie.map(item => this.__ziskajObjektPodlaHodnoty(res, item));
+    vyhladane.forEach(val => {
+        for (const kys in val) {
+            if (Object.hasOwnProperty.call(val, kys)) {
+                const element = val[kys];
+				if(typeof element === 'string') return;
+                for (let ky in element) {
+                    if (Object.hasOwnProperty.call(element, ky)) {
+                        if (!isNaN(+ky)) {
+                            ky = +ky + 1;
+                        }
+                        array.push(`${kys}_${ky}`);
+                    }
+                }
+            }
+        }
+    });
+	const price = Object.entries(this.__ziskajPrimitivneDoObjektu(res)[0])[0]
+	if(price) array.unshift(price[0])
+    return array
 }
 spracovanieDát.__ziskjHodnZArr = function() {
 	const ky1 = this.__menNazKlucZlozObj(odpoved)
@@ -188,9 +185,9 @@ spracovanieDát.__ziskjHodnZArr = function() {
 spracovanieDát.__ulozKlHdnDoProstr = function (odpoved,pouzFct){
     Object.entries(pouzFct).forEach(([key,value])=>{
         //pm.environment.set(key,value);
-		console.log(key,value);
+		console.log('key',key,'value:',value);
     })
 }
 // /*\
 //  */
- spracovanieDát.__ulozKlHdnDoProstr(odpoved,spracovanieDát.__ziskjHodnZArr(odpoved))
+const boomboom = spracovanieDát.__menNazKlucZlozObj(odpoved)
