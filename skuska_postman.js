@@ -187,7 +187,8 @@ spracovanieDát.__ziskjHodnZArr = function() {
 }
 spracovanieDát.__ulozKlHdnDoProstr = function (odpoved,pouzFct){
     Object.entries(pouzFct).forEach(([key,value])=>{
-        pm.environment.set(key,value);
+        //pm.environment.set(key,value);
+		console.log(key,value);
     })
 }
 // /*\
