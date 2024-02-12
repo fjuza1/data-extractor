@@ -216,7 +216,6 @@ spracovanieDát.__ziskjHodnZArr = function() {
 spracovanieDát.__ulozKlHdnDoProstr = function(odpoved, pouzFct) {
     let nullove = this.__ziskjHodnKlucDoArr(odpoved)
         .flatMap((obj) => Object.keys(obj).reduce((acc, o) => obj[o] === null ? [...acc, o] : acc, []))
-    console.log(this.__ocislujDuplikaty(nullove));
     nullove = this.__ocislujDuplikaty(nullove) // ide?
     //console.log(...nullove,null);
     if (nullove) {
