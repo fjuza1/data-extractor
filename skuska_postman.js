@@ -17,7 +17,7 @@ let odpoved = {
 	{
         "Email": null,
         "Username":null,
-        "Gender_id": 1
+        "Gender_id": null
     }
 ],
     "dssad": 'dffsdfds',
@@ -82,17 +82,19 @@ const ZískDátZoServisov = {
 };
 const spracovanieDát = Object.create(ZískDátZoServisov)
 spracovanieDát.__ocislujDuplikaty = function(obj) {
-    let i = 0;
+    let i = 1;
     if (Array.isArray(obj)) {
-        return obj.reduce((acc, cur) => {
+        const cislaNecisla = obj.reduce((acc, cur) => {
             if (acc.includes(cur)) {
                 i++;
                 return [...acc, `${cur}${i}`];
             }
                 return [...acc, cur];
-        }, []);
+        }, [])
+        .map(cislaNecisla=>!(/\d/).test(cislaNecisla) ?`${cislaNecisla}1`:`${cislaNecisla}`);
+        return cislaNecisla
     }
-    return obj;
+    return cislaNecisla
 };
 
 
