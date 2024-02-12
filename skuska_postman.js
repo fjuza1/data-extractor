@@ -11,12 +11,12 @@ let odpoved = {
     },
 	{
         "Email": null,
-        "Username":' null',
+        "Username":null,
         "Gender_id": null
     },
 	{
-        "Email": 1,
-        "Username":' null',
+        "Email": null,
+        "Username":null,
         "Gender_id": 1
     }
 ],
@@ -81,6 +81,21 @@ const ZískDátZoServisov = {
     },
 };
 const spracovanieDát = Object.create(ZískDátZoServisov)
+spracovanieDát.__ocislujDuplikaty = function(obj) {
+    let i = 0;
+    if (Array.isArray(obj)) {
+        return obj.reduce((acc, cur) => {
+            if (acc.includes(cur)) {
+                i++;
+                return [...acc, `${cur}${i}`];
+            }
+                return [...acc, cur];
+        }, []);
+    }
+    return obj;
+};
+
+
 spracovanieDát.__zjednotitData = function(result) {
     const zozbieraneData = ZískDátZoServisov.__ziskjHodnKlucDoArr(result)
     const arrKluc = [];
@@ -194,12 +209,14 @@ spracovanieDát.__ziskjHodnZArr = function() {
     return result;
 }
 spracovanieDát.__ulozKlHdnDoProstr = function(odpoved, pouzFct) {
-    const nullove = this.__ziskjHodnKlucDoArr(odpoved)
+    let nullove = this.__ziskjHodnKlucDoArr(odpoved)
         .flatMap((obj) => Object.keys(obj).reduce((acc, o) => obj[o] === null ? [...acc, o] : acc, []))
+		console.log(this.__ocislujDuplikaty(nullove));
+		nullove = this.__ocislujDuplikaty(nullove) // ide?
     //console.log(...nullove,null);
     if (nullove) {
         nullove.forEach(element => {
-            console.log(element+'1', null);
+            console.log(element, null);
             //pm.environment.set(element,null);
         });
     }
