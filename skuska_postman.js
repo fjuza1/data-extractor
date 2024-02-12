@@ -8,8 +8,19 @@ let odpoved = {
         "Email": null,
         "Username": null,
         "Gender_id": 2
-    }],
-    "dssad": 'dffsdfds'
+    },
+	{
+        "Email": null,
+        "Username":' null',
+        "Gender_id": null
+    },
+	{
+        "Email": 1,
+        "Username":' null',
+        "Gender_id": 1
+    }
+],
+    "dssad": 'dffsdfds',
 }
 const ZískDátZoServisov = {
     'začiatok': 'Dec 13, 2023 ',
@@ -188,13 +199,14 @@ spracovanieDát.__ulozKlHdnDoProstr = function(odpoved, pouzFct) {
     //console.log(...nullove,null);
     if (nullove) {
         nullove.forEach(element => {
-            //console.log(element,null);
+            console.log(element+'1', null);
             //pm.environment.set(element,null);
         });
     }
     //if(nullove) pm.environment.set(...nullove,null);
     Object.entries(pouzFct).forEach(([key, value]) => {
         //pm.environment.set(key,value);
-        //console.log('key',key,'value:',value);
+        console.log( key, value);
     })
 }
+const boomboom = spracovanieDát.__ulozKlHdnDoProstr(odpoved, spracovanieDát.__ziskjHodnZArr(odpoved))
