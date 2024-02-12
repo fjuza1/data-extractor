@@ -1,53 +1,14 @@
 'use strict'
 let odpoved = {
-    "state": {
-        "internalCode": 0,
-        "code": 200,
-        "description": "API/Kalendar_Sviatkov/Kalendar_Sviatkov_G2_Get: Spracovanie prebehlo v poriadku. Systém podkračuje v ďalšom spracovaní."
-    },
-    "cis_Udalost_Kalendar_Sviatkov": [],
-    "e_Dodrzany_Rozpocet_Eur": [],
-    "e_Dodrzany_Rozpocet_Md": [],
-    "e_Dodrzany_Termin": [],
-    "e_Dostatok_Zdrojov": [],
-    "e_Druh_Zaznamu": [],
-    "e_Druh_Zmluvy": [],
-    "e_Profesia": [],
-    "e_Projekt_Nacas": [],
-    "e_Projekt_Vramci_Rozpoctu": [],
-    "e_Stav_Spracovania": [],
-    "e_Stav_Zazmluvnenia": [],
-    "e_Stav_Zmluvy": [],
-    "e_Typ_Sviatku": [],
-    "e_Typ_Zmluvneho_Partnera": [],
-    "e_Typ_Zmluvy": [],
-    "e_Zdroj_Dat": [],
-    "firma": [],
-    "kalendar_Sviatkov": [
-        {
-            "kalendaR_SVIATKOV_ID": 118,
-            "ciS_UDALOST_KALENDAR_SVIATKOV_ID": 1,
-            "ciS_UDALOST_KALENDAR_SVIATKOV_ID___NAZOV": null,
-            "datuM_SVIATKU": "2026-06-20T00:00:00",
-            "datumvytvorenia": "2024-02-09T00:00:00",
-            "datumzmeny": "2024-02-09T00:00:00",
-            "vytvoril": "a44ff19c-2c9d-4f03-8541-920fca962b34",
-            "zmenil": "2ee0ede7-7a0b-46d6-bcdc-a46e4dac840d"
-        }
-    ],
-    "kod_Opravnenia": [],
-    "kod_Skupiny": [],
-    "kod_Skupiny_Priradenie": [],
-    "profit_Acl_Firma_Pracovnik": [],
-    "profit_Acl_Firma_Profesia": [],
-    "projekt_Cislo": [],
-    "projektovy_Tim": [],
-    "stredisko": [],
-    "uct_Kategoria": [],
-    "uct_Ucet": [],
-    "zmluvny_Partner": [],
-    "metadata": [],
-    "correlationId": "5fd30fbe-f47b-4ea1-b123-ba2567a8334b"
+	"reaction": {
+		"sts": 200,
+		"msg": "Connected"
+	},
+	"User": [{
+		"Email": "dds@example.com",
+		"Username": "dds",
+		"Gender_id": 2
+	}]
 }
 const ZískDátZoServisov = {
 	'začiatok': 'Dec 13, 2023 ',
@@ -120,7 +81,7 @@ spracovanieDát.__zjednotitData = function(result) {
 				this.__nieJePoleObjektov(val) ? val : []
 
 			}
-			if (typeof val === 'object') {
+			while (typeof val === 'object') {
 				for (const key in val) {
 					if (Object.hasOwnProperty.call(val, key)) {
 						if (Array.isArray(val)) {
@@ -226,9 +187,7 @@ spracovanieDát.__ziskjHodnZArr = function() {
 }
 spracovanieDát.__ulozKlHdnDoProstr = function (odpoved,pouzFct){
     Object.entries(pouzFct).forEach(([key,value])=>{
-		if(value === undefined && value !==null) return;
-		//console.log(key,value);
-        //pm.environment.set(key,value);
+        pm.environment.set(key,value);
     })
 }
 // /*\
