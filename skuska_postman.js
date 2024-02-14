@@ -5,22 +5,23 @@ let odpoved = {
         "msg": "description"
     },
     "User": [{
-            "Email": null,
+            "Email": "phil.juza2@gmail.com",
             "Username": null,
-            "Gender_id": null
+            "Gender_id": 2
+        },
+        {
+            "Email": "phil.juza@gmail.com",
+            "Username": "ShenHU1",
+            "Gender_id": 1
         },
         {
             "Email": null,
-            "Username": null,
-            "Gender_id": null
-        },
-        {
-            "Email": null,
-            "Username": null,
-            "Gender_id": null
+            "Username": "ShenHU",
+            "Gender_id": 2
         }
     ],
     "dssad": 'dffsdfds',
+    "dssads": 'dffsdfdsss'
 }
 const ZískDátZoServisov = {
     'začiatok': 'Dec 13, 2023 ',
@@ -230,4 +231,7 @@ spracovanieDát.__ulozKlHdnDoProstr = function(odpoved, pouzFct) {
         console.log(key, value);
     })
 }
+// BUG - primitivne push nakoniec do ulozKlHdnDoProstr
+const primitivne = spracovanieDát.__ziskajPrimitivneDoObjektu(odpoved);
+console.log("🚀 ~ primitivne:", primitivne)
 const boomboom = spracovanieDát.__ulozKlHdnDoProstr(odpoved, spracovanieDát.__ziskjHodnZArr(odpoved))
