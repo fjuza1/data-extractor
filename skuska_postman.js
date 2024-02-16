@@ -219,7 +219,7 @@ spracovanieDát.__ziskjHodnZArr = function(data) {
 }
 const primitivne = ZískDátZoServisov.__ziskajPrimitivneDoObjektu(odpoved);
 spracovanieDát.__ulozKlHdnDoProstr = function(data, pouzFct) {
-    console.log("🚀 ~ primitivne:", primitivne)
+	console.log("🚀 ~ primitivne:", primitivne)
 	let nullove = this.__ziskjHodnKlucDoArr(data)
 		.flatMap((obj) => Object.keys(obj).reduce((acc, o) => obj[o] === null ? [...acc, o] : acc, []))
 	nullove = this.__ocislujDuplikaty(nullove)
@@ -231,7 +231,7 @@ spracovanieDát.__ulozKlHdnDoProstr = function(data, pouzFct) {
 		});
 	}
 	//if(nullove) pm.environment.set(...nullove,null);
-    //pouzFct.push(primitivne)
+	//pouzFct.push(primitivne)
 	Object.entries(pouzFct).forEach(([key, value]) => {
 		//pm.environment.set(key,value);
 		console.log(key, value);

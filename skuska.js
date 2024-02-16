@@ -150,27 +150,17 @@
 //     });
 // });
 // console.log("🚀 ~ jednArr:", jednArr)
-const raw = {
-  dssad: 'dffsdfds',
-  User1_dssads: 'dffsdfdsss',
-  User1_Email: 'phil.juza2@gmail.com',
-  User2_Gender_id: 2,
-  User2_Email: 'phil.juza@gmail.com',
-  User2_Username: 'ShenHU1',
-  User3_Gender_id: 1,
-  User1_Username: 'ShenHU',
-  reaction_sts_Gender_id: 2,
-  reaction_msg_sts: 200
+let obj = {
+	a: 1,
+	b: 2,
+	c: 3
 };
+const {
+	a,
+	b,
+	...restObj
+} = obj;
 
-const __odstranNepovolene = function(odpoved, nepovolene) {
-  Object.keys(odpoved)
-    .filter(key => nepovolene.includes(key))
-    .forEach(key => delete odpoved[key]);
-};
-
-const notAllowed = ['dssad', 'User1_dssads'];
-
-__odstranNepovolene(raw, notAllowed);
-
-console.log(raw);
+console.log(a); // Output: 1
+console.log(restObj); // Output: { b: 2, c: 3 }
+console.log(obj); // Output: {a: 1, b: 2, c: 3}
