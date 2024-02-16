@@ -38,8 +38,8 @@ const ZískDátZoServisov = {
 	__nieJePoleObjektov(array) {
 		if (Array.isArray(array)) return array.every(element => typeof element !== 'object')
 	},
-	__ziskjJednTypyDatPoli(odpoved) {
-		return this.__ziskajObjektoveHodnoty(odpoved)
+	__ziskjJednTypyDatPoli(data) {
+		return this.__ziskajObjektoveHodnoty(data)
 			.flatMap(element => {
 				if (!element) return
 				return this.__nieJePoleObjektov(element) ? [...element] : []
@@ -59,22 +59,22 @@ const ZískDátZoServisov = {
 			.reduce((acc, next) => acc.concat(...next), [])
 			.reduce((acc, cur) => typeof cur === 'object' ? [...acc, cur] : acc, []);
 	},
-	__ziskajJednoducheObjekty(odpoved) {
-		if (!Array.isArray(odpoved)) {
-			return this.__ziskajObjektoveHodnoty(odpoved)
+	__ziskajJednoducheObjekty(data) {
+		if (!Array.isArray(data)) {
+			return this.__ziskajObjektoveHodnoty(data)
 				.reduce((acc, cur, i, arr) => cur && typeof cur === 'object' && !Array.isArray(cur) && this.__ziskajObjektoveHodnoty(cur).every(value => typeof value !== 'object') ? [...acc, cur] : acc, [])
 		} else {
-			return this.__ziskajObjektoveHodnoty(odpoved)
+			return this.__ziskajObjektoveHodnoty(data)
 				.reduce((acc, cur, i, arr) => cur && typeof cur === 'object' || Array.isArray(arr) && !Array.isArray(cur) && this.__ziskajObjektoveHodnoty(cur).every(value => typeof value !== 'object') ? [...acc, cur] : acc, [])
 		}
 	},
-	__ziskjHodnKlucDoArr(odpoved) {
-		const primitivne = this.__ziskajPrimitivneDoObjektu(odpoved);
-		const vnoreneObjekty = this.__ziskajNestedObj(odpoved)
-		const jednoducheObjekty = this.__ziskajJednoducheObjekty(odpoved)
-		const lord = this.__ziskajObjektoveHodnoty(odpoved)
+	__ziskjHodnKlucDoArr(data) {
+		const primitivne = this.__ziskajPrimitivneDoObjektu(data);
+		const vnoreneObjekty = this.__ziskajNestedObj(data)
+		const jednoducheObjekty = this.__ziskajJednoducheObjekty(data)
+		const lord = this.__ziskajObjektoveHodnoty(data)
 			.reduce((acc, cur) => cur && !Array.isArray(cur) && this.__ziskajObjektoveHodnoty(cur).some(value => Array.isArray(value)) ? [...acc, cur] : acc, [])
-		let jednoducheArr = this.__ziskjJednTypyDatPoli(odpoved)
+		let jednoducheArr = this.__ziskjJednTypyDatPoli(data)
 		let arr;
 		arr = [...primitivne, ...vnoreneObjekty, ...jednoducheObjekty]
 		if (jednoducheArr.length > 0) arr = [...arr, jednoducheArr]
@@ -100,10 +100,10 @@ spracovanieDát.__ocislujDuplikaty = function(obj) {
 	return obj;
 	return cislaNecisla
 };
-spracovanieDát.__odstranNepovolene = function(odpoved, nepovolene) {
-	Object.keys(odpoved)
+spracovanieDát.__odstranNepovolene = function(data, nepovolene) {
+	Object.keys(data)
 		.filter(key => nepovolene.includes(key))
-		.forEach(key => delete odpoved[key]);
+		.forEach(key => delete data[key]);
 };
 spracovanieDát.__zjednotitData = function(result) {
 	this.__odstranNepovolene(result, Object.getOwnPropertyNames(this.__ziskajPrimitivneDoObjektu(result)[0]))
@@ -139,10 +139,10 @@ spracovanieDát.__zjednotitData = function(result) {
 	});
 	return [arrKluc, arrHodnota]
 }
-spracovanieDát.__ziskajObjektPodlaHodnoty = function(odpoved, hladanaHodnota) {
-	const keys = this.__ziskajObjektoveKluce(odpoved);
+spracovanieDát.__ziskajObjektPodlaHodnoty = function(data, hladanaHodnota) {
+	const keys = this.__ziskajObjektoveKluce(data);
 	for (const key of keys) {
-		const value = odpoved[key];
+		const value = data[key];
 		if (value === hladanaHodnota) {
 			return {
 				[key]: value
@@ -188,11 +188,11 @@ spracovanieDát.__menNazKlucZlozObj = function(res) {
 	if (price) array.unshift(price[0])
 	return array
 }
-spracovanieDát.__ziskjHodnZArr = function() {
-	const ky1 = this.__menNazKlucZlozObj(odpoved)
-	const ky2 = this.__zjednotitData(odpoved)[0]
+spracovanieDát.__ziskjHodnZArr = function(data) {
+	const ky1 = this.__menNazKlucZlozObj(data)
+	const ky2 = this.__zjednotitData(data)[0]
 	const jeto = [ky1, ky2]
-	const val = this.__zjednotitData(odpoved)[1]
+	const val = this.__zjednotitData(data)[1]
 	const ziskjHodn = (ky1, ky2) => {
 		const key1 = ky1.flat();
 		const key2 = ky2.flat();
@@ -217,11 +217,12 @@ spracovanieDát.__ziskjHodnZArr = function() {
 
 	return result;
 }
-spracovanieDát.__ulozKlHdnDoProstr = function(odpoved, pouzFct) {
-	let nullove = this.__ziskjHodnKlucDoArr(odpoved)
+const primitivne = ZískDátZoServisov.__ziskajPrimitivneDoObjektu(odpoved);
+spracovanieDát.__ulozKlHdnDoProstr = function(data, pouzFct) {
+    console.log("🚀 ~ primitivne:", primitivne)
+	let nullove = this.__ziskjHodnKlucDoArr(data)
 		.flatMap((obj) => Object.keys(obj).reduce((acc, o) => obj[o] === null ? [...acc, o] : acc, []))
 	nullove = this.__ocislujDuplikaty(nullove)
-	const primitivne = spracovanieDát.__ziskajPrimitivneDoObjektu(odpoved);
 	//console.log(...nullove,null);
 	if (nullove) {
 		nullove.forEach(element => {
@@ -230,6 +231,7 @@ spracovanieDát.__ulozKlHdnDoProstr = function(odpoved, pouzFct) {
 		});
 	}
 	//if(nullove) pm.environment.set(...nullove,null);
+    //pouzFct.push(primitivne)
 	Object.entries(pouzFct).forEach(([key, value]) => {
 		//pm.environment.set(key,value);
 		console.log(key, value);
