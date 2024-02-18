@@ -113,7 +113,6 @@ spracovanieDát.__odstranNepovolene = function (data, nepovolene){
 	.forEach(key => delete data[key]);
 }
 spracovanieDát.__zjednotitData = function(result) {
-	this.__odstranNepovolene(result, Object.getOwnPropertyNames(this.__ziskajPrimitivneDoObjektu(result)[0]))
 	const zozbieraneData = ZískDátZoServisov.__ziskjHodnKlucDoArr(result)
 	const arrKluc = [];
 	const arrHodnota = []
@@ -196,6 +195,9 @@ spracovanieDát.__menNazKlucZlozObj = function(res) {
 	return array
 }
 spracovanieDát.__ziskjHodnZArr = function(data) {
+	const nepovolene = this.__ziskjNepovolene(data, Object.getOwnPropertyNames(this.__ziskajPrimitivneDoObjektu(data)[0]))
+	this.__odstranNepovolene(data, Object.getOwnPropertyNames(this.__ziskajPrimitivneDoObjektu(nepovolene)[0]))
+	console.log("🚀 ~ nepovolene:", nepovolene)
 	const ky1 = this.__menNazKlucZlozObj(data)
 	const ky2 = this.__zjednotitData(data)[0]
 	const jeto = [ky1, ky2]
