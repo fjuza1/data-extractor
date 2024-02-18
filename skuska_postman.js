@@ -2,7 +2,8 @@
 let odpoved = {
 	"reaction": {
 		"sts": 200,
-		"msg": "description"
+		"msg": "description",
+		"Usernamez": null
 	},
 	"User": [{
 			"Email": "phil.juza2@gmail.com",
@@ -22,7 +23,7 @@ let odpoved = {
 	],
 	"dssad": 'dffsdfds',
 	"dssads": 'dffsdfdsss',
-	"babel" : "¬1"
+	"babel": "¬1"
 }
 // TODO 1.0 add getting complex object on one level only in array of objects
 //TODO 1.1 pouzi ! __jePrimitivna at 1.0
@@ -65,10 +66,15 @@ const ZískDátZoServisov = {
 	__ziskajJednoducheObjekty(data) {
 		if (!Array.isArray(data)) {
 			return this.__ziskajObjektoveHodnoty(data)
-				.reduce((acc, cur, i, arr) => cur && typeof cur === 'object' && !Array.isArray(cur) && this.__ziskajObjektoveHodnoty(cur).every(value => typeof value !== 'object') ? [...acc, cur] : acc, [])
+				.reduce((acc, cur, i, arr) => cur 
+				&& typeof cur === 'object' 
+				&& !Array.isArray(cur)  || cur === null
+				&& this.__ziskajObjektoveHodnoty(cur).every(value => typeof value !== 'object') ? [...acc, cur] : acc, [])
 		} else {
 			return this.__ziskajObjektoveHodnoty(data)
-				.reduce((acc, cur, i, arr) => cur && typeof cur === 'object' || Array.isArray(arr) && !Array.isArray(cur) && this.__ziskajObjektoveHodnoty(cur).every(value => typeof value !== 'object') ? [...acc, cur] : acc, [])
+				.reduce((acc, cur, i, arr) => cur 
+				&& typeof cur === 'object' || Array.isArray(arr) || cur === null
+				&& !Array.isArray(cur) && this.__ziskajObjektoveHodnoty(cur).every(value => typeof value !== 'object') ? [...acc, cur] : acc, [])
 		}
 	},
 	__ziskjHodnKlucDoArr(data) {
@@ -107,13 +113,13 @@ spracovanieDát.__ziskjNepovolene = function(data, nepovolene) {
 	const extracted = {};
 	Object.keys(data)
 		.filter(key => nepovolene.includes(key))
-	.forEach(key => extracted[key] = data[key])
+		.forEach(key => extracted[key] = data[key])
 	return extracted
 };
-spracovanieDát.__odstranNepovolene = function (data, nepovolene){
+spracovanieDát.__odstranNepovolene = function(data, nepovolene) {
 	Object.keys(data)
-	.filter(key => nepovolene.includes(key))
-	.forEach(key => delete data[key]);
+		.filter(key => nepovolene.includes(key))
+		.forEach(key => delete data[key]);
 }
 spracovanieDát.__zjednotitData = function(result) {
 	const zozbieraneData = ZískDátZoServisov.__ziskjHodnKlucDoArr(result)
