@@ -24,6 +24,8 @@ let odpoved = {
 	"dssads": 'dffsdfdsss',
 	"babel" : "¬1"
 }
+// TODO 1.0 add getting complex object on one level only in array of objects
+//TODO 1.1 pouzi ! __jePrimitivna at 1.0
 const ZískDátZoServisov = {
 	'začiatok': 'Dec 13, 2023 ',
 	__ziskajObjektoveHodnoty(objekt) {
