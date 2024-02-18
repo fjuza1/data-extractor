@@ -21,7 +21,8 @@ let odpoved = {
 		}
 	],
 	"dssad": 'dffsdfds',
-	"dssads": 'dffsdfdsss'
+	"dssads": 'dffsdfdsss',
+	"babel" : "¬1"
 }
 const ZískDátZoServisov = {
 	'začiatok': 'Dec 13, 2023 ',
@@ -197,7 +198,6 @@ spracovanieDát.__menNazKlucZlozObj = function(res) {
 spracovanieDát.__ziskjHodnZArr = function(data) {
 	const nepovolene = this.__ziskjNepovolene(data, Object.getOwnPropertyNames(this.__ziskajPrimitivneDoObjektu(data)[0]))
 	this.__odstranNepovolene(data, Object.getOwnPropertyNames(this.__ziskajPrimitivneDoObjektu(nepovolene)[0]))
-	console.log("🚀 ~ nepovolene:", nepovolene)
 	const ky1 = this.__menNazKlucZlozObj(data)
 	const ky2 = this.__zjednotitData(data)[0]
 	const jeto = [ky1, ky2]
@@ -223,8 +223,8 @@ spracovanieDát.__ziskjHodnZArr = function(data) {
 	brasil.forEach((key, index) => {
 		result[key] = val[index];
 	});
-
-	return result;
+	Object.keys(nepovolene).forEach((key) => result[key] = nepovolene[key]);
+	return result
 }
 spracovanieDát.__ulozKlHdnDoProstr = function(data, pouzFct) {
 	let nullove = this.__ziskjHodnKlucDoArr(data)
@@ -244,5 +244,4 @@ spracovanieDát.__ulozKlHdnDoProstr = function(data, pouzFct) {
 		console.log(key, value);
 	})
 }
-// BUG - primitivne push nakoniec do ulozKlHdnDoProstr
-const boomboom = spracovanieDát.__ulozKlHdnDoProstr(odpoved, spracovanieDát.__ziskjHodnZArr(odpoved))
+spracovanieDát.__ulozKlHdnDoProstr(odpoved, spracovanieDát.__ziskjHodnZArr(odpoved))
