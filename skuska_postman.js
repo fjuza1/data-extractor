@@ -224,9 +224,7 @@ spracovanieDát.__ziskjHodnZArr = function(data) {
 
 	return result;
 }
-const primitivne = ZískDátZoServisov.__ziskajPrimitivneDoObjektu(odpoved);
 spracovanieDát.__ulozKlHdnDoProstr = function(data, pouzFct) {
-	console.log("🚀 ~ primitivne:", primitivne)
 	let nullove = this.__ziskjHodnKlucDoArr(data)
 		.flatMap((obj) => Object.keys(obj).reduce((acc, o) => obj[o] === null ? [...acc, o] : acc, []))
 	nullove = this.__ocislujDuplikaty(nullove)
