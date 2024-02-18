@@ -100,11 +100,18 @@ spracovanieDát.__ocislujDuplikaty = function(obj) {
 	return obj;
 	return cislaNecisla
 };
-spracovanieDát.__odstranNepovolene = function(data, nepovolene) {
+spracovanieDát.__ziskjNepovolene = function(data, nepovolene) {
+	const extracted = {};
 	Object.keys(data)
 		.filter(key => nepovolene.includes(key))
-		.forEach(key => delete data[key]);
+	.forEach(key => extracted[key] = data[key])
+	return extracted
 };
+spracovanieDát.__odstranNepovolene = function (data, nepovolene){
+	Object.keys(data)
+	.filter(key => nepovolene.includes(key))
+	.forEach(key => delete data[key]);
+}
 spracovanieDát.__zjednotitData = function(result) {
 	this.__odstranNepovolene(result, Object.getOwnPropertyNames(this.__ziskajPrimitivneDoObjektu(result)[0]))
 	const zozbieraneData = ZískDátZoServisov.__ziskjHodnKlucDoArr(result)
