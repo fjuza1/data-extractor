@@ -66,15 +66,15 @@ const ZískDátZoServisov = {
 	__ziskajJednoducheObjekty(data) {
 		if (!Array.isArray(data)) {
 			return this.__ziskajObjektoveHodnoty(data)
-				.reduce((acc, cur, i, arr) => cur 
-				&& typeof cur === 'object' 
-				&& !Array.isArray(cur)  || cur === null
-				&& this.__ziskajObjektoveHodnoty(cur).every(value => typeof value !== 'object') ? [...acc, cur] : acc, [])
+				.reduce((acc, cur, i, arr) => cur &&
+					typeof cur === 'object' &&
+					!Array.isArray(cur) || cur === null &&
+					this.__ziskajObjektoveHodnoty(cur).every(value => typeof value !== 'object') ? [...acc, cur] : acc, [])
 		} else {
 			return this.__ziskajObjektoveHodnoty(data)
-				.reduce((acc, cur, i, arr) => cur 
-				&& typeof cur === 'object' || Array.isArray(arr) || cur === null
-				&& !Array.isArray(cur) && this.__ziskajObjektoveHodnoty(cur).every(value => typeof value !== 'object') ? [...acc, cur] : acc, [])
+				.reduce((acc, cur, i, arr) => cur &&
+					typeof cur === 'object' || Array.isArray(arr) || cur === null &&
+					!Array.isArray(cur) && this.__ziskajObjektoveHodnoty(cur).every(value => typeof value !== 'object') ? [...acc, cur] : acc, [])
 		}
 	},
 	__ziskjHodnKlucDoArr(data) {

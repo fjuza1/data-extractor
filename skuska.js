@@ -62,15 +62,15 @@ class ZiskDatZoServisov {
 	_ziskajJednoducheObjekty(data) {
 		if (!Array.isArray(data)) {
 			return this._ziskajObjektoveHodnoty(data)
-				.reduce((acc, cur, i, arr) => cur 
-				&& typeof cur === 'object' 
-				&& !Array.isArray(cur)  || cur === null
-				&& this._ziskajObjektoveHodnoty(cur).every(value => typeof value !== 'object') ? [...acc, cur] : acc, [])
+				.reduce((acc, cur, i, arr) => cur &&
+					typeof cur === 'object' &&
+					!Array.isArray(cur) || cur === null &&
+					this._ziskajObjektoveHodnoty(cur).every(value => typeof value !== 'object') ? [...acc, cur] : acc, [])
 		} else {
 			return this._ziskajObjektoveHodnoty(data)
-				.reduce((acc, cur, i, arr) => cur 
-				&& typeof cur === 'object' || Array.isArray(arr) || cur === null
-				&& !Array.isArray(cur) && this._ziskajObjektoveHodnoty(cur).every(value => typeof value !== 'object') ? [...acc, cur] : acc, [])
+				.reduce((acc, cur, i, arr) => cur &&
+					typeof cur === 'object' || Array.isArray(arr) || cur === null &&
+					!Array.isArray(cur) && this._ziskajObjektoveHodnoty(cur).every(value => typeof value !== 'object') ? [...acc, cur] : acc, [])
 		}
 	}
 	_ziskjHodnKlucDoArr(data) {
@@ -87,7 +87,7 @@ class ZiskDatZoServisov {
 	}
 }
 class SpracovanieDat extends ZiskDatZoServisov {
-	_ocislujDuplikaty(obj){
+	_ocislujDuplikaty(obj) {
 		let i = 1;
 		if (Array.isArray(obj)) {
 			const cislaNecisla = obj.reduce((acc, cur) => {
@@ -105,19 +105,19 @@ class SpracovanieDat extends ZiskDatZoServisov {
 		return obj;
 		return cislaNecisla
 	};
-	_ziskjNepovolene(data,nepovolene){
+	_ziskjNepovolene(data, nepovolene) {
 		const extracted = {};
 		Object.keys(data)
 			.filter(key => nepovolene.includes(key))
 			.forEach(key => extracted[key] = data[key])
 		return extracted
 	}
-	_odstranNepovolene(data, nepovolene){
+	_odstranNepovolene(data, nepovolene) {
 		Object.keys(data)
-		.filter(key => nepovolene.includes(key))
-		.forEach(key => delete data[key]);
+			.filter(key => nepovolene.includes(key))
+			.forEach(key => delete data[key]);
 	}
-	_zjednotitData(result){
+	_zjednotitData(result) {
 		const zozbieraneData = this._ziskjHodnKlucDoArr(result)
 		const arrKluc = [];
 		const arrHodnota = []
@@ -126,14 +126,14 @@ class SpracovanieDat extends ZiskDatZoServisov {
 			Object.entries(obj).forEach(([key, val]) => {
 				if (Array.isArray(val)) {
 					this._nieJePoleObjektov(val) ? val : []
-	
+
 				}
 				if (typeof val === 'object') {
 					for (const key in val) {
 						if (Object.hasOwnProperty.call(val, key)) {
 							if (Array.isArray(val)) {
 								this._nieJePoleObjektov(val) ? val : []
-	
+
 							}
 							arrKluc.push(key)
 							const element = val[key];
@@ -150,7 +150,7 @@ class SpracovanieDat extends ZiskDatZoServisov {
 		});
 		return [arrKluc, arrHodnota]
 	}
-	_ziskajObjektPodlaHodnoty(data, hladanaHodnota){
+	_ziskajObjektPodlaHodnoty(data, hladanaHodnota) {
 		const keys = this._ziskajObjektoveKluce(data);
 		for (const key of keys) {
 			const value = data[key];
@@ -167,14 +167,14 @@ class SpracovanieDat extends ZiskDatZoServisov {
 					}
 				}
 			}
-	
+
 		}
 		return null;
 	}
-	_jeJednObj(){
+	_jeJednObj() {
 		return this._ziskajObjektoveHodnoty(obj).map(element => (typeof element).match(/(number)|(boolean)|(string)/))
 	}
-	_menNazKlucZlozObj(res){
+	_menNazKlucZlozObj(res) {
 		let array = [];
 		let objektove = [];
 		const naVyhladanie = this._zjednotitData(res)[1];
@@ -199,7 +199,7 @@ class SpracovanieDat extends ZiskDatZoServisov {
 		if (price) array.unshift(price[0])
 		return array
 	}
-	_ziskjHodnZArr(data){
+	_ziskjHodnZArr(data) {
 		const nepovolene = this._ziskjNepovolene(data, Object.getOwnPropertyNames(this._ziskajPrimitivneDoObjektu(data)[0]))
 		this._odstranNepovolene(data, Object.getOwnPropertyNames(this._ziskajPrimitivneDoObjektu(nepovolene)[0]))
 		const ky1 = this._menNazKlucZlozObj(data)
@@ -230,23 +230,23 @@ class SpracovanieDat extends ZiskDatZoServisov {
 		Object.keys(nepovolene).forEach((key) => result[key] = nepovolene[key]);
 		return result
 	}
-	_ulozKlHdnDoProstr(data, pouzFct){
+	_ulozKlHdnDoProstr(data, pouzFct) {
 		let nullove = this._ziskjHodnKlucDoArr(data)
-		.flatMap((obj) => Object.keys(obj).reduce((acc, o) => obj[o] === null ? [...acc, o] : acc, []))
-	nullove = this._ocislujDuplikaty(nullove)
-	//console.log(...nullove,null);
-	if (nullove) {
-		nullove.forEach(element => {
-			console.log(element, null);
-			//pm.environment.set(element,null);
-		});
-	}
-	//if(nullove) pm.environment.set(...nullove,null);
-	//pouzFct.push(primitivne)
-	Object.entries(pouzFct).forEach(([key, value]) => {
-		//pm.environment.set(key,value);
-		console.log(key, value);
-	})
+			.flatMap((obj) => Object.keys(obj).reduce((acc, o) => obj[o] === null ? [...acc, o] : acc, []))
+		nullove = this._ocislujDuplikaty(nullove)
+		//console.log(...nullove,null);
+		if (nullove) {
+			nullove.forEach(element => {
+				console.log(element, null);
+				//pm.environment.set(element,null);
+			});
+		}
+		//if(nullove) pm.environment.set(...nullove,null);
+		//pouzFct.push(primitivne)
+		Object.entries(pouzFct).forEach(([key, value]) => {
+			//pm.environment.set(key,value);
+			console.log(key, value);
+		})
 	}
 }
 const ziskDatZoServisov = new ZiskDatZoServisov();
