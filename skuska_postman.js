@@ -120,7 +120,7 @@ spracovanieDát.__odstranNepovolene = function(data, nepovolene) {
 	Object.keys(data)
 		.filter(key => nepovolene.includes(key))
 		.forEach(key => delete data[key]);
-}
+};
 spracovanieDát.__zjednotitData = function(result) {
 	const zozbieraneData = ZískDátZoServisov.__ziskjHodnKlucDoArr(result)
 	const arrKluc = [];
@@ -153,7 +153,7 @@ spracovanieDát.__zjednotitData = function(result) {
 		});
 	});
 	return [arrKluc, arrHodnota]
-}
+};
 spracovanieDát.__ziskajObjektPodlaHodnoty = function(data, hladanaHodnota) {
 	const keys = this.__ziskajObjektoveKluce(data);
 	for (const key of keys) {
@@ -174,10 +174,10 @@ spracovanieDát.__ziskajObjektPodlaHodnoty = function(data, hladanaHodnota) {
 
 	}
 	return null;
-}
+};
 spracovanieDát.__jeJednObj = function(obj) {
 	return this.__ziskajObjektoveHodnoty(obj).map(element => (typeof element).match(/(number)|(boolean)|(string)/))
-}
+};
 spracovanieDát.__menNazKlucZlozObj = function(res) {
 	let array = [];
 	let objektove = [];
@@ -202,7 +202,7 @@ spracovanieDát.__menNazKlucZlozObj = function(res) {
 	const price = Object.entries(this.__ziskajPrimitivneDoObjektu(res)[0])[0]
 	if (price) array.unshift(price[0])
 	return array
-}
+};
 spracovanieDát.__ziskjHodnZArr = function(data) {
 	const nepovolene = this.__ziskjNepovolene(data, Object.getOwnPropertyNames(this.__ziskajPrimitivneDoObjektu(data)[0]))
 	this.__odstranNepovolene(data, Object.getOwnPropertyNames(this.__ziskajPrimitivneDoObjektu(nepovolene)[0]))
@@ -233,7 +233,7 @@ spracovanieDát.__ziskjHodnZArr = function(data) {
 	});
 	Object.keys(nepovolene).forEach((key) => result[key] = nepovolene[key]);
 	return result
-}
+};
 spracovanieDát.__ulozKlHdnDoProstr = function(data, pouzFct) {
 	let nullove = this.__ziskjHodnKlucDoArr(data)
 		.flatMap((obj) => Object.keys(obj).reduce((acc, o) => obj[o] === null ? [...acc, o] : acc, []))
@@ -251,5 +251,5 @@ spracovanieDát.__ulozKlHdnDoProstr = function(data, pouzFct) {
 		//pm.environment.set(key,value);
 		console.log(key, value);
 	})
-}
-spracovanieDát.__ulozKlHdnDoProstr(odpoved, spracovanieDát.__ziskjHodnZArr(odpoved))
+};
+spracovanieDát.__ulozKlHdnDoProstr(odpoved, spracovanieDát.__ziskjHodnZArr(odpoved));
