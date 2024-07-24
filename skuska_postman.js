@@ -26,7 +26,7 @@ let odpoved = {
     "dssads": 'dffsdfdsss',
     "babel": "¬1"
 };
-
+//FIXME  replace loops with array methods
 /**
  * Class for extracting data from service responses.
  */
