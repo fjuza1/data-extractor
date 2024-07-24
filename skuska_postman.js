@@ -367,7 +367,6 @@ class SpracovanieDat extends ZiskDatZoServisov {
     }
 }
 
-// Example usage:
 const spracovanie = new SpracovanieDat();
 const result = spracovanie.zjednotitData(odpoved);
 console.log(result);
