@@ -27,21 +27,47 @@ let odpoved = {
 }
 // TODO 1.0 add getting complex object on one level only in array of objects
 //TODO 1.1 pouzi ! __jePrimitivna at 1.0
+/**@namespace  ZískDátZoServisov
+ * @property {string} zaciatok - starting date
+ */
 const ZískDátZoServisov = {
 	'začiatok': 'Dec 13, 2023 ',
+	/**Retrieves the values of an object's properties.
+	 * @param {Object} objekt - The object to retrieve values from 
+	 * @returns {Array} - An array of the object's values.
+	 */
 	__ziskajObjektoveHodnoty(objekt) {
 		if (objekt === undefined || objekt === null) return
 		return Object.values(objekt)
 	},
+	/**
+	 *  Retrieves the keys of an object's properties.
+	 * @param {Object} objekt -The object to retrieve keys from.
+	 * @returns {Array} - An array of the object's keys.
+	 * */
 	__ziskajObjektoveKluce(objekt) {
 		return Object.keys(objekt)
 	},
+	/**
+	 * Checks if a value is primitive.
+	 * @param {*} obj - The value to check.
+	 * @returns {boolean} - True if the value is primitive, false otherwise.
+	 */
 	__jePrimitivna(obj) {
 		return typeof obj !== 'object' || obj === null
 	},
+	/**
+	 * Checks if an array does not contain any objects.
+	 * @param {Array} array - The array to check. 
+	 * @returns {boolean} - True if the array does not contain objects, false otherwise.*/
 	__nieJePoleObjektov(array) {
 		if (Array.isArray(array)) return array.every(element => typeof element !== 'object')
 	},
+	/**
+	 * Retrieves data types from an array.
+	 * @param {Object} data - The data object to process.
+	 * @returns {Array} - An array of data types.
+	 */
 	__ziskjJednTypyDatPoli(data) {
 		return this.__ziskajObjektoveHodnoty(data)
 			.flatMap(element => {
@@ -49,6 +75,11 @@ const ZískDátZoServisov = {
 				return this.__nieJePoleObjektov(element) ? [...element] : []
 			})
 	},
+	/**
+	 * Retrieves primitive values from an object and places them in a new object.
+	 * @param {Object} obj - The object to process.
+	 * @return {Array} - An array containing the new object with primitive values.
+	 */
 	__ziskajPrimitivneDoObjektu(obj) {
 		let objekt = {};
 		this.__ziskajObjektoveKluce(obj)
@@ -58,11 +89,20 @@ const ZískDátZoServisov = {
 			})
 		return [objekt]
 	},
+	/**   
+	 * @param {Object} res - The response object to process.
+	 * @returns {Array} - An array of nested objects.
+	 */
 	__ziskajNestedObj(res) {
 		return this.__ziskajObjektoveHodnoty(res).map(v => v instanceof Object ? this.__ziskajObjektoveHodnoty(v) : [v])
 			.reduce((acc, next) => acc.concat(...next), [])
 			.reduce((acc, cur) => typeof cur === 'object' ? [...acc, cur] : acc, []);
 	},
+	/**
+	 * Retrieves simple objects from data.
+	 * @param {Object|Array} data - The data to process.
+	 * @returns {Array} - An array of simple objects.
+	 */
 	__ziskajJednoducheObjekty(data) {
 		if (!Array.isArray(data)) {
 			return this.__ziskajObjektoveHodnoty(data)
@@ -77,6 +117,11 @@ const ZískDátZoServisov = {
 					!Array.isArray(cur) && this.__ziskajObjektoveHodnoty(cur).every(value => typeof value !== 'object') ? [...acc, cur] : acc, [])
 		}
 	},
+	/**
+	 * Retrieves a combined array of keys and values from data.
+	 * @param {Object} data - The data to process.
+	 * @returns {Array} - An array of combined keys and values.
+	 */
 	__ziskjHodnKlucDoArr(data) {
 		const primitivne = this.__ziskajPrimitivneDoObjektu(data);
 		const vnoreneObjekty = this.__ziskajNestedObj(data)
@@ -90,7 +135,13 @@ const ZískDátZoServisov = {
 		return arr.reduce((acc, cur) => cur && !Object.keys(cur).length < 1 ? [...acc, cur] : acc, []);
 	},
 };
-const spracovanieDát = Object.create(ZískDátZoServisov)
+/**@namespace spracovanieDát - extends  ZískDátZoServisov*/
+const spracovanieDát = Object.create(ZískDátZoServisov);
+/**
+ * Number duplicates in an array.
+ * @param {Array} obj - The array to process.
+ * @returns {Array} - An array with numbered duplicates.
+ */
 spracovanieDát.__ocislujDuplikaty = function(obj) {
 	let i = 1;
 	if (Array.isArray(obj)) {
@@ -109,6 +160,12 @@ spracovanieDát.__ocislujDuplikaty = function(obj) {
 	return obj;
 	return cislaNecisla
 };
+/**
+ * Retrieves disallowed data from an object.
+ * @param {Object} data - The data object to process.
+ * @param {Array} nepovolene - An array of disallowed keys.
+ * @returns {Object} - An object containing disallowed data.
+ */
 spracovanieDát.__ziskjNepovolene = function(data, nepovolene) {
 	const extracted = {};
 	Object.keys(data)
@@ -116,11 +173,21 @@ spracovanieDát.__ziskjNepovolene = function(data, nepovolene) {
 		.forEach(key => extracted[key] = data[key])
 	return extracted
 };
+/**
+ * Removes disallowed data from an object.
+ * @param {Object} data - The data object to process.
+ * @param {Array} nepovolene - An array of disallowed keys.
+ */
 spracovanieDát.__odstranNepovolene = function(data, nepovolene) {
 	Object.keys(data)
 		.filter(key => nepovolene.includes(key))
 		.forEach(key => delete data[key]);
 };
+/**
+ * Combines data into a unified format.
+ * @param {Object} result - The data object to process.
+ * @returns {Array} - An array containing unified keys and values.
+ */
 spracovanieDát.__zjednotitData = function(result) {
 	const zozbieraneData = ZískDátZoServisov.__ziskjHodnKlucDoArr(result)
 	const arrKluc = [];
@@ -154,6 +221,12 @@ spracovanieDát.__zjednotitData = function(result) {
 	});
 	return [arrKluc, arrHodnota]
 };
+/**
+ * Retrieves an object based on a specific value.
+ * @param {Object} data - The data object to search.
+ * @param {*} hladanaHodnota - The value to search for.
+ * @returns {Object|null} - The object containing the searched value,
+ **/
 spracovanieDát.__ziskajObjektPodlaHodnoty = function(data, hladanaHodnota) {
 	const keys = this.__ziskajObjektoveKluce(data);
 	for (const key of keys) {
@@ -175,9 +248,19 @@ spracovanieDát.__ziskajObjektPodlaHodnoty = function(data, hladanaHodnota) {
 	}
 	return null;
 };
+/**
+ * Checks if all elements in the object are of primitive types.
+ * @param {Object} obj - The object to check.
+ * @returns {Array} - An array indicating the type of each element ('number', 'boolean', 'string').
+ */
 spracovanieDát.__jeJednObj = function(obj) {
 	return this.__ziskajObjektoveHodnoty(obj).map(element => (typeof element).match(/(number)|(boolean)|(string)/))
 };
+/**
+ * Generates an array of key names for a complex object.
+ * @param {Object} res - The object to process.
+ * @returns {Array} - An array of key names.
+ */
 spracovanieDát.__menNazKlucZlozObj = function(res) {
 	let array = [];
 	let objektove = [];
@@ -203,6 +286,11 @@ spracovanieDát.__menNazKlucZlozObj = function(res) {
 	if (price) array.unshift(price[0])
 	return array
 };
+/**
+ * Retrieves values from an array.
+ * @param {Object} data - The data object to process.
+ * @returns {Object} - An object with keys and values from the data.
+ */
 spracovanieDát.__ziskjHodnZArr = function(data) {
 	const nepovolene = this.__ziskjNepovolene(data, Object.getOwnPropertyNames(this.__ziskajPrimitivneDoObjektu(data)[0]))
 	this.__odstranNepovolene(data, Object.getOwnPropertyNames(this.__ziskajPrimitivneDoObjektu(nepovolene)[0]))
@@ -234,6 +322,11 @@ spracovanieDát.__ziskjHodnZArr = function(data) {
 	Object.keys(nepovolene).forEach((key) => result[key] = nepovolene[key]);
 	return result
 };
+/**
+ * Saves keys and values to an environment.
+ * @param {Object} data - The data object to process.
+ * @param {Object} pouzFct - The function to use for saving.
+ */
 spracovanieDát.__ulozKlHdnDoProstr = function(data, pouzFct) {
 	let nullove = this.__ziskjHodnKlucDoArr(data)
 		.flatMap((obj) => Object.keys(obj).reduce((acc, o) => obj[o] === null ? [...acc, o] : acc, []))
