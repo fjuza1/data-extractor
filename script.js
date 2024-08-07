@@ -1,234 +1,366 @@
-const ZiskDatZoServisov = {
-    zaciatok: 'Dec 13, 2023 ',
+// Polyfill for Object.create
+if (typeof Object.create !== 'function') {
+    Object.create = function(o, props) {
+     function F() {}
+     F.prototype = o;
+     result = new F();
+     if (typeof(props) === "object") {
+      for (prop in props) {
+       if (props.hasOwnProperty((prop))) {
+        result[prop] = props[prop].value;
+       }
+      }
+     }
+     return result;
+    };
+   }
 
-    __ziskajObjektoveHodnoty(objekt) {
-        if (objekt === undefined || objekt === null) return [];
-        return Object.values(objekt);
-    },
+// Your existing code
+function ZiskDatZoServisov() {
+    this.zaciatok = 'Dec 13, 2023';
+}
 
-    __ziskajObjektoveKluce(objekt) {
-        return Object.keys(objekt);
-    },
-
-    __jePrimitivna(obj) {
-        return typeof obj !== 'object' || obj === null;
-    },
-
-    __nieJePoleObjektov(array) {
-        if (Array.isArray(array)) return array.every(element => typeof element !== 'object');
-    },
-
-    __ziskjJednTypyDatPoli(data) {
-        return this.__ziskajObjektoveHodnoty(data)
-            .flatMap(element => {
-                if (!element) return [];
-                return this.__nieJePoleObjektov(element) ? [].concat(element) : [];
-            });
-    },
-
-    __ziskajPrimitivneDoObjektu(obj) {
-        let objekt = {};
-        this.__ziskajObjektoveKluce(obj)
-            .forEach(polozka => {
-                const key = obj[polozka];
-                if (this.__jePrimitivna(key)) objekt[polozka] = key;
-            });
-        return [objekt];
-    },
-
-    __ziskajNestedObj(res) {
-        return this.__ziskajObjektoveHodnoty(res).map(v => v instanceof Object ? this.__ziskajObjektoveHodnoty(v) : [v])
-            .reduce((acc, next) => acc.concat(...next), [])
-            .reduce((acc, cur) => typeof cur === 'object' ? [...acc, cur] : acc, []);
-    },
-
-    __ziskajJednoducheObjekty(data) {
-        if (!Array.isArray(data)) {
-            return this.__ziskajObjektoveHodnoty(data)
-                .reduce((acc, cur, i, arr) => cur &&
-                    typeof cur === 'object' &&
-                    (!Array.isArray(cur) || cur === null) &&
-                    this.__ziskajObjektoveHodnoty(cur).every(value => typeof value !== 'object') ? [...acc, cur] : acc, []);
-        } else {
-            return this.__ziskajObjektoveHodnoty(data)
-                .reduce((acc, cur, i, arr) => cur &&
-                    (typeof cur === 'object' || Array.isArray(arr)) &&
-                    (!Array.isArray(cur) && this.__ziskajObjektoveHodnoty(cur).every(value => typeof value !== 'object')) ? [...acc, cur] : acc, []);
+ZiskDatZoServisov.prototype.ziskajObjektoveHodnoty = function(objekt) {
+    if (objekt === undefined || objekt === null) return;
+    var values = [];
+    for (var key in objekt) {
+        if (objekt.hasOwnProperty(key)) {
+            values.push(objekt[key]);
         }
-    },
-
-    __ziskjHodnKlucDoArr(data) {
-        const primitivne = this.__ziskajPrimitivneDoObjektu(data);
-        const vnoreneObjekty = this.__ziskajNestedObj(data);
-        const jednoducheObjekty = this.__ziskajJednoducheObjekty(data);
-        const lord = this.__ziskajObjektoveHodnoty(data)
-            .reduce((acc, cur) => cur && !Array.isArray(cur) && this.__ziskajObjektoveHodnoty(cur).some(value => Array.isArray(value)) ? [...acc, cur] : acc, []);
-        let jednoducheArr = this.__ziskjJednTypyDatPoli(data);
-        let arr;
-        arr = [...primitivne, ...vnoreneObjekty, ...jednoducheObjekty];
-        if (jednoducheArr.length > 0) arr = [...arr, jednoducheArr];
-        return arr.reduce((acc, cur) => cur && Object.keys(cur).length > 0 ? [...acc, cur] : acc, []);
-    },
+    }
+    return values;
 };
 
-const spracovanieDat = Object.create(ZiskDatZoServisov);
+ZiskDatZoServisov.prototype.ziskajObjektoveKluce = function(objekt) {
+    var keys = [];
+    for (var key in objekt) {
+        if (objekt.hasOwnProperty(key)) {
+            keys.push(key);
+        }
+    }
+    return keys;
+};
 
-spracovanieDat.__ocislujDuplikaty = function (obj) {
-    let i = 1;
-    if (Array.isArray(obj)) {
-        const cislaNecisla = obj.reduce((acc, cur) => {
-            const original = cur;
-            while (acc.includes(cur)) {
-                i++;
-                cur = `${original}${i}`;
+ZiskDatZoServisov.prototype.jePrimitivna = function(obj) {
+    return typeof obj !== 'object' || obj === null;
+};
+
+ZiskDatZoServisov.prototype.nieJePoleObjektov = function(array) {
+    if (Array.isArray(array)) {
+        return array.every(function(element) {
+            return typeof element !== 'object';
+        });
+    }
+};
+
+ZiskDatZoServisov.prototype.ziskjJednTypyDatPoli = function(data) {
+    var values = this.ziskajObjektoveHodnoty(data);
+    var result = [];
+    for (var i = 0; i < values.length; i++) {
+        var element = values[i];
+        if (!element) continue;
+        if (this.nieJePoleObjektov(element)) {
+            result = result.concat(element);
+        }
+    }
+    return result;
+};
+
+ZiskDatZoServisov.prototype.ziskajPrimitivneDoObjektu = function(obj) {
+    var objekt = {};
+    var keys = this.ziskajObjektoveKluce(obj);
+    for (var i = 0; i < keys.length; i++) {
+        var key = keys[i];
+        var value = obj[key];
+        if (this.jePrimitivna(value)) {
+            objekt[key] = value;
+        }
+    }
+    return [objekt];
+};
+
+ZiskDatZoServisov.prototype.ziskajNestedObj = function(res) {
+    var values = this.ziskajObjektoveHodnoty(res);
+    var result = [];
+    for (var i = 0; i < values.length; i++) {
+        var v = values[i];
+        if (v instanceof Object) {
+            result = result.concat(this.ziskajObjektoveHodnoty(v));
+        } else {
+            result.push(v);
+        }
+    }
+    var finalResult = [];
+    for (var j = 0; j < result.length; j++) {
+        var cur = result[j];
+        if (typeof cur === 'object') {
+            finalResult.push(cur);
+        }
+    }
+    return finalResult;
+};
+
+ZiskDatZoServisov.prototype.ziskajJednoducheObjekty = function(data) {
+    if (!Array.isArray(data)) {
+        var values = this.ziskajObjektoveHodnoty(data);
+        var result = [];
+        for (var i = 0; i < values.length; i++) {
+            var cur = values[i];
+            if (cur && typeof cur === 'object' && !Array.isArray(cur) || cur === null && this.ziskajObjektoveHodnoty(cur).every(function(value) {
+                    return typeof value !== 'object';
+                })) {
+                result.push(cur);
             }
-            i = 1;
-            return [...acc, cur];
-        }, []).map(cislaNecisla => !(/\d/).test(cislaNecisla) ? `${cislaNecisla}1` : `${cislaNecisla}`);
+        }
+        return result;
+    } else {
+        var values = this.ziskajObjektoveHodnoty(data);
+        var result = [];
+        for (var i = 0; i < values.length; i++) {
+            var cur = values[i];
+            if (cur && typeof cur === 'object' || Array.isArray(data) || cur === null && !Array.isArray(cur) && this.ziskajObjektoveHodnoty(cur).every(function(value) {
+                    return typeof value !== 'object';
+                })) {
+                result.push(cur);
+            }
+        }
+        return result;jePrimitivna
+    }
+};
+
+ZiskDatZoServisov.prototype.ziskjHodnKlucDoArr = function(data) {
+    var primitivne = this.ziskajPrimitivneDoObjektu(data);
+    var vnoreneObjekty = this.ziskajNestedObj(data);
+    var jednoducheObjekty = this.ziskajJednoducheObjekty(data);
+    var values = this.ziskajObjektoveHodnoty(data);
+    var lord = [];
+    for (var i = 0; i < values.length; i++) {
+        var cur = values[i];
+        if (cur && !Array.isArray(cur) && this.ziskajObjektoveHodnoty(cur).some(function(value) {
+                return Array.isArray(value);
+            })) {
+            lord.push(cur);
+        }
+    }
+    var jednoducheArr = this.ziskjJednTypyDatPoli(data);
+    var arr = primitivne.concat(vnoreneObjekty, jednoducheObjekty);
+    if (jednoducheArr.length > 0) arr = arr.concat(jednoducheArr);
+    var result = [];
+    for (var j = 0; j < arr.length; j++) {
+        var cur = arr[j];
+        if (cur && Object.keys(cur).length > 0) {
+            result.push(cur);
+        }
+    }
+    return result;
+};
+
+function SpracovanieDat() {
+    ZiskDatZoServisov.call(this);
+}
+
+SpracovanieDat.prototype = Object.create(ZiskDatZoServisov.prototype);
+SpracovanieDat.prototype.constructor = SpracovanieDat;
+
+SpracovanieDat.prototype.ocislujDuplikaty = function(obj) {
+    var i = 1;
+    if (Array.isArray(obj)) {
+        var cislaNecisla = obj.reduce(function(acc, cur) {
+                var original = cur;
+                while (acc.indexOf(cur) !== -1) {
+                    i++;
+                    cur = original + i;
+                }
+                i = 1;
+                return acc.concat(cur);
+            }, [])
+            .map(function(cislaNecisla) {
+                return !(/\d/).test(cislaNecisla) ? cislaNecisla + "1" : cislaNecisla;
+            });
         return cislaNecisla;
     }
     return obj;
 };
 
-spracovanieDat.__ziskjNepovolene = function (data, nepovolene) {
-    const extracted = {};
-    Object.keys(data)
-        .filter(key => nepovolene.includes(key))
-        .forEach(key => extracted[key] = data[key]);
+SpracovanieDat.prototype.ziskjNepovolene = function(data, nepovolene) {
+    var extracted = {};
+    for (var key in data) {
+        if (data.hasOwnProperty(key) && nepovolene.indexOf(key) !== -1) {
+            extracted[key] = data[key];
+        }
+    }
     return extracted;
 };
 
-spracovanieDat.__odstranNepovolene = function (data, nepovolene) {
-    Object.keys(data)
-        .filter(key => nepovolene.includes(key))
-        .forEach(key => delete data[key]);
+SpracovanieDat.prototype.odstranNepovolene = function(data, nepovolene) {
+    for (var key in data) {
+        if (data.hasOwnProperty(key) && nepovolene.indexOf(key) !== -1) {
+            delete data[key];
+        }
+    }
 };
 
-spracovanieDat.__zjednotitData = function (result) {
-    const zozbieraneData = this.__ziskjHodnKlucDoArr(result);
-    const arrKluc = [];
-    const arrHodnota = [];
-    zozbieraneData.forEach(obj => {
-        if (obj === undefined || obj === null) return;
-        Object.entries(obj).forEach(([key, val]) => {
-            if (Array.isArray(val)) {
-                this.__nieJePoleObjektov(val) ? val : [];
-            }
-            if (typeof val === 'object') {
-                for (const k in val) {
-                    if (Object.hasOwnProperty.call(val, k)) {
-                        if (Array.isArray(val)) {
-                            this.__nieJePoleObjektov(val) ? val : [];
-                        }
-                        arrKluc.push(k);
-                        const element = val[k];
-                        arrHodnota.push(element);
-                        if (typeof element !== 'object') return;
+SpracovanieDat.prototype.zjednotitData = function(result) {
+    var zozbieraneData = this.ziskjHodnKlucDoArr(result);
+    var arrKluc = [];
+    var arrHodnota = [];
+    for (var i = 0; i < zozbieraneData.length; i++) {
+        var obj = zozbieraneData[i];
+        if (obj === undefined || obj === null) continue;
+        for (var key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                var val = obj[key];
+                if (Array.isArray(val)) {
+                    if (this.nieJePoleObjektov(val)) {
+                        val = val;
+                    } else {
+                        val = [];
                     }
                 }
+                if (typeof val === 'object') {
+                    for (var k in val) {
+                        if (val.hasOwnProperty(k)) {
+                            if (Array.isArray(val)) {
+                                if (this.nieJePoleObjektov(val)) {
+                                    val = val;
+                                } else {
+                                    val = [];
+                                }
+                            }
+                            arrKluc.push(key);
+                            var element = val[k];
+                            arrHodnota.push(element);
+                            if (typeof element !== 'object') return;
+                        }
+                    }
+                }
+                if (typeof val !== 'object') {
+                    arrKluc.push(key);
+                    arrHodnota.push(val);
+                }
             }
-            if (typeof val !== 'object') {
-                arrKluc.push(key);
-                arrHodnota.push(val);
-            }
-        });
-    });
+        }
+    }
     return [arrKluc, arrHodnota];
 };
 
-spracovanieDat.__ziskajObjektPodlaHodnoty = function (data, hladanaHodnota) {
-    const keys = this.__ziskajObjektoveKluce(data);
-    for (const key of keys) {
-        const value = data[key];
+SpracovanieDat.prototype.ziskajObjektPodlaHodnoty = function(data, hladanaHodnota) {
+    var keys = this.ziskajObjektoveKluce(data);
+    for (var i = 0; i < keys.length; i++) {
+        var key = keys[i];
+        var value = data[key];
         if (value === hladanaHodnota) {
-            return {
-                [key]: value
-            };
+            var result = {};
+            result[key] = value;
+            return result;
         }
         if (typeof value === 'object' && value !== null) {
-            const vnoreneRes = this.__ziskajObjektPodlaHodnoty(value, hladanaHodnota);
+            var vnoreneRes = this.ziskajObjektPodlaHodnoty(value, hladanaHodnota);
             if (vnoreneRes) {
-                return {
-                    [key]: vnoreneRes
-                };
+                var nestedResult = {};
+                nestedResult[key] = vnoreneRes;
+                return nestedResult;
             }
         }
     }
     return null;
 };
 
-spracovanieDat.__jeJednObj = function (obj) {
-    return this.__ziskajObjektoveHodnoty(obj).map(element => (typeof element).match(/(number)|(boolean)|(string)/));
+SpracovanieDat.prototype.jeJednObj = function(obj) {
+    var values = this.ziskajObjektoveHodnoty(obj);
+    var result = [];
+    for (var i = 0; i < values.length; i++) {
+        var element = values[i];
+        result.push((typeof element).match(/(number)|(boolean)|(string)/));
+    }
+    return result;
 };
 
-spracovanieDat.__menNazKlucZlozObj = function (res) {
-    let array = [];
-    const naVyhladanie = this.__zjednotitData(res)[1];
-    const vyhladane = naVyhladanie.map(item => this.__ziskajObjektPodlaHodnoty(res, item));
-    vyhladane.forEach(val => {
-        for (const kys in val) {
-            if (Object.hasOwnProperty.call(val, kys)) {
-                const element = val[kys];
+SpracovanieDat.prototype.menNazKlucZlozObj = function(res) {
+    var array = [];
+    var objektove = [];
+    var naVyhladanie = this.zjednotitData(res)[1];
+    var vyhladane = [];
+    for (var i = 0; i < naVyhladanie.length; i++) {
+        var item = naVyhladanie[i];
+        vyhladane.push(this.ziskajObjektPodlaHodnoty(res, item));
+    }
+    for (var i = 0; i < vyhladane.length; i++) {
+        var val = vyhladane[i];
+        for (var kys in val) {
+            if (val.hasOwnProperty(kys)) {
+                var element = val[kys];
                 if (typeof element === 'string') return;
-                for (let ky in element) {
-                    if (Object.hasOwnProperty.call(element, ky)) {
+                for (var ky in element) {
+                    if (element.hasOwnProperty(ky)) {
                         if (!isNaN(+ky)) {
                             ky = +ky + 1;
                         }
-                        array.push(`${kys}_${ky}`);
+                        array.push(kys + "_" + ky);
                     }
                 }
             }
         }
-    });
-    const price = Object.entries(this.__ziskajPrimitivneDoObjektu(res)[0])[0];
+    }
+    var price = Object.entries(this.ziskajPrimitivneDoObjektu(res)[0])[0];
     if (price) array.unshift(price[0]);
     return array;
 };
 
-spracovanieDat.__ziskjHodnZArr = function (data) {
-    const nepovolene = this.__ziskjNepovolene(data, Object.getOwnPropertyNames(this.__ziskajPrimitivneDoObjektu(data)[0]));
-    this.__odstranNepovolene(data, Object.getOwnPropertyNames(this.__ziskajPrimitivneDoObjektu(nepovolene)[0]));
-    const ky1 = this.__menNazKlucZlozObj(data);
-    const ky2 = this.__zjednotitData(data)[0];
-    const jeto = [ky1, ky2];
-    const val = this.__zjednotitData(data)[1];
-    const ziskjHodn = (ky1, ky2) => {
-        const key1 = ky1.flat();
-        const key2 = ky2.flat();
-        const spojene = key1.map((item, i) => {
-            let string = `${item}_${key2[i]}`;
+SpracovanieDat.prototype.ziskjHodnZArr = function(data) {
+    var nepovolene = this.ziskjNepovolene(data, Object.getOwnPropertyNames(this.ziskajPrimitivneDoObjektu(data)[0]));
+    this.odstranNepovolene(data, Object.getOwnPropertyNames(this.ziskajPrimitivneDoObjektu(nepovolene)[0]));
+    var ky1 = this.menNazKlucZlozObj(data);
+    var ky2 = this.zjednotitData(data)[0];
+    var jeto = [ky1, ky2];
+    var val = this.zjednotitData(data)[1];
+    var ziskjHodn = function(ky1, ky2) {
+        var key1 = ky1.flat();
+        var key2 = ky2.flat();
+        var spojene = key1.map(function(item, i) {
+            var string = item + "_" + key2[i];
             string = Array.from(new Set(Object.values(string.split('_'))));
             return string.join('_');
         });
         return spojene;
     };
-    const zbavSa = ziskjHodn(ky1, ky2);
-    const brasil = zbavSa.map(item => {
-        return item.split('_')
-            .map((part, index) => (index > 0 && !isNaN(part) ? part : index === 0 ? part : `_${part}`))
+    var zbavSa = ziskjHodn(ky1, ky2);
+    var brasil = zbavSa.map(function(item) {
+        return item
+            .split('_')
+            .map(function(part, index) {
+                return (index > 0 && !isNaN(part) ? part : index === 0 ? part : "_" + part);
+            })
             .join('');
     });
-    const result = {};
-    brasil.forEach((key, index) => {
-        result[key] = val[index];
-    });
-    Object.keys(nepovolene).forEach((key) => result[key] = nepovolene[key]);
+    var result = {};
+    for (var i = 0; i < brasil.length; i++) {
+        var key = brasil[i];
+        result[key] = val[i];
+    }
+    for (var key in nepovolene) {
+        result[key] = nepovolene[key];
+    }
     return result;
 };
 
-spracovanieDat.__ulozKlHdnDoProstr = function (data, pouzFct) {
-    let prazdne = this.__ziskjHodnKlucDoArr(data)
-        .flatMap((obj) => Object.keys(obj).reduce((acc, o) => obj[o] === null ? [...acc, o] : acc, []));
-    prazdne = this.__ocislujDuplikaty(prazdne);
-    if (prazdne) {
-        prazdne.forEach(element => {
-            console.log(element, null);
+SpracovanieDat.prototype.ulozKlHdnDoProstr = function(data, pouzFct) {
+    var nullove = this.ziskjHodnKlucDoArr(data)
+        .flatMap(function(obj) {
+            return Object.keys(obj).reduce(function(acc, o) {
+                return obj[o] === null ? acc.concat(o) : acc;
+            }, []);
         });
+    nullove = this.ocislujDuplikaty(nullove);
+    if (nullove) {
+        for (var i = 0; i < nullove.length; i++) {
+            var element = nullove[i];
+            console.log(element, null);
+        }
     }
-    Object.entries(pouzFct).forEach(([key, value]) => {
-        console.log(key, value);
-    });
+    for (var key in pouzFct) {
+        if (pouzFct.hasOwnProperty(key)) {
+            console.log(key, pouzFct[key]);
+        }
+    }
 };
-
-spracovanieDat.__ulozKlHdnDoProstr(odpoved, spracovanieDat.__ziskjHodnZArr(odpoved));
