@@ -1,3 +1,30 @@
+def odpoved = [
+    reaction: [
+        sts: 200,
+        msg: "description",
+        Usernamez: null
+    ],
+    User: [
+        [
+            Email: "phil.juza2@gmail.com",
+            Username: null,
+            Gender_id: 2
+        ],
+        [
+            Email: "phil.juza@gmail.com",
+            Username: "ShenHU1",
+            Gender_id: 1
+        ],
+        [
+            Email: null,
+            Username: "ShenHU",
+            Gender_id: 2
+        ]
+    ],
+    dssad: 'dffsdfds',
+    dssads: 'dffsdfdsss',
+    babel: "¬1"
+]
 class ZiskDatZoServisov {
     
     def _ziskajObjektoveHodnoty(objekt) {
@@ -207,3 +234,4 @@ class SpracovanieDat extends ZiskDatZoServisov {
 
 def ziskDatZoServisov = new ZiskDatZoServisov()
 def spracovanieDat = new SpracovanieDat()
+spracovanieDat._ulozKlHdnDoProstr(odpoved, spracovanieDat._ziskjHodnZArr(odpoved));

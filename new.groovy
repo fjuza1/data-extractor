@@ -167,49 +167,79 @@ class SpracovanieDat extends ZiskDatZoServisov {
         return array
     }
 
-    def _ziskjHodnZArr(data) {
-        def nepovolene = _ziskjNepovolene(data, _ziskajPrimitivneDoObjektu(data)[0].keySet().toList())
-        _odstranNepovolene(data, _ziskajPrimitivneDoObjektu(nepovolene)[0].keySet().toList())
-        def ky1 = _menNazKlucZlozObj(data)
-        def ky2 = _zjednotitData(data)[0]
-        def jeto = [ky1, ky2]
-        def val = _zjednotitData(data)[1]
-        def ziskjHodn = { ky1, ky2 ->
-            def key1 = ky1.flatten()
-            def key2 = ky2.flatten()
-            def spojene = key1.collect { item, i ->
-                def string = "${item}_${key2[i]}"
-                string = string.split('_').toList().unique().join('_')
-                return string
-            }
-            return spojene
+def _ziskjHodnZArr(data) {
+    def nepovolene = _ziskjNepovolene(data, _ziskajPrimitivneDoObjektu(data)[0].keySet().toList())
+    _odstranNepovolene(data, _ziskajPrimitivneDoObjektu(nepovolene)[0].keySet().toList())
+    def ky1 = _menNazKlucZlozObj(data)
+    def ky2 = _zjednotitData(data)[0]
+    def val = _zjednotitData(data)[1]
+    
+    // Rename the closure parameters to avoid conflict
+    def ziskjHodn = { key1, key2 ->
+        def flatKey1 = key1.flatten()
+        def flatKey2 = key2.flatten()
+        def spojene = flatKey1.collect { item, i ->
+            def string = "${item}_${flatKey2[i]}"
+            string = string.split('_').toList().unique().join('_')
+            return string
         }
-        def zbavSa = ziskjHodn(ky1, ky2)
-        def brasil = zbavSa.collect { item ->
-            item.split('_').collect { part, index ->
-                index > 0 && part.isNumber() ? part : (index == 0 ? part : "_${part}")
-            }.join('')
-        }
-        def result = [:]
-        brasil.eachWithIndex { key, index ->
-            result[key] = val[index]
-        }
-        nepovolene.each { key, value -> result[key] = value }
-        return result
+        return spojene
     }
-
-    def _ulozKlHdnDoProstr(data, pouzFct) {
-        def prazdne = _ziskjHodnKlucDoArr(data)
-            .collectMany { obj -> obj.keySet().findAll { obj[it] == null } }
-        prazdne = _ocislujDuplikaty(prazdne)
-        prazdne.each { element ->
-            println("${element} = null")
-        }
-        pouzFct.each { key, value ->
-            println("${key} = ${value}")
-        }
+    
+    def zbavSa = ziskjHodn(ky1, ky2)
+    def brasil = zbavSa.collect { item ->
+        item.split('_').collect { part, index ->
+            index > 0 && part.isNumber() ? part : (index == 0 ? part : "_${part}")
+        }.join('')
     }
+    
+    def result = [:]
+    brasil.eachWithIndex { key, index ->
+        result[key] = val[index]
+    }
+    nepovolene.each { key, value -> result[key] = value }
+    return result
 }
 
+def _ulozKlHdnDoProstr(data, pouzFct) {
+    def prazdne = _ziskjHodnKlucDoArr(data)
+        .collectMany { obj -> obj.keySet().findAll { obj[it] == null } }
+    prazdne = _ocislujDuplikaty(prazdne)
+    prazdne.each { element ->
+        println("${element} = null")
+    }
+    pouzFct.each { key, value ->
+        println("${key} = ${value}")
+    }
+}
+}
+def odpoved = [
+    reaction: [
+        sts: 200,
+        msg: "description",
+        Usernamez: null
+    ],
+    User: [
+        [
+            Email: "phil.juza2@gmail.com",
+            Username: null,
+            Gender_id: 2
+        ],
+        [
+            Email: "phil.juza@gmail.com",
+            Username: "ShenHU1",
+            Gender_id: 1
+        ],
+        [
+            Email: null,
+            Username: "ShenHU",
+            Gender_id: 2
+        ]
+    ],
+    dssad: 'dffsdfds',
+    dssads: 'dffsdfdsss',
+    babel: "¬1"
+]
 def ziskDatZoServisov = new ZiskDatZoServisov()
 def spracovanieDat = new SpracovanieDat()
+spracovanieDat._ulozKlHdnDoProstr(odpoved, spracovanieDat._ziskjHodnZArr(odpoved));
