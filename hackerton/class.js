@@ -9,4 +9,4 @@ class CityDesign {
     }
 }
 const city  = new CityDesign();
-console.log(city._cityDesign({cityLayout: 'square'},5));
+console.log(city._cityDesign({cityLayout: 'square'},10));
