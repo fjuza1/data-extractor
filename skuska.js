@@ -1,85 +1,59 @@
-let odpoved = {
-	"reaction": {
-		"sts": 200,
-		"msg": "description",
-		"Usernamez": null
-	},
-	"User": [{
-			"Email": "phil.juza2@gmail.com",
-			"Username": null,
-			"Gender_id": 2
-		},
-		{
-			"Email": "phil.juza@gmail.com",
-			"Username": "ShenHU1",
-			"Gender_id": 1
-		},
-		{
-			"Email": null,
-			"Username": "ShenHU",
-			"Gender_id": 2
-		}
-	],
-	"dssad": 'dffsdfds',
-	"dssads": 'dffsdfdsss',
-	"babel": "¬1"
-}
 class ZiskDatZoServisov {
-	_ziskajObjektoveHodnoty(objekt) {
+	_getObjectValues(objekt) {
 		if (objekt === undefined || objekt === null) return
 		return Object.values(objekt)
 	}
-	_ziskajObjektoveKluce(objekt) {
+	_getObjectKeys(objekt) {
 		return Object.keys(objekt)
 	}
-	_jePrimitivna(obj) {
+	_isPrimitive(obj) {
 		return typeof obj !== 'object' || obj === null
 	}
-	_nieJePoleObjektov(array) {
+	_isNotArrayOfObjects(array) {
 		if (Array.isArray(array)) return array.every(element => typeof element !== 'object')
 	}
-	_ziskjJednTypyDatPoli(data) {
-		return this._ziskajObjektoveHodnoty(data)
+	_getSingleDataTypesFromArrays(data) {
+		return this._getObjectValues(data)
 			.flatMap(element => {
 				if (!element) return
-				return this._nieJePoleObjektov(element) ? [...element] : []
+				return this._isNotArrayOfObjects(element) ? [...element] : []
 			})
 	}
-	_ziskajPrimitivneDoObjektu(obj) {
+	_extractPrimitiveToObject(obj) {
 		let objekt = {};
-		this._ziskajObjektoveKluce(obj)
+		this._getObjectKeys(obj)
 			.forEach(polozka => {
 				const key = obj[polozka];
-				this._jePrimitivna(key) ? objekt[polozka] = key : null
+				this._isPrimitive(key) ? objekt[polozka] = key : null
 			})
 		return [objekt]
 	}
-	_ziskajNestedObj(res) {
-		return this._ziskajObjektoveHodnoty(res).map(v => v instanceof Object ? this._ziskajObjektoveHodnoty(v) : [v])
+	_getNestedObjects(res) {
+		return this._getObjectValues(res).map(v => v instanceof Object ? this._getObjectValues(v) : [v])
 			.reduce((acc, next) => acc.concat(...next), [])
 			.reduce((acc, cur) => typeof cur === 'object' ? [...acc, cur] : acc, []);
 	}
-	_ziskajJednoducheObjekty(data) {
+	_getSimpleObjects(data) {
 		if (!Array.isArray(data)) {
-			return this._ziskajObjektoveHodnoty(data)
+			return this._getObjectValues(data)
 				.reduce((acc, cur, i, arr) => cur &&
 					typeof cur === 'object' &&
 					!Array.isArray(cur) || cur === null &&
-					this._ziskajObjektoveHodnoty(cur).every(value => typeof value !== 'object') ? [...acc, cur] : acc, [])
+					this._getObjectValues(cur).every(value => typeof value !== 'object') ? [...acc, cur] : acc, [])
 		} else {
-			return this._ziskajObjektoveHodnoty(data)
+			return this._getObjectValues(data)
 				.reduce((acc, cur, i, arr) => cur &&
 					typeof cur === 'object' || Array.isArray(arr) || cur === null &&
-					!Array.isArray(cur) && this._ziskajObjektoveHodnoty(cur).every(value => typeof value !== 'object') ? [...acc, cur] : acc, [])
+					!Array.isArray(cur) && this._getObjectValues(cur).every(value => typeof value !== 'object') ? [...acc, cur] : acc, [])
 		}
 	}
-	_ziskjHodnKlucDoArr(data) {
-		const primitivne = this._ziskajPrimitivneDoObjektu(data);
-		const vnoreneObjekty = this._ziskajNestedObj(data)
-		const jednoducheObjekty = this._ziskajJednoducheObjekty(data)
-		const lord = this._ziskajObjektoveHodnoty(data)
-			.reduce((acc, cur) => cur && !Array.isArray(cur) && this._ziskajObjektoveHodnoty(cur).some(value => Array.isArray(value)) ? [...acc, cur] : acc, [])
-		let jednoducheArr = this._ziskjJednTypyDatPoli(data)
+	_getValuesAndKeysArray(data) {
+		const primitivne = this._extractPrimitiveToObject(data);
+		const vnoreneObjekty = this._getNestedObjects(data)
+		const jednoducheObjekty = this._getSimpleObjects(data)
+		const lord = this._getObjectValues(data)
+			.reduce((acc, cur) => cur && !Array.isArray(cur) && this._getObjectValues(cur).some(value => Array.isArray(value)) ? [...acc, cur] : acc, [])
+		let jednoducheArr = this._getSingleDataTypesFromArrays(data)
 		let arr;
 		arr = [...primitivne, ...vnoreneObjekty, ...jednoducheObjekty]
 		if (jednoducheArr.length > 0) arr = [...arr, jednoducheArr]
@@ -87,7 +61,7 @@ class ZiskDatZoServisov {
 	}
 }
 class SpracovanieDat extends ZiskDatZoServisov {
-	_ocislujDuplikaty(obj) {
+	_numberDuplicates(obj) {
 		let i = 1;
 		if (Array.isArray(obj)) {
 			const cislaNecisla = obj.reduce((acc, cur) => {
@@ -104,34 +78,34 @@ class SpracovanieDat extends ZiskDatZoServisov {
 		}
 		return obj;
 	}
-	_ziskjNepovolene(data, nepovolene) {
+	_getDisallowed(data, nepovolene) {
 		const extracted = {};
 		Object.keys(data)
 			.filter(key => nepovolene.includes(key))
 			.forEach(key => extracted[key] = data[key])
 		return extracted
 	}
-	_odstranNepovolene(data, nepovolene) {
+	_removeDisallowed(data, nepovolene) {
 		Object.keys(data)
 			.filter(key => nepovolene.includes(key))
 			.forEach(key => delete data[key]);
 	}
-	_zjednotitData(result) {
-		const zozbieraneData = this._ziskjHodnKlucDoArr(result)
+	_consolidateData(result) {
+		const zozbieraneData = this._getValuesAndKeysArray(result)
 		const arrKluc = [];
 		const arrHodnota = []
 		zozbieraneData.forEach(obj => {
 			if (obj === undefined || obj === null) return
 			Object.entries(obj).forEach(([key, val]) => {
 				if (Array.isArray(val)) {
-					this._nieJePoleObjektov(val) ? val : []
+					this._isNotArrayOfObjects(val) ? val : []
 
 				}
 				if (typeof val === 'object') {
 					for (const key in val) {
 						if (Object.hasOwnProperty.call(val, key)) {
 							if (Array.isArray(val)) {
-								this._nieJePoleObjektov(val) ? val : []
+								this._isNotArrayOfObjects(val) ? val : []
 
 							}
 							arrKluc.push(key)
@@ -149,8 +123,8 @@ class SpracovanieDat extends ZiskDatZoServisov {
 		});
 		return [arrKluc, arrHodnota]
 	}
-	_ziskajObjektPodlaHodnoty(data, hladanaHodnota) {
-		const keys = this._ziskajObjektoveKluce(data);
+	_getObjectByValue(data, hladanaHodnota) {
+		const keys = this._getObjectKeys(data);
 		for (const key of keys) {
 			const value = data[key];
 			if (value === hladanaHodnota) {
@@ -159,7 +133,7 @@ class SpracovanieDat extends ZiskDatZoServisov {
 				};
 			}
 			if (typeof value === 'object' && value !== null) {
-				const vnoreneRes = this._ziskajObjektPodlaHodnoty(value, hladanaHodnota);
+				const vnoreneRes = this._getObjectByValue(value, hladanaHodnota);
 				if (vnoreneRes) {
 					return {
 						[key]: vnoreneRes
@@ -170,14 +144,14 @@ class SpracovanieDat extends ZiskDatZoServisov {
 		}
 		return null;
 	}
-	_jeJednObj() {
-		return this._ziskajObjektoveHodnoty(obj).map(element => (typeof element).match(/(number)|(boolean)|(string)/))
+	_isSingleObjectType() {
+		return this._getObjectValues(obj).map(element => (typeof element).match(/(number)|(boolean)|(string)/))
 	}
-	_menNazKlucZlozObj(res) {
+	_renameKeysInComplexObject(res) {
 		let array = [];
 		let objektove = [];
-		const naVyhladanie = this._zjednotitData(res)[1];
-		const vyhladane = naVyhladanie.map(item => this._ziskajObjektPodlaHodnoty(res, item));
+		const naVyhladanie = this._consolidateData(res)[1];
+		const vyhladane = naVyhladanie.map(item => this._getObjectByValue(res, item));
 		vyhladane.forEach(val => {
 			for (const kys in val) {
 				if (Object.hasOwnProperty.call(val, kys)) {
@@ -194,17 +168,17 @@ class SpracovanieDat extends ZiskDatZoServisov {
 				}
 			}
 		});
-		const price = Object.entries(this._ziskajPrimitivneDoObjektu(res)[0])[0]
+		const price = Object.entries(this._extractPrimitiveToObject(res)[0])[0]
 		if (price) array.unshift(price[0])
 		return array
 	}
-	_ziskjHodnZArr(data) {
-		const nepovolene = this._ziskjNepovolene(data, Object.getOwnPropertyNames(this._ziskajPrimitivneDoObjektu(data)[0]))
-		this._odstranNepovolene(data, Object.getOwnPropertyNames(this._ziskajPrimitivneDoObjektu(nepovolene)[0]))
-		const ky1 = this._menNazKlucZlozObj(data)
-		const ky2 = this._zjednotitData(data)[0]
+	_extractValuesFromArray(data) {
+		const nepovolene = this._getDisallowed(data, Object.getOwnPropertyNames(this._extractPrimitiveToObject(data)[0]))
+		this._removeDisallowed(data, Object.getOwnPropertyNames(this._extractPrimitiveToObject(nepovolene)[0]))
+		const ky1 = this._renameKeysInComplexObject(data)
+		const ky2 = this._consolidateData(data)[0]
 		const jeto = [ky1, ky2]
-		const val = this._zjednotitData(data)[1]
+		const val = this._consolidateData(data)[1]
 		const ziskjHodn = (ky1, ky2) => {
 			const key1 = ky1.flat();
 			const key2 = ky2.flat();
@@ -229,10 +203,10 @@ class SpracovanieDat extends ZiskDatZoServisov {
 		Object.keys(nepovolene).forEach((key) => result[key] = nepovolene[key]);
 		return result
 	}
-	_ulozKlHdnDoProstr(data, pouzFct) {
-		let prazdne = this._ziskjHodnKlucDoArr(data)
+	_storeKeyValuesToEnv(data, pouzFct) {
+		let prazdne = this._getValuesAndKeysArray(data)
 			.flatMap((obj) => Object.keys(obj).reduce((acc, o) => obj[o] === null ? [...acc, o] : acc, []))
-		prazdne = this._ocislujDuplikaty(prazdne)
+		prazdne = this._numberDuplicates(prazdne)
 		//console.log(...prazdne,null);
 		if (prazdne) {
 			prazdne.forEach(element => {
@@ -250,5 +224,3 @@ class SpracovanieDat extends ZiskDatZoServisov {
 }
 const ziskDatZoServisov = new ZiskDatZoServisov();
 const spracovanieDat = new SpracovanieDat();
-
-spracovanieDat._ulozKlHdnDoProstr(odpoved, spracovanieDat._ziskjHodnZArr(odpoved));
