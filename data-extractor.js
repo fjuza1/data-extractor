@@ -1,4 +1,4 @@
-class ZiskDatZoServisov {
+class GetData {
 	_getObjectValues(objekt) {
 		if (objekt === undefined || objekt === null) return
 		return Object.values(objekt)
@@ -60,7 +60,7 @@ class ZiskDatZoServisov {
 		return arr.reduce((acc, cur) => cur && !Object.keys(cur).length < 1 ? [...acc, cur] : acc, []);
 	}
 }
-class SpracovanieDat extends ZiskDatZoServisov {
+class ConsolidateData extends GetData {
 	_numberDuplicates(obj) {
 		let i = 1;
 		if (Array.isArray(obj)) {
@@ -222,5 +222,3 @@ class SpracovanieDat extends ZiskDatZoServisov {
 		})
 	}
 }
-const ziskDatZoServisov = new ZiskDatZoServisov();
-const spracovanieDat = new SpracovanieDat();
