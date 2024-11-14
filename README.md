@@ -1,4 +1,5 @@
 Class ZiskDatZoServisov - Data Extraction from Services
+
 _getObjectValues: Returns the values of an object as an array. If the input is null or undefined, it returns undefined.
 
 _getObjectKeys: Returns the keys of an object as an array.
