@@ -21,6 +21,7 @@ _getValuesAndKeysArray: Combines and returns primitive, nested, and simple objec
 
 
 Class SpracovanieDat - Data Processing (extends ZiskDatZoServisov)
+
 _numberDuplicates: Adds a numerical suffix to duplicate items in an array to ensure unique values.
 
 _getDisallowed: Extracts specified disallowed keys and their values from an object.
