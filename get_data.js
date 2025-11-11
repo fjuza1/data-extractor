@@ -1,17 +1,68 @@
+/**
+ * Utility class for extracting and normalizing data from objects returned by services.
+ *
+ * Methods are prefixed with `_` because they are intended as internal helpers,
+ * however they are documented to make their behavior explicit for contributors
+ * and consumers writing examples/tests.
+ *
+ * @class GetData
+ */
 export default class GetData {
+	/**
+	 * Return the values of an object as an array. If input is `null` or
+	 * `undefined` an empty array is returned.
+	 *
+	 * @param {Object|null|undefined} objekt - The object to read values from
+	 * @returns {Array<any>} Array of values or [] when input is null/undefined
+	 * @private
+	 */
 	_getObjectValues(objekt) {
 		if (objekt === undefined || objekt === null) return [];
 		return Object.values(objekt);
 	}
+
+	/**
+	 * Return the keys of an object as an array of strings.
+	 *
+	 * @param {Object} objekt - The object to get keys from
+	 * @returns {Array<string>} Array of keys
+	 * @private
+	 */
 	_getObjectKeys(objekt) {
 		return Object.keys(objekt)
 	}
+
+	/**
+	 * Check whether a value is a primitive (not an object) or null.
+	 *
+	 * @param {*} obj - Value to test
+	 * @returns {boolean} True when primitive (string/number/boolean/symbol/undefined) or null
+	 * @private
+	 */
 	_isPrimitive(obj) {
 		return typeof obj !== 'object' || obj === null
 	}
+
+	/**
+	 * Check whether the provided value is an array that does NOT contain objects.
+	 * Returns `undefined` when input is not an array.
+	 *
+	 * @param {*=} array - The value to test
+	 * @returns {boolean|undefined} True if array and every element is not an object; undefined otherwise
+	 * @private
+	 */
 	_isNotArrayOfObjects(array) {
 		if (Array.isArray(array)) return array.every(element => typeof element !== 'object')
 	}
+
+	/**
+	 * From an object's values, collect elements from arrays that contain only
+	 * primitive/non-object types and flatten them into one array.
+	 *
+	 * @param {Object} data - Object whose values are inspected
+	 * @returns {Array<any>} Flattened array of primitive elements found in array-valued properties
+	 * @private
+	 */
 	_getSingleDataTypesFromArrays(data) {
 		return this._getObjectValues(data)
 			.flatMap(element => {
@@ -19,6 +70,16 @@ export default class GetData {
 				return this._isNotArrayOfObjects(element) ? [...element] : []
 			})
 	}
+
+	/**
+	 * Extract only primitive properties from an object into a new object.
+	 * Returns an array with a single object to match downstream callers that expect
+	 * an array of objects.
+	 *
+	 * @param {Object} obj - Source object
+	 * @returns {Array<Object>} Single-element array with object of primitive props
+	 * @private
+	 */
 	_extractPrimitiveToObject(obj) {
 		let objekt = {};
 		this._getObjectKeys(obj)
@@ -28,11 +89,29 @@ export default class GetData {
 			})
 		return [objekt]
 	}
+
+	/**
+	 * Return a flat array of nested objects found in the values of the provided
+	 * object. Non-object values are ignored.
+	 *
+	 * @param {Object} res - Source object to scan for nested objects
+	 * @returns {Array<Object>} Array of nested object values
+	 * @private
+	 */
 	_getNestedObjects(res) {
 		return this._getObjectValues(res).map(v => v instanceof Object ? this._getObjectValues(v) : [v])
 			.reduce((acc, next) => acc.concat(...next), [])
 			.reduce((acc, cur) => typeof cur === 'object' ? [...acc, cur] : acc, []);
 	}
+
+	/**
+	 * Collect simple (non-nested) objects from either an object or array.
+	 * The method attempts to filter out complex/nested objects and arrays.
+	 *
+	 * @param {Object|Array} data - The data to inspect
+	 * @returns {Array<Object>} Array of simple objects
+	 * @private
+	 */
 	_getSimpleObjects(data) {
 		if (!Array.isArray(data)) {
 			return this._getObjectValues(data)
@@ -47,6 +126,15 @@ export default class GetData {
 					!Array.isArray(cur) && this._getObjectValues(cur).every(value => typeof value !== 'object') ? [...acc, cur] : acc, [])
 		}
 	}
+
+	/**
+	 * Combine primitive, nested and simple objects into a consolidated array used
+	 * by higher-level processing routines.
+	 *
+	 * @param {Object|Array} data - Input data to analyze
+	 * @returns {Array<Object|Array>} Consolidated array of objects / primitive-arrays
+	 * @private
+	 */
 	_getValuesAndKeysArray(data) {
 		const primitivne = this._extractPrimitiveToObject(data);
 		const vnoreneObjekty = this._getNestedObjects(data)
