@@ -75,35 +75,34 @@ class ConsolidateData extends GetData {
 	 * @returns {[Array<string>, Array<any>]} Tuple of [keysArray, valuesArray]
 	 * @private
 	 */
+	/**
+	 * Helper: extract key-value pairs from a single value recursively.
+	 * @private
+	 */
+	_extractKeyValuePairs(val, key, arrKluc, arrHodnota) {
+		if (typeof val === 'object' && val !== null && !Array.isArray(val)) {
+			for (const nestedKey in val) {
+				if (Object.prototype.hasOwnProperty.call(val, nestedKey)) {
+					const element = val[nestedKey];
+					arrKluc.push(nestedKey);
+					arrHodnota.push(element);
+					if (typeof element === 'object') return;
+				}
+			}
+		} else if (typeof val !== 'object') {
+			arrKluc.push(key);
+			arrHodnota.push(val);
+		}
+	}
+
 	_consolidateData(result, options = {}) {
-		const zozbieraneData = this._getValuesAndKeysArray(result,options)
+		const zozbieraneData = this._getValuesAndKeysArray(result, options)
 		const arrKluc = [];
 		const arrHodnota = []
 		zozbieraneData.forEach(obj => {
 			if (obj === undefined || obj === null) return
 			Object.entries(obj).forEach(([key, val]) => {
-				if (Array.isArray(val)) {
-					this._isNotArrayOfObjects(val) ? val : []
-
-				}
-				if (typeof val === 'object') {
-					for (const key in val) {
-						if (Object.hasOwnProperty.call(val, key)) {
-							if (Array.isArray(val)) {
-								this._isNotArrayOfObjects(val) ? val : []
-
-							}
-							arrKluc.push(key)
-							const element = val[key];
-							arrHodnota.push(element)
-							if (typeof element !== 'object') return;
-						}
-					}
-				}
-				if (typeof val !== 'object') {
-					arrKluc.push(key)
-					arrHodnota.push(val)
-				}
+				this._extractKeyValuePairs(val, key, arrKluc, arrHodnota);
 			});
 		});
 		return [arrKluc, arrHodnota]
@@ -161,24 +160,31 @@ class ConsolidateData extends GetData {
 	 * @returns {Array<string>} Array of new key names
 	 * @private
 	 */
+	/**
+	 * Helper: build key names from nested object properties.
+	 * @private
+	 */
+	_buildKeyNamesFromElement(element, parentKey, array) {
+		for (let ky in element) {
+			if (Object.prototype.hasOwnProperty.call(element, ky)) {
+				if (!isNaN(+ky)) {
+					ky = +ky + 1;
+				}
+				array.push(`${parentKey}_${ky}`);
+			}
+		}
+	}
+
 	_renameKeysInComplexObject(res) {
 		let array = [];
-		let objektove = [];
 		const naVyhladanie = this._consolidateData(res)[1];
 		const vyhladane = naVyhladanie.map(item => this._getObjectByValue(res, item));
 		vyhladane.forEach(val => {
 			for (const kys in val) {
-				if (Object.hasOwnProperty.call(val, kys)) {
+				if (Object.prototype.hasOwnProperty.call(val, kys)) {
 					const element = val[kys];
 					if (typeof element === 'string') return;
-					for (let ky in element) {
-						if (Object.hasOwnProperty.call(element, ky)) {
-							if (!isNaN(+ky)) {
-								ky = +ky + 1;
-							}
-							array.push(`${kys}_${ky}`);
-						}
-					}
+					this._buildKeyNamesFromElement(element, kys, array);
 				}
 			}
 		});
@@ -199,9 +205,10 @@ class ConsolidateData extends GetData {
 		const nepovolene = this._getDisallowed(data, Object.getOwnPropertyNames(this._extractPrimitiveToObject(data)[0]))
 		this._removeDisallowed(data, Object.getOwnPropertyNames(this._extractPrimitiveToObject(nepovolene)[0]))
 		const ky1 = this._renameKeysInComplexObject(data)
-		const ky2 = this._consolidateData(data, options)[0]
-		const jeto = [ky1, ky2]
-		const val = this._consolidateData(data, options)[1]
+		// Cache the consolidated data to avoid triple-calling
+		const consolidatedData = this._consolidateData(data, options)
+		const ky2 = consolidatedData[0]
+		const val = consolidatedData[1]
 		const ziskjHodn = (ky1, ky2) => {
 			const key1 = ky1.flat();
 			const key2 = ky2.flat();
