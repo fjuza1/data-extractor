@@ -36,4 +36,4 @@ const data = {
     ],
     "db_name": "list_levels"
 }
-consolidateData._storeKeyValuesToEnv(data, consolidateData._extractValuesFromArray(data))
+consolidateData._storeKeyValuesToEnv(data, {numOfItems:2})

@@ -75,8 +75,8 @@ class ConsolidateData extends GetData {
 	 * @returns {[Array<string>, Array<any>]} Tuple of [keysArray, valuesArray]
 	 * @private
 	 */
-	_consolidateData(result) {
-		const zozbieraneData = this._getValuesAndKeysArray(result)
+	_consolidateData(result, options = {}) {
+		const zozbieraneData = this._getValuesAndKeysArray(result,options)
 		const arrKluc = [];
 		const arrHodnota = []
 		zozbieraneData.forEach(obj => {
@@ -195,13 +195,13 @@ class ConsolidateData extends GetData {
 	 * @returns {Object} Flattened key/value mapping
 	 * @private
 	 */
-	_extractValuesFromArray(data) {
+	_extractValuesFromArray(data, options = {}) {
 		const nepovolene = this._getDisallowed(data, Object.getOwnPropertyNames(this._extractPrimitiveToObject(data)[0]))
 		this._removeDisallowed(data, Object.getOwnPropertyNames(this._extractPrimitiveToObject(nepovolene)[0]))
 		const ky1 = this._renameKeysInComplexObject(data)
-		const ky2 = this._consolidateData(data)[0]
+		const ky2 = this._consolidateData(data, options)[0]
 		const jeto = [ky1, ky2]
-		const val = this._consolidateData(data)[1]
+		const val = this._consolidateData(data, options)[1]
 		const ziskjHodn = (ky1, ky2) => {
 			const key1 = ky1.flat();
 			const key2 = ky2.flat();
@@ -236,22 +236,26 @@ class ConsolidateData extends GetData {
 	 * @param {Object} pouzFct - Key/value pairs to store (object of name->value)
 	 * @private
 	 */
-	_storeKeyValuesToEnv(data, pouzFct) {
-		let prazdne = this._getValuesAndKeysArray(data)
+	_storeKeyValuesToEnv(data, options = {}) {
+		let prazdne = this._getValuesAndKeysArray(data,options)
 			.flatMap((obj) => Object.keys(obj).reduce((acc, o) => obj[o] === null ? [...acc, o] : acc, []))
 		prazdne = this._numberDuplicates(prazdne)
 		//console.log(...prazdne,null);
 		if (prazdne) {
 			prazdne.forEach(element => {
-				console.log(element, null);
+				//console.log(element, null);
 				//pm.environment.set(element,null);
 			});
 		}
 		//if(prazdne) pm.environment.set(...prazdne,null);
 		//pouzFct.push(primitivne)
-		Object.entries(pouzFct).forEach(([key, value]) => {
+		const retrieved = this._extractValuesFromArray(data, options)
+		Object.entries(retrieved).forEach(([key, value]) => {
+			if(!value) return
+			if(!key) return
+				console.log('element',value);
 			//pm.environment.set(key,value);
-			console.log(key, value);
+			//console.log(key, value);
 		})
 	}
 }

@@ -135,9 +135,11 @@ export default class GetData {
 	 * @returns {Array<Object|Array>} Consolidated array of objects / primitive-arrays
 	 * @private
 	 */
-	_getValuesAndKeysArray(data) {
+	_getValuesAndKeysArray(data, options = {}) {
+		const {numOfItems} = options
 		const primitivne = this._extractPrimitiveToObject(data);
-		const vnoreneObjekty = this._getNestedObjects(data)
+		let vnoreneObjekty = this._getNestedObjects(data)
+		numOfItems ? vnoreneObjekty = this._getNestedObjects(data).slice(0,numOfItems) : this._getNestedObjects(data)
 		const jednoducheObjekty = this._getSimpleObjects(data)
 		const lord = this._getObjectValues(data)
 			.reduce((acc, cur) => cur && !Array.isArray(cur) && this._getObjectValues(cur).some(value => Array.isArray(value)) ? [...acc, cur] : acc, [])
