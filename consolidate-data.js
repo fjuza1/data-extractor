@@ -148,7 +148,7 @@ class ConsolidateData extends GetData {
 	 * @returns {Array<RegExpMatchArray|null>} Array of match results per value
 	 * @private
 	 */
-	_isSingleObjectType() {
+	_isSingleObjectType(obj) {
 		return this._getObjectValues(obj).map(element => (typeof element).match(/(number)|(boolean)|(string)/))
 	}
 
