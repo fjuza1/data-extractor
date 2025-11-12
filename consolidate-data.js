@@ -250,7 +250,7 @@ class ConsolidateData extends GetData {
 		//console.log(...emptyKeys,null);
 		if (emptyKeys) {
 			emptyKeys.forEach(element => {
-				//console.log(element, null);
+				console.log(element, null);
 				//pm.environment.set(element,null);
 			});
 		}
@@ -259,9 +259,8 @@ class ConsolidateData extends GetData {
 		Object.entries(extractedValues).forEach(([key, value]) => {
 			if(!value) return
 			if(!key) return
-				console.log('element',value);
 			//pm.environment.set(key,value);
-			//console.log(key, value);
+			console.log(key, value);
 		})
 	}
 }
