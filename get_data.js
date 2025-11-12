@@ -12,24 +12,24 @@ export default class GetData {
 	 * Return the values of an object as an array. If input is `null` or
 	 * `undefined` an empty array is returned.
 	 *
-	 * @param {Object|null|undefined} objekt - The object to read values from
+	 * @param {Object|null|undefined} obj - The object to read values from
 	 * @returns {Array<any>} Array of values or [] when input is null/undefined
 	 * @private
 	 */
-	_getObjectValues(objekt) {
-		if (objekt === undefined || objekt === null) return [];
-		return Object.values(objekt);
+	_getObjectValues(obj) {
+		if (obj === undefined || obj === null) return [];
+		return Object.values(obj);
 	}
 
 	/**
 	 * Return the keys of an object as an array of strings.
 	 *
-	 * @param {Object} objekt - The object to get keys from
+	 * @param {Object} obj - The object to get keys from
 	 * @returns {Array<string>} Array of keys
 	 * @private
 	 */
-	_getObjectKeys(objekt) {
-		return Object.keys(objekt)
+	_getObjectKeys(obj) {
+		return Object.keys(obj)
 	}
 
 	/**
@@ -81,25 +81,25 @@ export default class GetData {
 	 * @private
 	 */
 	_extractPrimitiveToObject(obj) {
-		let objekt = {};
+		let primitiveProps = {};
 		this._getObjectKeys(obj)
-			.forEach(polozka => {
-				const key = obj[polozka];
-				this._isPrimitive(key) ? objekt[polozka] = key : null
+			.forEach(propKey => {
+				const value = obj[propKey];
+				this._isPrimitive(value) ? primitiveProps[propKey] = value : null
 			})
-		return [objekt]
+		return [primitiveProps]
 	}
 
 	/**
 	 * Return a flat array of nested objects found in the values of the provided
 	 * object. Non-object values are ignored.
 	 *
-	 * @param {Object} res - Source object to scan for nested objects
+	 * @param {Object} obj - Source object to scan for nested objects
 	 * @returns {Array<Object>} Array of nested object values
 	 * @private
 	 */
-	_getNestedObjects(res) {
-		return this._getObjectValues(res).map(v => v instanceof Object ? this._getObjectValues(v) : [v])
+	_getNestedObjects(obj) {
+		return this._getObjectValues(obj).map(v => v instanceof Object ? this._getObjectValues(v) : [v])
 			.reduce((acc, next) => acc.concat(...next), [])
 			.reduce((acc, cur) => typeof cur === 'object' ? [...acc, cur] : acc, []);
 	}
@@ -137,16 +137,16 @@ export default class GetData {
 	 */
 	_getValuesAndKeysArray(data, options = {}) {
 		const {numOfItems} = options
-		const primitivne = this._extractPrimitiveToObject(data);
-		let vnoreneObjekty = this._getNestedObjects(data)
-		numOfItems ? vnoreneObjekty = this._getNestedObjects(data).slice(0,numOfItems) : this._getNestedObjects(data)
-		const jednoducheObjekty = this._getSimpleObjects(data)
-		const lord = this._getObjectValues(data)
+		const primitiveObjects = this._extractPrimitiveToObject(data);
+		let nestedObjects = this._getNestedObjects(data)
+		numOfItems ? nestedObjects = this._getNestedObjects(data).slice(0, numOfItems) : this._getNestedObjects(data)
+		const simpleObjects = this._getSimpleObjects(data)
+		const complexWithArrays = this._getObjectValues(data)
 			.reduce((acc, cur) => cur && !Array.isArray(cur) && this._getObjectValues(cur).some(value => Array.isArray(value)) ? [...acc, cur] : acc, [])
-		let jednoducheArr = this._getSingleDataTypesFromArrays(data)
-		let arr;
-		arr = [...primitivne, ...vnoreneObjekty, ...jednoducheObjekty]
-		if (jednoducheArr.length > 0) arr = [...arr, jednoducheArr]
-		return arr.reduce((acc, cur) => cur && !Object.keys(cur).length < 1 ? [...acc, cur] : acc, []);
+		let primitiveArrays = this._getSingleDataTypesFromArrays(data)
+		let result;
+		result = [...primitiveObjects, ...nestedObjects, ...simpleObjects]
+		if (primitiveArrays.length > 0) result = [...result, primitiveArrays]
+		return result.reduce((acc, cur) => cur && !Object.keys(cur).length < 1 ? [...acc, cur] : acc, []);
 	}
 }
