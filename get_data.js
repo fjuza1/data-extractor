@@ -25,7 +25,7 @@ export default class GetData {
 	 * Return the keys of an object as an array of strings.
 	 *
 	 * @param {Object} obj - The object to get keys from
-	 * @returns {Array<string>} Array of keys
+	 * @returns {Array<string>} Array of keys (empty array if input is not an object)
 	 * @private
 	 */
 	_getObjectKeys(obj) {
@@ -59,7 +59,7 @@ export default class GetData {
 	 * From an object's values, collect elements from arrays that contain only
 	 * primitive/non-object types and flatten them into one array.
 	 *
-	 * @param {Object} data - Object whose values are inspected
+	 * @param {Object|Array} data - Object or array whose values are inspected
 	 * @returns {Array<any>} Flattened array of primitive elements found in array-valued properties
 	 * @private
 	 */
@@ -77,7 +77,7 @@ export default class GetData {
 	 * an array of objects.
 	 *
 	 * @param {Object} obj - Source object
-	 * @returns {Array<Object>} Single-element array with object of primitive props
+	 * @returns {Array<Object>} Single-element array with object of primitive props (empty object when no primitives found)
 	 * @private
 	 */
 	_extractPrimitiveToObject(obj) {
@@ -94,8 +94,8 @@ export default class GetData {
 	 * Return a flat array of nested objects found in the values of the provided
 	 * object. Non-object values are ignored.
 	 *
-	 * @param {Object} obj - Source object to scan for nested objects
-	 * @returns {Array<Object>} Array of nested object values
+	 * @param {Object|Array} obj - Source object/array to scan for nested objects
+	 * @returns {Array<Object>} Array of nested object values (may be empty)
 	 * @private
 	 */
 	_getNestedObjects(obj) {
@@ -109,7 +109,7 @@ export default class GetData {
 	 * The method attempts to filter out complex/nested objects and arrays.
 	 *
 	 * @param {Object|Array} data - The data to inspect
-	 * @returns {Array<Object>} Array of simple objects
+	 * @returns {Array<Object>} Array of simple objects (objects that do not contain nested objects)
 	 * @private
 	 */
 	_getSimpleObjects(data) {
@@ -132,6 +132,8 @@ export default class GetData {
 	 * by higher-level processing routines.
 	 *
 	 * @param {Object|Array} data - Input data to analyze
+	 * @param {Object} [options] - Optional parameters
+	 * @param {number} [options.numOfItems] - If set, limit the number of nested items included
 	 * @returns {Array<Object|Array>} Consolidated array of objects / primitive-arrays
 	 * @private
 	 */
