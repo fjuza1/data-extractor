@@ -20,6 +20,31 @@ class ConsolidateData extends GetData {
 	 * @returns {Array<any>|*} Array with unique entries (suffixed) or original value
 	 * @private
 	 */
+	_numberDuplicates(obj) {
+		let i = 1;
+		if (Array.isArray(obj)) {
+			// Reduce the array to unique values by appending a numeric suffix
+			// when a duplicate is encountered. We keep an `i` counter to
+			// increment the suffix until the value becomes unique within `acc`.
+			const uniqueWithSuffix = obj.reduce((acc, cur) => {
+				const original = cur;
+				// If `cur` already exists in accumulator, append/increment a numeric
+				// suffix until it becomes unique.
+				while (acc.includes(cur)) {
+					i++;
+					cur = `${original}${i}`;
+				}
+				// reset counter for next iteration
+				i = 1;
+				return [...acc, cur];
+			}, [])
+			// Ensure that items without any digit get a `1` suffix so callers can
+			// rely on a consistent numbered naming convention (e.g. `name1`).
+			.map(item => !(/\d/).test(item) ? `${item}1` : `${item}`);
+			return uniqueWithSuffix;
+		}
+		return obj;
+	}
 	/**
 	 * Extract and return properties from `data` whose keys are listed in `disallowedKeys`.
 	 *
@@ -191,6 +216,32 @@ class ConsolidateData extends GetData {
 		}
 	}
 
+	_renameKeysInComplexObject(res) {
+		let array = [];
+		// Build a list of renamed keys by examining consolidated values
+		// and finding their parent objects inside `res`. We then collect
+		// the child property names and prefix them with the parent key.
+		const searchValues = this._consolidateData(res)[1];
+		const foundObjects = searchValues.map(item => this._getObjectByValue(res, item));
+		foundObjects.forEach(val => {
+			for (const parentKey in val) {
+				if (Object.prototype.hasOwnProperty.call(val, parentKey)) {
+					const element = val[parentKey];
+					// If the element is a primitive string it's used as-is and we
+					// don't descend into it for generated names.
+					if (typeof element === 'string') return;
+					this._buildKeyNamesFromElement(element, parentKey, array);
+				}
+			}
+		});
+		// If the input contains primitive properties (for example a price)
+		// prefer to place the primitive key at the front of the generated
+		// list so the flattened output keeps that important field prominent.
+		const price = Object.entries(this._extractPrimitiveToObject(res)[0])[0]
+		if (price) array.unshift(price[0])
+		return array
+	}
+
 	/**
 	 * Extract key/value pairs from a complex nested array/object structure and
 	 * return a flat result object mapping renamed keys to corresponding values.
@@ -208,18 +259,25 @@ class ConsolidateData extends GetData {
 		// Remove the previously extracted disallowed keys from `data` so
 		// they don't interfere with the renaming/consolidation logic.
 		this._removeDisallowed(data, Object.getOwnPropertyNames(this._extractPrimitiveToObject(disallowed)[0]))
-		const renamedKeys = data
+		const renamedKeys = this._renameKeysInComplexObject(data)
 		// Cache the consolidated data to avoid repeated work
 		const consolidatedData = this._consolidateData(data, options)
 		const consolidatedKeys = consolidatedData[0]
 		const consolidatedValues = consolidatedData[1]
 		// Merge renamed parent-based keys with consolidated child keys to
 		// produce a one-to-one mapping between generated names and values.
-		const mergeKeyPairs = (consolidatedKeys) => {
+		const mergeKeyPairs = (renamedKeys, consolidatedKeys) => {
+			const flatRenamedKeys = renamedKeys.flat();
 			const flatConsolidatedKeys = consolidatedKeys.flat();
-			return flatConsolidatedKeys
+			const mergedKeys = flatRenamedKeys.map((item, i) => {
+				let keyString = `${item}_${flatConsolidatedKeys[i]}`
+				// Remove duplicate segments while preserving order
+				keyString = Array.from(new Set(Object.values(keyString.split('_'))))
+				return keyString.join('_')
+			})
+			return mergedKeys
 		}
-		const mergedKeysList = mergeKeyPairs(consolidatedKeys)
+		const mergedKeysList = mergeKeyPairs(renamedKeys, consolidatedKeys)
 		// Convert merged keys into the final key strings expected by callers.
 		const finalKeys = mergedKeysList.map(item => {
 			return item
@@ -252,9 +310,10 @@ class ConsolidateData extends GetData {
 	_storeKeyValuesToEnv(data, options = {}) {
 		// Determine keys that have null values so they can be explicitly
 		// set to null in an environment store if required.
-		const emptyKeys = this._getValuesAndKeysArray(data, options)
+		let emptyKeys = this._getValuesAndKeysArray(data, options)
 			.flatMap((obj) => Object.keys(obj).reduce((acc, o) => obj[o] === null ? [...acc, o] : acc, []))
 		// Ensure duplicates in the list of empty keys are numbered for unique names
+		emptyKeys = this._numberDuplicates(emptyKeys)
 		// Log each empty key (and leave commented hooks for Postman)
 		if (emptyKeys) {
 			emptyKeys.forEach(element => {
